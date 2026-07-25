@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTX Summer Cup 2026 - Cổng thông tin chính thức</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
+    <style>
+        :root {
+            --navy: #1D3557;
+            --ptx-orange: #F15A24;
+            --white: #FFFFFF;
+            --gold: #D4A13E;
+            --bg-light: #F8FAFC;
+            --text-dark: #1A1A1A;
+            --text-muted: #64748B;
+            --shadow-card: 0 12px 40px rgba(29, 53, 87, 0.08);
+            --radius-card: 20px;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --bg-body: var(--bg-light);
+            --bg-card: var(--white);
+            --text-primary: var(--text-dark);
+            --border-color: rgba(0,0,0,0.04);
+            --nav-blur: rgba(255, 255, 255, 0.85);
+            --team-p-color: #1A5BB5;
+            --team-t-color: #D32F2F;
+            --team-x-color: #F5A623;
+        }
+
+        [data-theme="dark"] {
+            --navy: #0F1A2C;
+            --bg-body: #0F172A;
+            --bg-card: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255,255,255,0.06);
+            --nav-blur: rgba(15, 23, 42, 0.85);
+            --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        h1, h2, h3, .heading { font-family: 'Bebas Neue', sans-serif; font-weight: 700; letter-spacing: 0.02em; }
+        p, li, a, .body-text { font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.6; }
+
+        /* --- THEME TOGGLE & SPLASH SCREEN --- */
+        .theme-toggle { position: fixed; top: 20px; right: 20px; z-index: 1002; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 50px; padding: 8px 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--text-primary); box-shadow: var(--shadow-card); transition: var(--transition); font-family: 'Inter', sans-serif; }
+        .theme-toggle:hover { transform: scale(1.05); }
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--navy); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.6s ease, visibility 0.6s ease; color: var(--white); }
+        #splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        #splash-screen .logo { font-size: 48px; font-family: 'Bebas Neue', sans-serif; color: var(--ptx-orange); letter-spacing: 2px; margin-bottom: 20px; }
+        #splash-screen .bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; margin-bottom: 15px; }
+        #splash-screen .bar .fill { width: 0%; height: 100%; background: var(--ptx-orange); border-radius: 4px; animation: loadFill 2.5s ease-in-out forwards; }
+        @keyframes loadFill { to { width: 100%; } }
+        #splash-screen .status { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 400; }
+
+        /* --- NAVIGATION BAR --- */
+        .nav-container { position: sticky; top: 0; z-index: 1000; background: var(--nav-blur); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); height: 72px; display: flex; align-items: center; padding: 0 32px; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: background 0.4s ease; }
+        .nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .nav-brand { display: flex; align-items: center; gap: 8px; font-size: 22px; font-family: 'Bebas Neue', sans-serif; color: var(--navy); text-decoration: none; letter-spacing: 1px; }
+        [data-theme="dark"] .nav-brand { color: var(--white); }
+        .nav-brand span { color: var(--ptx-orange); }
+        .hamburger { display: none; border: none; background: transparent; cursor: pointer; padding: 8px; }
+        .hamburger svg { width: 28px; height: 28px; stroke: var(--navy); }
+        [data-theme="dark"] .hamburger svg { stroke: var(--white); }
+        .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+        .nav-links li a { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-muted); text-decoration: none; transition: var(--transition); }
+        .nav-links li a svg { width: 18px; height: 18px; stroke-width: 2; }
+        .nav-links li a:hover { background: rgba(241, 90, 36, 0.08); color: var(--ptx-orange); }
+        .nav-links li a.active { background: rgba(255, 255, 255, 0.6); color: var(--ptx-orange); box-shadow: inset 0 -2px 0 var(--ptx-orange); }
+        [data-theme="dark"] .nav-links li a.active { background: rgba(255,255,255,0.1); }
+        .nav-links li a.active svg { stroke: var(--ptx-orange); }
+        .lang-switch { display: flex; background: #f1f5f9; border-radius: 12px; padding: 4px; gap: 2px; }
+        .lang-switch button { border: none; background: transparent; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif; }
+        .lang-switch button.active { background: var(--white); color: var(--ptx-orange); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .lang-switch button:hover:not(.active) { color: var(--navy); }
+
+        /* --- HERO --- */
+        .hero { position: relative; width: 100%; height: 420px; background: linear-gradient(135deg, var(--navy) 0%, #2a4a6e 100%); overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 4px solid var(--ptx-orange); }
+        .hero::before { content: ''; position: absolute; inset: 0; background-image: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1400&q=80'); background-size: cover; background-position: center; opacity: 0.15; mix-blend-mode: overlay; }
+        .hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 0 20px; }
+        .hero-content .org-line { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 12px; letter-spacing: 1.5px; font-weight: 400; }
+        .hero-content .org-line strong { color: var(--gold); font-weight: 600; }
+        .hero-content h1 { font-size: 82px; letter-spacing: 2px; color: var(--white); display: flex; flex-direction: column; gap: 0; line-height: 0.9; }
+        .hero-content h1 .row { display: block; }
+        .hero-content h1 .blue { color: var(--white); text-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+        .hero-content h1 .orange { color: var(--ptx-orange); text-shadow: 0 0 40px rgba(241, 90, 36, 0.4); }
+        .hero-content .sub { font-size: 18px; color: rgba(255,255,255,0.7); margin-top: 16px; font-weight: 400; letter-spacing: 4px; font-family: 'Inter', sans-serif; }
+        .hero-content .slogan { font-size: 20px; color: var(--gold); margin-top: 12px; font-weight: 500; font-family: 'Inter', sans-serif; background: rgba(0,0,0,0.3); display: inline-block; padding: 6px 24px; border-radius: 30px; backdrop-filter: blur(4px); }
+
+        /* --- LAYOUT & SECTIONS --- */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .section-gap { padding: 60px 0; }
+        .section-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px; }
+        .section-header .icon { font-size: 32px; margin-bottom: 4px; }
+        .section-header h2 { font-size: 42px; color: var(--text-primary); letter-spacing: 1px; line-height: 1.1; }
+        .section-header h2 span { color: var(--ptx-orange); }
+        .section-header .sub { font-size: 16px; color: var(--text-muted); margin-top: 4px; font-weight: 400; text-transform: uppercase; letter-spacing: 2px; }
+        .card { background: var(--bg-card); border-radius: var(--radius-card); padding: 24px; box-shadow: var(--shadow-card); border: 1px solid var(--border-color); transition: var(--transition); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(29, 53, 87, 0.1); }
+
+        .welcome-section { max-width: 1100px; margin: -30px auto 60px auto; padding: 0 20px; position: relative; z-index: 2; }
+        .welcome-card { background: var(--bg-card); border-radius: var(--radius-card); padding: 40px 48px; box-shadow: var(--shadow-card); border: 1px solid var(--border-color); transition: var(--transition); }
+        .welcome-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(29, 53, 87, 0.12); }
+        .welcome-card h2 { font-size: 32px; color: var(--navy); margin-bottom: 12px; }
+        [data-theme="dark"] .welcome-card h2 { color: var(--white); }
+        .welcome-card h2 span { color: var(--ptx-orange); }
+        .welcome-card .intro { font-size: 16px; color: var(--text-muted); margin-bottom: 24px; max-width: 700px; font-weight: 400; }
+        .welcome-bullets { display: flex; gap: 30px; flex-wrap: wrap; margin-bottom: 28px; }
+        .welcome-bullets .item { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500; color: var(--navy); }
+        [data-theme="dark"] .welcome-bullets .item { color: var(--white); }
+        .welcome-bullets .item svg { width: 20px; height: 20px; stroke: var(--ptx-orange); }
+        .welcome-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 12px; font-weight: 600; font-size: 15px; text-decoration: none; transition: var(--transition); cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+        .btn-primary { background: var(--ptx-orange); color: var(--white); box-shadow: 0 4px 14px rgba(241, 90, 36, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(241, 90, 36, 0.4); }
+        .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--ptx-orange); }
+
+        /* --- ORGANIZER (2 Logos mới) --- */
+        .organizer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; text-align: center; }
+        .organizer-card { padding: 30px 20px; }
+        .organizer-card .icon { font-size: 48px; margin-bottom: 12px; }
+        .organizer-card .name { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+        .organizer-card .role { font-size: 15px; color: var(--text-muted); margin-top: 4px; }
+        .organizer-card .logo-box { width: 150px; height: 150px; margin: 16px auto; background: var(--bg-card); border-radius: 16px; padding: 10px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--ptx-orange); box-shadow: var(--shadow-card); }
+        .organizer-card .logo-box img { width: 100%; height: auto; object-fit: contain; border-radius: 8px; }
+
+        /* --- MESSAGE --- */
+        .message-box { padding: 40px; text-align: center; border-left: 6px solid var(--ptx-orange); }
+        .message-box .msg { font-size: 18px; line-height: 1.8; color: var(--text-muted); max-width: 800px; margin: 0 auto; font-style: italic; }
+        .message-box .author { margin-top: 20px; font-weight: 600; color: var(--text-primary); font-size: 16px; }
+
+        /* --- ABOUT --- */
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .about-card { text-align: center; padding: 30px 20px; }
+        .about-card .icon { font-size: 40px; margin-bottom: 12px; }
+        .about-card .title { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+        .about-card .desc { font-size: 15px; color: var(--text-muted); }
+
+        /* --- TIMELINE --- */
+        .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; position: relative; padding: 20px 0; }
+        .timeline-grid::after { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--border-color); transform: translateX(-50%); z-index: 0; }
+        @media (max-width: 768px) { .timeline-grid { grid-template-columns: 1fr; gap: 20px; } .timeline-grid::after { display: none; } }
+        .timeline-col { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 30px; }
+        .timeline-col.left { align-items: flex-end; padding-right: 30px; text-align: right; }
+        .timeline-col.right { align-items: flex-start; padding-left: 30px; text-align: left; }
+        @media (max-width: 768px) { .timeline-col.left, .timeline-col.right { align-items: center; padding: 0; text-align: center; } }
+        .timeline-col h3 { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; border-bottom: 2px solid var(--ptx-orange); padding-bottom: 8px; display: inline-block; }
+        .timeline-item { display: flex; flex-direction: column; gap: 4px; position: relative; background: var(--bg-card); padding: 12px 16px; border-radius: var(--radius-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); width: 100%; max-width: 300px; }
+        .timeline-col.left .timeline-item { border-right: 4px solid var(--ptx-orange); }
+        .timeline-col.right .timeline-item { border-left: 4px solid var(--ptx-orange); }
+        .timeline-item .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--ptx-orange); border: 2px solid var(--bg-body); position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; }
+        .timeline-col.left .dot { right: -37px; }
+        .timeline-col.right .dot { left: -37px; }
+        @media (max-width: 768px) { .timeline-col.left .timeline-item { border-right: none; border-left: 4px solid var(--ptx-orange); } .timeline-item .dot { display: none; } }
+        .timeline-item .title { font-weight: 600; font-size: 15px; color: var(--text-primary); }
+        .timeline-item .desc { font-size: 13px; color: var(--text-muted); }
+
+        /* --- COMMITTEE --- */
+        .committee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; }
+        .committee-card { text-align: center; padding: 20px; }
+        .committee-card .avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block; border: 3px solid var(--ptx-orange); background: #e2e8f0; }
+        .committee-card .name { font-size: 16px; font-weight: 600; color: var(--text-primary); }
+        .committee-card .role { font-size: 13px; color: var(--text-muted); }
+
+        /* --- TEAM LOGOS --- */
+        .teams-logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 40px; }
+        @media (max-width: 900px) { .teams-logo-grid { grid-template-columns: 1fr; } }
+        .team-logo-card { background: var(--bg-card); border-radius: var(--radius-card); padding: 30px; box-shadow: var(--shadow-card); border: 1px solid var(--border-color); display: flex; gap: 20px; align-items: flex-start; transition: var(--transition); }
+        .team-logo-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(29, 53, 87, 0.1); }
+        @media (max-width: 600px) { .team-logo-card { flex-direction: column; align-items: center; text-align: center; } }
+        .team-logo-card .logo-placeholder { width: 140px; height: 140px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 16px; font-size: 72px; font-weight: 700; color: #fff; font-family: 'Bebas Neue', sans-serif; position: relative; }
+        .team-logo-card .logo-placeholder .icon-overlay { font-size: 40px; position: absolute; right: -10px; bottom: -10px; background: #fff; border-radius: 50%; padding: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .team-logo-card .info { flex: 1; }
+        .team-logo-card .info .t-name { font-size: 26px; font-weight: 700; margin-bottom: 4px; letter-spacing: 1px; }
+        .team-logo-card .info .t-sub { font-size: 16px; font-weight: 600; margin-bottom: 12px; opacity: 0.8; }
+        .team-logo-card .info ul { list-style: none; padding: 0; }
+        .team-logo-card .info ul li { position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+        .team-logo-card .info ul li::before { content: '•'; position: absolute; left: 0; font-size: 18px; font-weight: 700; }
+        .team-logo-card .info .color-highlight { margin-top: 12px; font-weight: 700; font-size: 15px; }
+        .team-p .logo-placeholder { background: linear-gradient(135deg, #1A5BB5, #4A90E2); }
+        .team-p .info .t-name { color: var(--team-p-color); }
+        .team-p .info .t-sub { color: var(--team-p-color); }
+        .team-p .info ul li::before { color: var(--team-p-color); }
+        .team-p .info .color-highlight { color: var(--team-p-color); }
+        .team-t .logo-placeholder { background: linear-gradient(135deg, #D32F2F, #F44336); }
+        .team-t .info .t-name { color: var(--team-t-color); }
+        .team-t .info .t-sub { color: var(--team-t-color); }
+        .team-t .info ul li::before { color: var(--team-t-color); }
+        .team-t .info .color-highlight { color: var(--team-t-color); }
+        .team-x .logo-placeholder { background: linear-gradient(135deg, #F5A623, #FFC107); }
+        .team-x .info .t-name { color: var(--team-x-color); }
+        .team-x .info .t-sub { color: var(--team-x-color); }
+        .team-x .info ul li::before { color: var(--team-x-color); }
+        .team-x .info .color-highlight { color: var(--team-x-color); }
+
+        /* --- SCHEDULE --- */
+        .match-info { text-align: center; margin-bottom: 24px; font-size: 15px; color: var(--text-muted); line-height: 1.8; }
+        .match-info strong { color: var(--text-primary); }
+        .match-info .map-btn { display: inline-block; background: var(--ptx-orange); color: #fff; padding: 6px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 14px; transition: var(--transition); margin-top: 4px; }
+        .match-info .map-btn:hover { transform: scale(1.05); }
+        .match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .match-card { text-align: center; padding: 28px 20px; transition: 0.3s; position: relative; }
+        .match-card.live { background: #fee2e2; border-color: #dc2626; box-shadow: 0 0 30px rgba(220, 38, 38, 0.2); animation: pulseLiveCard 2s infinite; }
+        [data-theme="dark"] .match-card.live { background: #450a0a; border-color: #dc2626; box-shadow: 0 0 30px rgba(220, 38, 38, 0.4); }
+        @keyframes pulseLiveCard { 0% { transform: scale(1); } 50% { transform: scale(1.01); } 100% { transform: scale(1); } }
+        .match-card .badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; margin-bottom: 12px; }
+        .badge-upcoming { background: #e2e8f0; color: var(--text-muted); }
+        .badge-live { background: #dc2626; color: #fff; animation: pulseLive 1.5s infinite; }
+        @keyframes pulseLive { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        .badge-finished { background: #dcfce7; color: #16a34a; }
+        .match-card .teams { font-size: 20px; font-weight: 700; color: var(--text-primary); display: flex; justify-content: center; gap: 16px; margin: 8px 0; }
+        .match-card .teams .vs { color: var(--text-muted); font-weight: 400; }
+        .match-card .time { font-size: 14px; color: var(--text-muted); }
+        .match-card .live-timer { font-size: 18px; font-weight: 700; color: #dc2626; display: none; margin-top: 10px; font-variant-numeric: tabular-nums; }
+        .match-card.live .live-timer { display: block; }
+        .match-card .result-display { font-size: 18px; font-weight: 700; color: var(--text-primary); display: none; margin-top: 10px; }
+        .match-card.finished .result-display { display: block; }
+        .match-card.finished .countdown-wrap { display: none; }
+        .match-card.finished .live-timer { display: none; }
+        .match-card.finished .badge { background: #dcfce7; color: #16a34a; }
+
+        /* --- STATS & HIGHLIGHTS --- */
+        .stats-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
+        .stat-card { text-align: center; padding: 20px 16px; }
+        .stat-card .icon { font-size: 28px; margin-bottom: 4px; }
+        .stat-card .number { font-size: 36px; font-weight: 700; color: var(--text-primary); font-family: 'Inter', sans-serif; }
+        .stat-card .label { font-size: 14px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+        .player-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 24px; }
+        .player-highlight-card { text-align: center; padding: 20px; background: var(--bg-card); border-radius: var(--radius-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); transition: var(--transition); }
+        .player-highlight-card:hover { transform: translateY(-4px); }
+        .player-highlight-card .avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid var(--ptx-orange); margin-bottom: 12px; background: #e2e8f0; }
+        .player-highlight-card .name { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+        .player-highlight-card .stat { font-size: 14px; color: var(--text-muted); }
+        .player-highlight-card .badge { display: inline-block; margin-top: 8px; background: var(--ptx-orange); color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+        /* --- FIFA STYLE EXPECTED LINEUPS --- */
+        .fifa-lineup-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        @media (max-width: 900px) { .fifa-lineup-container { grid-template-columns: 1fr; } }
+        .fifa-team-box {
+            background: var(--bg-card); border-radius: var(--radius-card);
+            padding: 24px; box-shadow: var(--shadow-card); border: 1px solid var(--border-color);
+            text-align: center; transition: var(--transition); position: relative;
+        }
+        .fifa-team-box:hover { transform: translateY(-4px); }
+        .fifa-team-box .t-name { font-size: 22px; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid; padding-bottom: 10px; display: inline-block; }
+        .futsal-pitch {
+            position: relative; padding: 20px 10px; display: flex; flex-direction: column; gap: 20px;
+            background: radial-gradient(circle at center, rgba(50, 150, 50, 0.05) 0%, transparent 70%);
+            border-radius: 16px; border: 1px dashed rgba(0,0,0,0.05);
+        }
+        [data-theme="dark"] .futsal-pitch {
+            background: radial-gradient(circle at center, rgba(50, 150, 50, 0.1) 0%, transparent 70%);
+            border-color: rgba(255,255,255,0.05);
+        }
+        .futsal-pitch .lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .futsal-pitch .lines svg { width: 100%; height: 100%; opacity: 0.15; }
+        [data-theme="dark"] .futsal-pitch .lines svg { opacity: 0.25; }
+        .futsal-row { display: flex; justify-content: center; gap: 30px; position: relative; z-index: 1; flex-wrap: wrap; }
+        .futsal-row .pos-label { position: absolute; top: -18px; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
+        .futsal-player {
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            background: var(--bg-body); padding: 12px 10px; border-radius: 12px;
+            border: 1px solid var(--border-color); transition: var(--transition);
+            width: 90px; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .futsal-player:hover { transform: translateY(-5px) scale(1.05); border-color: var(--ptx-orange); box-shadow: 0 8px 20px rgba(241, 90, 36, 0.2); }
+        .futsal-player .avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--ptx-orange); background: #ddd; }
+        .futsal-player .name { font-size: 11px; font-weight: 600; color: var(--text-primary); max-width: 80px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .futsal-player .shirt-number {
+            font-size: 10px; font-weight: 700; color: #fff;
+            background: var(--navy); padding: 2px 6px; border-radius: 6px;
+            position: absolute; top: -6px; right: -6px; min-width: 18px; text-align: center;
+        }
+        [data-theme="dark"] .futsal-player .shirt-number { background: var(--text-muted); }
+        .futsal-row.gk-row { margin-bottom: 10px; }
+        .futsal-row.mid-row { margin-bottom: 20px; }
+        .futsal-row.fwd-row { margin-bottom: 0; }
+        .fifa-team-p .t-name { border-bottom-color: var(--team-p-color); color: var(--team-p-color); }
+        .fifa-team-p .futsal-player .avatar { border-color: var(--team-p-color); }
+        .fifa-team-p .futsal-player:hover { border-color: var(--team-p-color); }
+        .fifa-team-t .t-name { border-bottom-color: var(--team-t-color); color: var(--team-t-color); }
+        .fifa-team-t .futsal-player .avatar { border-color: var(--team-t-color); }
+        .fifa-team-t .futsal-player:hover { border-color: var(--team-t-color); }
+        .fifa-team-x .t-name { border-bottom-color: var(--team-x-color); color: var(--team-x-color); }
+        .fifa-team-x .futsal-player .avatar { border-color: var(--team-x-color); }
+        .fifa-team-x .futsal-player:hover { border-color: var(--team-x-color); }
+
+        /* --- GALLERY & VIDEO --- */
+        .video-wrapper { position: relative; width: 100%; max-width: 800px; margin: 0 auto; border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); }
+        .video-wrapper video { width: 100%; display: block; border-radius: var(--radius-card); background: #000; }
+        .plyr--video .plyr__control--overlaid { background: var(--ptx-orange); }
+        .plyr__control--overlaid:hover { background: #d34a1e; }
+
+        /* --- NEW GALLERY (TABS BY YEAR) --- */
+        .gallery-tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+        .gallery-tab { background: var(--bg-card); border: 1px solid var(--border-color); padding: 8px 20px; border-radius: 30px; font-weight: 600; font-size: 14px; color: var(--text-muted); cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif; }
+        .gallery-tab:hover { border-color: var(--ptx-orange); color: var(--text-primary); }
+        .gallery-tab.active { background: var(--ptx-orange); color: #fff; border-color: var(--ptx-orange); }
+        .gallery-year-content { display: none; text-align: center; }
+        .gallery-year-content.active { display: block; }
+        
+        .gallery-inner-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
+        @media (max-width: 768px) { .gallery-inner-grid { grid-template-columns: 1fr; } }
+        
+        .gallery-item-box { background: var(--bg-card); border-radius: var(--radius-card); padding: 20px; border: 2px dashed var(--border-color); min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: var(--transition); }
+        .gallery-item-box img { width: 100%; height: auto; max-height: 300px; object-fit: cover; border-radius: 12px; display: none; }
+        .gallery-item-box .placeholder { color: var(--text-muted); font-size: 14px; font-weight: 500; }
+        .gallery-item-box .label { font-weight: 600; margin-bottom: 10px; color: var(--text-primary); }
+
+        /* --- HALL OF FAME (6 YEARS) --- */
+        .hof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        @media (max-width: 900px) { .hof-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .hof-grid { grid-template-columns: 1fr; } }
+        
+        .hof-card { text-align: center; padding: 20px 16px; border-top: 4px solid var(--gold); background: var(--bg-card); border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
+        .hof-card .year { font-size: 28px; font-weight: 700; color: var(--gold); font-family: 'Bebas Neue', sans-serif; margin-bottom: 12px; }
+        .hof-card .award-item { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        .hof-card .award-item:last-child { border-bottom: none; }
+        .hof-card .award-item .title { color: var(--text-muted); font-weight: 500; }
+        .hof-card .award-item .winner { color: var(--text-primary); font-weight: 600; }
+
+        /* --- SPONSOR (New Logos) --- */
+        .sponsor-carousel { overflow: hidden; white-space: nowrap; padding: 20px 0; position: relative; }
+        .sponsor-carousel::before, .sponsor-carousel::after { content: ''; position: absolute; top: 0; width: 80px; height: 100%; z-index: 2; pointer-events: none; }
+        .sponsor-carousel::before { left: 0; background: linear-gradient(to right, var(--bg-body), transparent); }
+        .sponsor-carousel::after { right: 0; background: linear-gradient(to left, var(--bg-body), transparent); }
+        .sponsor-track { display: inline-block; animation: scrollSponsors 20s linear infinite; }
+        .sponsor-track img { height: 60px; margin: 0 30px; vertical-align: middle; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
+        .sponsor-track img:hover { filter: grayscale(0%); opacity: 1; }
+        @keyframes scrollSponsors { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- STANDINGS --- */
+        .standings-wrap { padding: 0; overflow: hidden; }
+        .standings-wrap table { width: 100%; border-collapse: collapse; text-align: center; }
+        .standings-wrap th { background: #f8fafc; border-bottom: 1px solid var(--border-color); padding: 16px; font-weight: 600; color: var(--text-muted); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        [data-theme="dark"] .standings-wrap th { background: var(--bg-card); border-color: var(--border-color); }
+        .standings-wrap td { padding: 14px; border-bottom: 1px solid var(--border-color); font-size: 15px; }
+        .standings-wrap tr:last-child td { border-bottom: none; }
+        .standings-wrap .highlight { font-weight: 700; color: var(--ptx-orange); }
+
+        /* --- PLAYER LIST --- */
+        .teams-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 10px; }
+        .team-box { text-align: center; padding: 24px 16px; }
+        .team-box .t-name { font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; border-bottom: 2px solid var(--ptx-orange); padding-bottom: 12px; display: inline-block; }
+        .player-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border-color); transition: 0.3s; justify-content: center; position: relative; }
+        .player-item:hover { color: var(--ptx-orange); font-weight: 600; }
+        .player-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; background: #ddd; border: 2px solid var(--ptx-orange); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .player-item:hover .player-avatar { transform: scale(2.0); box-shadow: 0 15px 40px rgba(232, 71, 44, 0.6), 0 0 30px rgba(255, 255, 255, 0.3); border-color: #FFD166; z-index: 20; }
+
+        /* --- RULES & AWARDS --- */
+        .rules-list { list-style: none; padding: 0; color: var(--text-primary); line-height: 2; font-size: 15px; }
+        .rules-list li { display: flex; gap: 12px; align-items: flex-start; }
+        .rules-list li strong { color: var(--navy); min-width: 120px; }
+        [data-theme="dark"] .rules-list li strong { color: var(--white); }
+        .awards-table { width: 100%; border-collapse: collapse; text-align: center; background: var(--bg-card); border-radius: var(--radius-card); overflow: hidden; }
+        .awards-table th { background: var(--ptx-orange); color: #fff; padding: 12px; font-weight: 600; }
+        .awards-table td { padding: 12px; border-bottom: 1px solid var(--border-color); font-size: 15px; }
+        .awards-table td:first-child { font-weight: 700; }
+
+        /* --- ADMIN PANEL & LOGIN --- */
+        #loginModal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        #loginModal.active { display: flex; }
+        .login-box { background: var(--bg-card); padding: 40px; border-radius: var(--radius-card); box-shadow: var(--shadow-card); max-width: 400px; width: 90%; text-align: center; border: 1px solid var(--border-color); position: relative; }
+        .login-box h3 { font-size: 24px; color: var(--text-primary); margin-bottom: 20px; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+        .login-box input { width: 100%; padding: 12px 16px; margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--bg-body); color: var(--text-primary); font-size: 15px; font-family: 'Inter', sans-serif; }
+        .login-box button { background: var(--ptx-orange); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 600; width: 100%; cursor: pointer; transition: var(--transition); font-family: 'Inter', sans-serif; font-size: 16px; }
+        .login-box button:hover { transform: scale(1.02); box-shadow: 0 4px 15px rgba(241, 90, 36, 0.3); }
+        .login-box .error { color: #dc2626; font-size: 14px; margin-top: 10px; display: none; }
+        .close-modal { position: absolute; top: 12px; right: 18px; font-size: 28px; font-weight: 400; color: var(--text-muted); cursor: pointer; transition: var(--transition); line-height: 1; font-family: 'Inter', sans-serif; }
+        .close-modal:hover { color: var(--text-primary); transform: rotate(90deg) scale(1.1); }
+
+        #adminPanel { display: none; background: var(--bg-card); border: 2px solid var(--ptx-orange); border-radius: var(--radius-card); padding: 24px; margin-bottom: 30px; box-shadow: var(--shadow-card); }
+        #adminPanel.active { display: block; }
+        #adminPanel h3 { font-size: 22px; margin-bottom: 15px; color: var(--ptx-orange); font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+        #adminPanel .desc { font-size: 14px; color: var(--text-muted); margin-bottom: 15px; }
+        .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .admin-card { background: var(--bg-body); padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); }
+        .admin-card label { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+        .admin-card input, .admin-card textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); color: var(--text-primary); font-size: 13px; margin-bottom: 8px; font-family: 'Inter', sans-serif; resize: vertical; }
+        .admin-card textarea { min-height: 60px; }
+        .admin-card button { background: var(--ptx-orange); color: #fff; border: none; padding: 8px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; transition: var(--transition); font-family: 'Inter', sans-serif; }
+        .admin-card button:hover { transform: scale(1.02); }
+        @media (max-width: 768px) { .admin-grid { grid-template-columns: 1fr; } }
+
+        /* --- FOOTER & THANKS --- */
+        .thanks-section { background: var(--navy); color: #fff; padding: 50px 30px; border-top: 5px solid var(--ptx-orange); border-bottom: 5px solid var(--ptx-orange); margin-top: 40px; text-align: center; }
+        .thanks-section h2 { font-size: 36px; color: var(--gold); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px; }
+        .thanks-section .intro { max-width: 800px; margin: 0 auto 30px auto; line-height: 1.8; color: rgba(255,255,255,0.9); font-size: 16px; }
+        .thanks-footer { margin-top: 35px; font-size: 18px; font-weight: 500; color: var(--gold); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 30px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        footer { background: var(--navy); color: rgba(255,255,255,0.8); padding: 60px 0 30px; margin-top: 60px; border-top: 4px solid var(--ptx-orange); }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+        .footer-col h4 { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+        .footer-col p, .footer-col a { font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; display: block; margin-bottom: 6px; transition: 0.3s; }
+        .footer-col a:hover { color: var(--ptx-orange); }
+        .footer-logo-box { max-width: 300px; width: 100%; background: rgba(255,255,255,0.03); border-radius: 12px; padding: 10px; margin: 20px auto 0; }
+        .footer-logo-box img { width: 100%; height: auto; object-fit: contain; display: block; border-radius: 8px; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; margin-top: 40px; max-width: 1280px; margin-left: auto; margin-right: auto; padding-left: 20px; padding-right: 20px; font-size: 13px; color: rgba(255,255,255,0.4); }
+        .footer-bottom .org-line { margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+        .footer-bottom .org-line strong { color: var(--gold); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; } .stats-dashboard { grid-template-columns: repeat(3, 1fr); } .committee-grid { grid-template-columns: repeat(3, 1fr); } .hero { height: 340px; } .hero-content h1 { font-size: 56px; } }
+        @media (max-width: 900px) { .nav-inner { max-width: 100%; width: 100%; } .hamburger { display: flex; align-items: center; } .nav-links { position: absolute; top: 72px; left: 0; width: 100%; background: var(--nav-blur); backdrop-filter: blur(16px); flex-direction: column; padding: 20px; gap: 8px; border-bottom: 1px solid var(--border-color); display: none; } .nav-links.active { display: flex; } .nav-links li a { padding: 12px 16px; font-size: 16px; width: 100%; justify-content: flex-start; border-radius: 12px; } .lang-switch { margin-left: auto; margin-right: 0; } }
+        @media (max-width: 768px) { .nav-container { padding: 0 16px; } .hero { height: 260px; } .hero-content h1 { font-size: 36px; } .hero-content .slogan { font-size: 16px; } .hero-content .sub { font-size: 14px; } .org-line { font-size: 12px; } .welcome-card { padding: 20px; } .welcome-bullets { flex-direction: column; gap: 12px; } .section-header h2 { font-size: 26px; } .section-gap { padding: 40px 0; } .footer-grid { grid-template-columns: 1fr; gap: 30px; } .stats-dashboard { grid-template-columns: repeat(2, 1fr); } .teams-grid { grid-template-columns: 1fr; } .teams-logo-grid { grid-template-columns: 1fr; } .fifa-lineup-container { grid-template-columns: 1fr; } .rules-list li { flex-direction: column; gap: 4px; } .rules-list li strong { min-width: auto; } .organizer-grid { grid-template-columns: 1fr; } .committee-grid { grid-template-columns: 1fr; } .countdown-wrap { gap: 10px; } .countdown-item .num { font-size: 24px; } .match-card .teams { font-size: 16px; } .message-box { padding: 20px; } .message-box .msg { font-size: 16px; } .card { padding: 16px; } .gallery-inner-grid { grid-template-columns: 1fr; } .hof-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) { .masonry-grid { column-count: 1; } .hero-content h1 { font-size: 28px; } .hero-content .slogan { font-size: 14px; } .match-card .teams { font-size: 14px; } }
+    </style>
+</head>
+<body>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="logo">PTX <span style="color: var(--white);">SUMMER</span> CUP</div>
+        <div class="bar"><div class="fill"></div></div>
+        <div class="status">Loading experience...</div>
+    </div>
+
+    <!-- THEME TOGGLE -->
+    <button class="theme-toggle">
+        <span id="themeIcon">🌙</span> <span id="themeLabel">Dark</span>
+    </button>
+
+    <!-- LOGIN BUTTON -->
+    <button id="loginBtn" style="position: fixed; bottom: 20px; left: 20px; z-index: 1002; background: var(--navy); color: #fff; border: none; padding: 10px 20px; border-radius: 30px; font-weight: 600; font-size: 13px; cursor: pointer; box-shadow: var(--shadow-card); font-family: 'Inter', sans-serif; transition: var(--transition);" onclick="openLogin()">🔐 Đăng nhập Admin</button>
+
+    <!-- NAVIGATION BAR -->
+    <div class="nav-container">
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">PTX <span>SUMMER CUP</span></a>
+            <button class="hamburger" aria-label="Menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Giới thiệu</a></li>
+                <li><a href="#schedule" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Lịch thi đấu</a></li>
+                <li><a href="#standings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="2" x2="12" y2="22"/><line x1="4" y1="12" x2="20" y2="12"/></svg> BXH</a></li>
+                <li><a href="#lineup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/></svg> Đội hình ra sân</a></li>
+                <li><a href="#teams"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Danh sách</a></li>
+                <li><a href="#gallery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Thư viện</a></li>
+                <li><a href="#hof"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><circle cx="12" cy="12" r="3"/></svg> Vinh danh</a></li>
+            </ul>
+            <div class="lang-switch">
+                <button class="active">VI</button>
+                <button>EN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO BANNER -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="org-line" data-vi="Giải bóng đá truyền thống do <strong>Công đoàn PTX Group Việt Nam</strong> chủ trì tổ chức<br>Đồng hành bởi <strong>PTX Group Việt Nam</strong>" data-en="Traditional football tournament organized by <strong>PTX Group Vietnam Trade Union</strong><br>Co-organized by <strong>PTX Group Vietnam</strong>">
+                Giải bóng đá truyền thống do <strong>Công đoàn PTX Group Việt Nam</strong> chủ trì tổ chức<br>Đồng hành bởi <strong>PTX Group Việt Nam</strong>
+            </div>
+            <h1>
+                <span class="row blue">PTX</span>
+                <span class="row orange">SUMMER CUP</span>
+                <span class="row blue" style="font-size: 44px; color: rgba(255,255,255,0.7); margin-top: 4px;">2026</span>
+            </h1>
+            <div class="slogan" id="heroSlogan" data-vi="&quot;Làm hết sức – Chơi hết mình&quot;" data-en="&quot;Do your best – Play with heart&quot;">"Làm hết sức – Chơi hết mình"</div>
+        </div>
+    </section>
+
+    <!-- WELCOME SECTION -->
+    <div class="welcome-section">
+        <div class="welcome-card">
+            <h2 data-vi="Chào mừng đến với <span>PTX Summer Cup 2026</span>!" data-en="Welcome to <span>PTX Summer Cup 2026</span>!">Chào mừng đến với <span>PTX Summer Cup 2026</span>!</h2>
+            <p class="intro" data-vi="Giải đấu tạo nên sân chơi thể thao lành mạnh, gắn kết các thành viên PTX Group Việt Nam." data-en="A healthy sports playground connecting current and former members of PTX Group Vietnam.">Giải đấu tạo nên sân chơi thể thao lành mạnh, gắn kết các thành viên PTX Group Việt Nam.</p>
+            <div class="welcome-bullets">
+                <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> <span data-vi="Gắn kết tập thể" data-en="Team bonding">Gắn kết tập thể</span></div>
+                <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> <span data-vi="Tinh thần Fair-play" data-en="Fair-play spirit">Tinh thần Fair-play</span></div>
+                <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> <span data-vi="Rèn luyện sức khỏe" data-en="Health & fitness">Rèn luyện sức khỏe</span></div>
+            </div>
+            <div class="welcome-ctas">
+                <a href="#schedule" class="btn btn-primary" data-vi="📅 Xem lịch thi đấu" data-en="📅 View Schedule">📅 Xem lịch thi đấu</a>
+                <a href="#standings" class="btn btn-outline" data-vi="📊 Bảng xếp hạng" data-en="📊 Standings">📊 Bảng xếp hạng</a>
+                <a href="#lineup" class="btn btn-outline" data-vi="⚽ Đội hình ra sân" data-en="⚽ Expected Lineup">⚽ Đội hình ra sân</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ĐƠN VỊ TỔ CHỨC (Logo mới CD & PTX) -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">🏛️</div>
+            <h2 data-vi="ĐƠN VỊ <span>TỔ CHỨC</span>" data-en="ORGANIZING <span>UNITS</span>">ĐƠN VỊ <span>TỔ CHỨC</span></h2>
+            <div class="sub" data-vi="Organizers & Partners" data-en="Organizers & Partners">Organizers & Partners</div>
+        </div>
+        <div class="organizer-grid">
+            <div class="card organizer-card">
+                <div class="icon">🏛️</div>
+                <div class="name" data-vi="Công đoàn PTX Group Việt Nam" data-en="PTX Group Vietnam Trade Union">Công đoàn PTX Group Việt Nam</div>
+                <div class="role" style="color: var(--ptx-orange); font-weight: 600;" data-vi="Chủ trì tổ chức" data-en="Lead Organizer">Chủ trì tổ chức</div>
+                <div class="logo-box">
+                    <img src="https://i.postimg.cc/J4BFgJp7/CD.jpg" alt="Logo Công đoàn">
+                </div>
+            </div>
+            <div class="card organizer-card">
+                <div class="icon">🤝</div>
+                <div class="name" data-vi="PTX Group Việt Nam" data-en="PTX Group Vietnam">PTX Group Việt Nam</div>
+                <div class="role" style="color: var(--navy); font-weight: 600;" data-vi="Đồng tổ chức" data-en="Co-organizer">Đồng tổ chức</div>
+                <div class="logo-box">
+                    <img src="https://i.postimg.cc/02J43mVm/PTX.png" alt="Logo PTX Group">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- THÔNG ĐIỆP BAN TỔ CHỨC -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">💬</div>
+            <h2 data-vi="THÔNG ĐIỆP <span>BAN TỔ CHỨC</span>" data-en="MESSAGE FROM <span>ORGANIZERS</span>">THÔNG ĐIỆP <span>BAN TỔ CHỨC</span></h2>
+            <div class="sub" data-vi="Organizers' Message" data-en="Organizers' Message">Organizers' Message</div>
+        </div>
+        <div class="card message-box">
+            <div class="msg" id="organizerMsg" data-vi="PTX Summer Cup không chỉ là một giải bóng đá, mà còn là hoạt động ý nghĩa nhằm tăng cường sự gắn kết giữa các thành viên, lan tỏa tinh thần đoàn kết, rèn luyện sức khỏe và xây dựng văn hóa doanh nghiệp PTX Group Việt Nam." data-en="PTX Summer Cup is not just a football tournament, but a meaningful activity aimed at strengthening bonds between members, spreading team spirit, promoting health, and building the corporate culture of PTX Group Vietnam.">
+                PTX Summer Cup không chỉ là một giải bóng đá, mà còn là hoạt động ý nghĩa nhằm tăng cường sự gắn kết giữa các thành viên, lan tỏa tinh thần đoàn kết, rèn luyện sức khỏe và xây dựng văn hóa doanh nghiệp PTX Group Việt Nam.
+            </div>
+            <div class="author" data-vi="— Ban Chấp hành Công đoàn PTX Group Việt Nam" data-en="— Executive Committee, PTX Group Vietnam Trade Union">— Ban Chấp hành Công đoàn PTX Group Việt Nam</div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <div class="container section-gap" id="about">
+        <div class="section-header">
+            <div class="icon">ℹ️</div>
+            <h2 data-vi="GIỚI <span>THIỆU</span>" data-en="ABOUT <span>THE TOURNAMENT</span>">GIỚI <span>THIỆU</span></h2>
+            <div class="sub" data-vi="About the Tournament" data-en="About the Tournament">About the Tournament</div>
+        </div>
+        <div class="about-grid">
+            <div class="card about-card">
+                <div class="icon">⚽</div>
+                <div class="title" data-vi="Giới thiệu giải đấu" data-en="Tournament Intro">Giới thiệu giải đấu</div>
+                <div class="desc" data-vi="PTX Summer Cup là giải bóng đá truyền thống do Công đoàn PTX Group Việt Nam chủ trì, PTX Group Việt Nam đồng tổ chức." data-en="PTX Summer Cup is a traditional tournament led by PTX Group Vietnam Trade Union, co-organized by PTX Group Vietnam.">PTX Summer Cup là giải bóng đá truyền thống do Công đoàn PTX Group Việt Nam chủ trì, PTX Group Việt Nam đồng tổ chức.</div>
+            </div>
+            <div class="card about-card">
+                <div class="icon">🎯</div>
+                <div class="title" data-vi="Mục tiêu" data-en="Objectives">Mục tiêu</div>
+                <div class="desc" data-vi="Tạo sân chơi lành mạnh, rèn luyện sức khỏe, gắn kết tập thể và xây dựng văn hóa doanh nghiệp vững mạnh." data-en="Create a healthy playground, promote fitness, build team bonding, and strengthen corporate culture.">Tạo sân chơi lành mạnh, rèn luyện sức khỏe, gắn kết tập thể và xây dựng văn hóa doanh nghiệp vững mạnh.</div>
+            </div>
+            <div class="card about-card">
+                <div class="icon">💡</div>
+                <div class="title" data-vi="Ý nghĩa" data-en="Significance">Ý nghĩa</div>
+                <div class="desc" data-vi="Lan tỏa tinh thần đoàn kết, tôn vinh vai trò của Công đoàn trong đời sống người lao động và sự đồng hành của Công ty." data-en="Spread team spirit, honor the role of the Trade Union in workers' lives, and highlight the Company's partnership.">Lan tỏa tinh thần đoàn kết, tôn vinh vai trò của Công đoàn trong đời sống người lao động và sự đồng hành của Công ty.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VỀ CÔNG ĐOÀN -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">🏛️</div>
+            <h2 data-vi="VỀ <span>CÔNG ĐOÀN</span>" data-en="ABOUT <span>THE TRADE UNION</span>">VỀ <span>CÔNG ĐOÀN</span></h2>
+            <div class="sub" data-vi="PTX Group Vietnam Trade Union" data-en="PTX Group Vietnam Trade Union">PTX Group Vietnam Trade Union</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 40px;">
+            <div style="font-size: 48px; margin-bottom: 16px;">🏛️</div>
+            <h3 style="font-size: 24px; color: var(--text-primary); margin-bottom: 12px;" data-vi="Đồng hành cùng người lao động" data-en="Accompanying workers">Đồng hành cùng người lao động</h3>
+            <div class="welcome-bullets" style="justify-content: center; margin-bottom: 0;">
+                <div class="item" style="color: var(--text-primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> <span data-vi="Xây dựng môi trường làm việc tích cực" data-en="Build a positive work environment">Xây dựng môi trường làm việc tích cực</span></div>
+                <div class="item" style="color: var(--text-primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> <span data-vi="Tăng cường gắn kết" data-en="Enhance bonding">Tăng cường gắn kết</span></div>
+                <div class="item" style="color: var(--text-primary);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> <span data-vi="Nâng cao đời sống tinh thần" data-en="Enhance spiritual life">Nâng cao đời sống tinh thần</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BAN TỔ CHỨC CHI TIẾT -->
+    <div class="container section-gap" id="organizers">
+        <div class="section-header">
+            <div class="icon">👨‍💼</div>
+            <h2 data-vi="BAN <span>TỔ CHỨC</span>" data-en="ORGANIZING <span>COMMITTEE</span>">BAN <span>TỔ CHỨC</span></h2>
+            <div class="sub" data-vi="Organizing Committee" data-en="Organizing Committee">Organizing Committee</div>
+        </div>
+        <div class="committee-grid">
+            <div class="card committee-card">
+                <img src="https://i.postimg.cc/sDkWmsR9/Phan-Hien.jpg" class="avatar" alt="Nguyễn Phan Hiền">
+                <div class="name">Nguyễn Phan Hiền</div>
+                <div class="role" data-vi="Trưởng ban" data-en="Head">Trưởng ban</div>
+            </div>
+            <div class="card committee-card">
+                <img src="https://i.postimg.cc/J4fXxMWD/Dinh-Huy.jpg" class="avatar" alt="Tăng Vũ Đình Huy">
+                <div class="name">Tăng Vũ Đình Huy</div>
+                <div class="role" data-vi="Phó ban" data-en="Vice Head">Phó ban</div>
+            </div>
+            <div class="card committee-card">
+                <img src="https://i.postimg.cc/L6YfjhGY/Bao-Anh.jpg" class="avatar" alt="Trần Bảo Anh">
+                <div class="name">Trần Bảo Anh</div>
+                <div class="role" data-vi="Phó ban" data-en="Vice Head">Phó ban</div>
+            </div>
+            <div class="card committee-card">
+                <img src="https://i.postimg.cc/WbBZ8TPD/Hoang-Nam.jpg" class="avatar" alt="Nguyễn Hoàng Nam">
+                <div class="name">Nguyễn Hoàng Nam</div>
+                <div class="role" data-vi="Ủy viên" data-en="Member">Ủy viên</div>
+            </div>
+            <div class="card committee-card">
+                <img src="https://i.postimg.cc/L6cPD2Mj/Nguyen-Su.jpg" class="avatar" alt="Nguyễn Xuân Sử">
+                <div class="name">Nguyễn Xuân Sử</div>
+                <div class="role" data-vi="Ủy viên" data-en="Member">Ủy viên</div>
+            </div>
+        </div>
+        <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; text-align: center;">
+            <div class="card committee-card"><div class="avatar" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:24px;">⚖️</div><div class="name" data-vi="Ban Trọng tài" data-en="Referee Board">Ban Trọng tài</div><div class="role" data-vi="Nhân viên công ty" data-en="Company Staff">Nhân viên công ty</div></div>
+            <div class="card committee-card"><div class="avatar" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:24px;">📸</div><div class="name" data-vi="Ban Truyền thông" data-en="Media Board">Ban Truyền thông</div><div class="role" data-vi="Official Media" data-en="Official Media">Official Media</div></div>
+            <div class="card committee-card"><div class="avatar" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:24px;">🚑</div><div class="name" data-vi="Ban Y tế" data-en="Medical Board">Ban Y tế</div><div class="role" data-vi="Official Medical" data-en="Official Medical">Official Medical</div></div>
+            <div class="card committee-card"><div class="avatar" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:24px;">🛡️</div><div class="name" data-vi="Ban An ninh" data-en="Security Board">Ban An ninh</div><div class="role" data-vi="Official Security" data-en="Official Security">Official Security</div></div>
+            <div class="card committee-card"><div class="avatar" style="background:#e2e8f0; display:flex; align-items:center; justify-content:center; font-size:24px;">📦</div><div class="name" data-vi="Ban Hậu cần" data-en="Logistics Board">Ban Hậu cần</div><div class="role" data-vi="Official Logistics" data-en="Official Logistics">Official Logistics</div></div>
+        </div>
+    </div>
+
+    <!-- HÀNH TRÌNH PHÁT TRIỂN -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">⏳</div>
+            <h2 data-vi="HÀNH TRÌNH <span>PHÁT TRIỂN</span>" data-en="JOURNEY OF <span>GROWTH</span>">HÀNH TRÌNH <span>PHÁT TRIỂN</span></h2>
+            <div class="sub" data-vi="Company & Tournament Timeline" data-en="Company & Tournament Timeline">Company & Tournament Timeline</div>
+        </div>
+        <div class="timeline-grid">
+            <div class="timeline-col left">
+                <h3 data-vi="🏢 PTX Group Việt Nam" data-en="🏢 PTX Group Vietnam">🏢 PTX Group Việt Nam</h3>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="title">8/8/2016</div>
+                    <div class="desc" data-vi="Thành lập Công ty" data-en="Company Founded">Thành lập Công ty</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="title">2026</div>
+                    <div class="desc" data-vi="Kỷ niệm 10 năm thành lập" data-en="10th Anniversary">Kỷ niệm 10 năm thành lập</div>
+                </div>
+            </div>
+            <div class="timeline-col right">
+                <h3 data-vi="🏛️ Công đoàn PTX Group" data-en="🏛️ PTX Group Trade Union">🏛️ Công đoàn PTX Group</h3>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="title">28/7/1929</div>
+                    <div class="desc" data-vi="Ngày thành lập Công đoàn Việt Nam" data-en="Vietnam Trade Union Founded">Ngày thành lập Công đoàn Việt Nam</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="dot"></div>
+                    <div class="title">2026</div>
+                    <div class="desc" data-vi="97 năm Công đoàn Việt Nam & Summer Cup 2026" data-en="97 years of Trade Union & Summer Cup 2026">97 năm Công đoàn Việt Nam & Summer Cup 2026</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LỊCH THI ĐẤU -->
+    <div class="container section-gap" id="schedule">
+        <div class="section-header">
+            <div class="icon">📅</div>
+            <h2 data-vi="LỊCH <span>THI ĐẤU</span>" data-en="MATCH <span>SCHEDULE</span>">LỊCH <span>THI ĐẤU</span></h2>
+            <div class="sub" data-vi="Match Schedule" data-en="Match Schedule">Match Schedule</div>
+        </div>
+        <div class="match-info" id="matchInfoContainer">
+            <strong data-vi="Ngày thi đấu:" data-en="Date:">Ngày thi đấu:</strong> <span id="scheduleDate">07/08/2026</span><br>
+            <strong data-vi="Địa điểm:" data-en="Location:">Địa điểm:</strong> <span id="scheduleLocation">152 Hoàng Hoa Thám, Bảy Hiền, Hồ Chí Minh, Việt Nam</span><br>
+            <a href="https://maps.app.goo.gl/WcMGu8BE8Ufo3XYm7" target="_blank" class="map-btn" data-vi="📍 Xem bản đồ" data-en="📍 View on Map">📍 Xem bản đồ</a>
+        </div>
+        <div class="match-grid">
+            <!-- TRẬN 1 -->
+            <div class="card match-card" id="match1">
+                <div class="badge" id="badge1">Sắp diễn ra</div>
+                <div class="teams"><span>TEAM P</span><span class="vs">VS</span><span>TEAM T</span></div>
+                <div class="time">17:00 - 17:35</div>
+                <div class="countdown-wrap" id="countdown1">
+                    <div class="countdown-item"><div class="num" id="d1">00</div><div class="label">Ngày</div></div>
+                    <div class="countdown-item"><div class="num" id="h1">00</div><div class="label">Giờ</div></div>
+                    <div class="countdown-item"><div class="num" id="m1">00</div><div class="label">Phút</div></div>
+                    <div class="countdown-item"><div class="num" id="s1">00</div><div class="label">Giây</div></div>
+                </div>
+                <div class="live-timer" id="timer1">00:00</div>
+                <div class="result-display" id="result1">-</div>
+            </div>
+
+            <!-- TRẬN 2 -->
+            <div class="card match-card" id="match2">
+                <div class="badge" id="badge2">Sắp diễn ra</div>
+                <div class="teams"><span>TEAM P</span><span class="vs">VS</span><span>TEAM X</span></div>
+                <div class="time">17:50 - 18:25</div>
+                <div class="countdown-wrap" id="countdown2">
+                    <div class="countdown-item"><div class="num" id="d2">00</div><div class="label">Ngày</div></div>
+                    <div class="countdown-item"><div class="num" id="h2">00</div><div class="label">Giờ</div></div>
+                    <div class="countdown-item"><div class="num" id="m2">00</div><div class="label">Phút</div></div>
+                    <div class="countdown-item"><div class="num" id="s2">00</div><div class="label">Giây</div></div>
+                </div>
+                <div class="live-timer" id="timer2">00:00</div>
+                <div class="result-display" id="result2">-</div>
+            </div>
+
+            <!-- TRẬN 3 -->
+            <div class="card match-card" id="match3">
+                <div class="badge" id="badge3">Sắp diễn ra</div>
+                <div class="teams"><span>TEAM X</span><span class="vs">VS</span><span>TEAM T</span></div>
+                <div class="time">18:40 - 19:15</div>
+                <div class="countdown-wrap" id="countdown3">
+                    <div class="countdown-item"><div class="num" id="d3">00</div><div class="label">Ngày</div></div>
+                    <div class="countdown-item"><div class="num" id="h3">00</div><div class="label">Giờ</div></div>
+                    <div class="countdown-item"><div class="num" id="m3">00</div><div class="label">Phút</div></div>
+                    <div class="countdown-item"><div class="num" id="s3">00</div><div class="label">Giây</div></div>
+                </div>
+                <div class="live-timer" id="timer3">00:00</div>
+                <div class="result-display" id="result3">-</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BẢNG XẾP HẠNG -->
+    <div class="container section-gap" id="standings">
+        <div class="section-header">
+            <div class="icon">📊</div>
+            <h2 data-vi="BẢNG <span>XẾP HẠNG</span>" data-en="TEAM <span>STANDINGS</span>">BẢNG <span>XẾP HẠNG</span></h2>
+            <div class="sub" data-vi="Team Standings" data-en="Team Standings">Team Standings</div>
+        </div>
+        <div class="card standings-wrap">
+            <table>
+                <thead><tr><th>#</th><th data-vi="Đội" data-en="Team">Đội</th><th data-vi="Trận" data-en="Pld">Trận</th><th data-vi="Thắng" data-en="W">Thắng</th><th data-vi="Hòa" data-en="D">Hòa</th><th data-vi="Thua" data-en="L">Thua</th><th data-vi="Hiệu số" data-en="GD">Hiệu số</th><th data-vi="Điểm" data-en="Pts">Điểm</th></tr></thead>
+                <tbody id="standingsBody">
+                    <tr id="rowP"><td>1</td><td style="font-weight:600;">⚡ TEAM P</td><td id="p-pld">0</td><td id="p-w">0</td><td id="p-d">0</td><td id="p-l">0</td><td id="p-gd">0</td><td class="highlight" id="p-pts">0</td></tr>
+                    <tr id="rowT"><td>2</td><td style="font-weight:600;">🔥 TEAM T</td><td id="t-pld">0</td><td id="t-w">0</td><td id="t-d">0</td><td id="t-l">0</td><td id="t-gd">0</td><td id="t-pts">0</td></tr>
+                    <tr id="rowX"><td>3</td><td style="font-weight:600;">💎 TEAM X</td><td id="x-pld">0</td><td id="x-w">0</td><td id="x-d">0</td><td id="x-l">0</td><td id="x-gd">0</td><td id="x-pts">0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- STATS & TOP PLAYERS -->
+    <div class="container section-gap" id="stats">
+        <div class="section-header">
+            <div class="icon">📈</div>
+            <h2 data-vi="THỐNG KÊ &amp; <span>NGÔI SAO</span>" data-en="STATS &amp; <span>STARS</span>">THỐNG KÊ &amp; <span>NGÔI SAO</span></h2>
+            <div class="sub" data-vi="Tournament Dashboard" data-en="Tournament Dashboard">Tournament Dashboard</div>
+        </div>
+        <div class="stats-dashboard">
+            <div class="card stat-card"><div class="icon">⚽</div><div class="number" id="stat-goals">36</div><div class="label" data-vi="Bàn thắng" data-en="Goals">Bàn thắng</div></div>
+            <div class="card stat-card"><div class="icon">🏆</div><div class="number" id="stat-matches">12</div><div class="label" data-vi="Trận đấu" data-en="Matches">Trận đấu</div></div>
+            <div class="card stat-card"><div class="icon">👥</div><div class="number" id="stat-players">96</div><div class="label" data-vi="Cầu thủ" data-en="Players">Cầu thủ</div></div>
+            <div class="card stat-card"><div class="icon">🟨</div><div class="number" id="stat-yellow">24</div><div class="label" data-vi="Thẻ vàng" data-en="Yellow Cards">Thẻ vàng</div></div>
+            <div class="card stat-card"><div class="icon">🟥</div><div class="number" id="stat-red">2</div><div class="label" data-vi="Thẻ đỏ" data-en="Red Cards">Thẻ đỏ</div></div>
+        </div>
+        <div class="player-highlights">
+            <div class="player-highlight-card">
+                <img src="https://i.postimg.cc/sDkWmsR9/Phan-Hien.jpg" class="avatar" alt="Top Scorer">
+                <div class="name">Phan Hiền</div>
+                <div class="stat">⚽ 3 bàn thắng</div>
+                <div class="badge">🔥 Vua phá lưới</div>
+            </div>
+            <div class="player-highlight-card">
+                <img src="https://i.postimg.cc/J4fXxMWD/Dinh-Huy.jpg" class="avatar" alt="Player of the Week">
+                <div class="name">Đình Huy</div>
+                <div class="stat">🎯 2 kiến tạo, 1 MVP</div>
+                <div class="badge">⭐ Cầu thủ xuất sắc</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEAM LOGOS -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">🏁</div>
+            <h2 data-vi="BIỂU TƯỢNG <span>CÁC ĐỘI</span>" data-en="TEAM <span>IDENTITIES</span>">BIỂU TƯỢNG <span>CÁC ĐỘI</span></h2>
+            <div class="sub" data-vi="Team Logos & Identities" data-en="Team Logos & Identities">Team Logos & Identities</div>
+        </div>
+        <div class="teams-logo-grid">
+            <div class="team-logo-card team-p">
+                <div class="logo-placeholder">P<div class="icon-overlay">🦅</div></div>
+                <div class="info">
+                    <div class="t-name">ĐỘI P - PHOENIX</div>
+                    <div class="t-sub">Biểu tượng: Phượng Hoàng</div>
+                    <ul>
+                        <li>Chữ P được cách điệu từ hình ảnh Phượng Hoàng đang tung cánh bay lên.</li>
+                        <li>Thể hiện sức mạnh, sự tái sinh và vươn tầm.</li>
+                        <li>Màu xanh dương tượng trưng cho trí tuệ, niềm tin và khát vọng chinh phục.</li>
+                    </ul>
+                    <div class="color-highlight">Màu chủ đạo: Xanh dương</div>
+                </div>
+            </div>
+            <div class="team-logo-card team-t">
+                <div class="logo-placeholder">T<div class="icon-overlay">🐯</div></div>
+                <div class="info">
+                    <div class="t-name">ĐỘI T - TIGER</div>
+                    <div class="t-sub">Biểu tượng: Hổ</div>
+                    <ul>
+                        <li>Chữ T được cách điệu từ hình ảnh đầu Hổ mạnh mẽ và dũng mãnh.</li>
+                        <li>Biểu trưng cho sức mạnh, tinh thần chiến đấu và bản lĩnh dẫn đầu.</li>
+                        <li>Màu đỏ tượng trưng cho nhiệt huyết, quyết tâm và chiến thắng.</li>
+                    </ul>
+                    <div class="color-highlight">Màu chủ đạo: Đỏ</div>
+                </div>
+            </div>
+            <div class="team-logo-card team-x">
+                <div class="logo-placeholder">X<div class="icon-overlay">🐟</div></div>
+                <div class="info">
+                    <div class="t-name">ĐỘI X - XIPHIAS GLADIUS</div>
+                    <div class="t-sub">Biểu tượng: Cá Kiếm (Xiphias Gladius)</div>
+                    <ul>
+                        <li>Chữ X được cách điệu từ hình ảnh Cá Kiếm với chiếc mũi kiếm sắc bén.</li>
+                        <li>Biểu trưng cho tốc độ, sự chính xác và tinh thần bứt phá.</li>
+                        <li>Màu vàng tượng trưng cho ánh sáng, vinh quang và thành công.</li>
+                    </ul>
+                    <div class="color-highlight">Màu chủ đạo: Vàng</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIFA STYLE EXPECTED LINEUPS -->
+    <div class="container section-gap" id="lineup">
+        <div class="section-header">
+            <div class="icon">⚽</div>
+            <h2 data-vi="ĐỘI HÌNH RA SÂN <span>DỰ KIẾN</span>" data-en="EXPECTED <span>LINEUPS</span>">ĐỘI HÌNH RA SÂN <span>DỰ KIẾN</span></h2>
+            <div class="sub" data-vi="Futsal 5-Man Formation" data-en="Futsal 5-Man Formation">Futsal 5-Man Formation</div>
+        </div>
+        <div class="card" style="padding: 24px;">
+            <div class="fifa-lineup-container">
+                <!-- TEAM P -->
+                <div class="fifa-team-box fifa-team-p">
+                    <div class="t-name">⚡ TEAM P</div>
+                    <div class="futsal-pitch">
+                        <div class="lines">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <polyline points="50,20 30,50 50,80 70,50 50,20" fill="none" stroke="var(--team-p-color)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                                <line x1="30" y1="50" x2="70" y2="50" stroke="var(--team-p-color)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                            </svg>
+                        </div>
+                        <!-- GK -->
+                        <div class="futsal-row gk-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">1</span>
+                                <img src="https://i.postimg.cc/5NhzgbM7/Quang-Minh.jpg" class="avatar" alt="Quang Minh">
+                                <div class="name">Quang Minh</div>
+                            </div>
+                        </div>
+                        <!-- DEF -->
+                        <div class="futsal-row def-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">3</span>
+                                <img src="https://i.postimg.cc/VLrMX52J/Anh-Truong.jpg" class="avatar" alt="Anh Trương">
+                                <div class="name">Anh Trương</div>
+                            </div>
+                            <div class="futsal-player">
+                                <span class="shirt-number">4</span>
+                                <img src="https://i.postimg.cc/X7R5L402/Thanh-Long.jpg" class="avatar" alt="Thanh Long">
+                                <div class="name">Thanh Long</div>
+                            </div>
+                        </div>
+                        <!-- MID -->
+                        <div class="futsal-row mid-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">8</span>
+                                <img src="https://i.postimg.cc/sDkWmsR9/Phan-Hien.jpg" class="avatar" alt="Phan Hiền">
+                                <div class="name">Phan Hiền</div>
+                            </div>
+                        </div>
+                        <!-- FWD -->
+                        <div class="futsal-row fwd-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">10</span>
+                                <img src="https://i.postimg.cc/Dy9G6nKD/Thanh-Truc.jpg" class="avatar" alt="Thanh Trúc">
+                                <div class="name">Thanh Trúc</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEAM T -->
+                <div class="fifa-team-box fifa-team-t">
+                    <div class="t-name">🔥 TEAM T</div>
+                    <div class="futsal-pitch">
+                        <div class="lines">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <polyline points="50,20 30,50 50,80 70,50 50,20" fill="none" stroke="var(--team-t-color)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                                <line x1="30" y1="50" x2="70" y2="50" stroke="var(--team-t-color)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                            </svg>
+                        </div>
+                        <!-- GK -->
+                        <div class="futsal-row gk-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">1</span>
+                                <img src="https://i.postimg.cc/1zQ1z1z1/placeholder-player.jpg" class="avatar" alt="GK">
+                                <div class="name">[GK]</div>
+                            </div>
+                        </div>
+                        <!-- DEF -->
+                        <div class="futsal-row def-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">2</span>
+                                <img src="https://i.postimg.cc/VLxtgmcM/Minh-The.jpg" class="avatar" alt="Minh Thế">
+                                <div class="name">Minh Thế</div>
+                            </div>
+                            <div class="futsal-player">
+                                <span class="shirt-number">5</span>
+                                <img src="https://i.postimg.cc/YCQWyZpX/Tuong-Khanh.jpg" class="avatar" alt="Tường Khánh">
+                                <div class="name">Tường Khánh</div>
+                            </div>
+                        </div>
+                        <!-- MID -->
+                        <div class="futsal-row mid-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">7</span>
+                                <img src="https://i.postimg.cc/WbBZ8TPD/Hoang-Nam.jpg" class="avatar" alt="Hoàng Nam">
+                                <div class="name">Hoàng Nam</div>
+                            </div>
+                        </div>
+                        <!-- FWD -->
+                        <div class="futsal-row fwd-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">9</span>
+                                <img src="https://i.postimg.cc/wjDmbZ6w/Thanh-Tu.jpg" class="avatar" alt="Thanh Tú">
+                                <div class="name">Thanh Tú</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEAM X -->
+                <div class="fifa-team-box fifa-team-x">
+                    <div class="t-name">💎 TEAM X</div>
+                    <div class="futsal-pitch">
+                        <div class="lines">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <polyline points="50,20 30,50 50,80 70,50 50,20" fill="none" stroke="var(--team-x-color)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                                <line x1="30" y1="50" x2="70" y2="50" stroke="var(--team-x-color)" stroke-width="0.5" stroke-dasharray="2,2"/>
+                            </svg>
+                        </div>
+                        <!-- GK -->
+                        <div class="futsal-row gk-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">1</span>
+                                <img src="https://i.postimg.cc/L6YfjhGY/Bao-Anh.jpg" class="avatar" alt="Bảo Anh">
+                                <div class="name">Bảo Anh</div>
+                            </div>
+                        </div>
+                        <!-- DEF -->
+                        <div class="futsal-row def-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">4</span>
+                                <img src="https://i.postimg.cc/L6cPD2Mj/Nguyen-Su.jpg" class="avatar" alt="Xuân Sử">
+                                <div class="name">Xuân Sử</div>
+                            </div>
+                            <div class="futsal-player">
+                                <span class="shirt-number">5</span>
+                                <img src="https://i.postimg.cc/Z56dD2TV/Thien-Phu.jpg" class="avatar" alt="Thiên Phú">
+                                <div class="name">Thiên Phú</div>
+                            </div>
+                        </div>
+                        <!-- MID -->
+                        <div class="futsal-row mid-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">7</span>
+                                <img src="https://i.postimg.cc/J4fXxMWD/Dinh-Huy.jpg" class="avatar" alt="Đình Huy">
+                                <div class="name">Đình Huy</div>
+                            </div>
+                        </div>
+                        <!-- FWD -->
+                        <div class="futsal-row fwd-row">
+                            <div class="futsal-player">
+                                <span class="shirt-number">9</span>
+                                <img src="https://i.postimg.cc/PrgDyTkF/Thanh-Thai.jpg" class="avatar" alt="Thành Thái">
+                                <div class="name">Thành Thái</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIGHLIGHT VIDEO -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">🎥</div>
+            <h2 data-vi="VIDEO <span>NỔI BẬT</span>" data-en="HIGHLIGHT <span>VIDEO</span>">VIDEO <span>NỔI BẬT</span></h2>
+            <div class="sub" data-vi="Match Highlights" data-en="Match Highlights">Match Highlights</div>
+        </div>
+        <div class="card" style="padding:0; overflow:hidden; background: transparent; box-shadow: none;">
+            <div class="video-wrapper">
+                <video id="player" controls crossorigin playsinline poster="https://i.postimg.cc/66yFg2q3/Doi-hinh-doi-P.jpg">
+                    <source src="videos/ptx-highlight.mp4" type="video/mp4" />
+                    Trình duyệt của bạn không hỗ trợ video HTML5.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- THƯ VIỆN ẢNH (Tabs 2025-2030, đã xóa ảnh cũ) -->
+    <div class="container section-gap" id="gallery">
+        <div class="section-header">
+            <div class="icon">📸</div>
+            <h2 data-vi="THƯ VIỆN <span>ẢNH</span>" data-en="PHOTO <span>GALLERY</span>">THƯ VIỆN <span>ẢNH</span></h2>
+            <div class="sub" data-vi="Photo Gallery" data-en="Photo Gallery">Photo Gallery</div>
+        </div>
+
+        <!-- Gallery Tabs -->
+        <div class="gallery-tabs" id="galleryTabs">
+            <button class="gallery-tab active" data-year="2025">2025</button>
+            <button class="gallery-tab" data-year="2026">2026</button>
+            <button class="gallery-tab" data-year="2027">2027</button>
+            <button class="gallery-tab" data-year="2028">2028</button>
+            <button class="gallery-tab" data-year="2029">2029</button>
+            <button class="gallery-tab" data-year="2030">2030</button>
+        </div>
+
+        <!-- Gallery Year Containers -->
+        <div id="galleryYearsContainer">
+            <!-- Nội dung sẽ được JS tạo ra -->
+        </div>
+    </div>
+
+    <!-- DANH SÁCH CẦU THỦ -->
+    <div class="container section-gap" id="teams">
+        <div class="section-header">
+            <div class="icon">👥</div>
+            <h2 data-vi="DANH SÁCH <span>CẦU THỦ</span>" data-en="PLAYER <span>LIST</span>">DANH SÁCH <span>CẦU THỦ</span></h2>
+            <div class="sub" data-vi="Player List" data-en="Player List">Player List</div>
+        </div>
+        <div class="card" style="padding: 24px;">
+            <div class="teams-grid">
+                <div class="team-box">
+                    <div class="t-name">TEAM P</div>
+                    <div class="player-list">
+                        <div class="player-item"><img src="https://i.postimg.cc/VLrMX52J/Anh-Truong.jpg" class="player-avatar"> Anh Trương</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/sDkWmsR9/Phan-Hien.jpg" class="player-avatar"> Phan Hiền</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/X7R5L402/Thanh-Long.jpg" class="player-avatar"> Thanh Long</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/Dy9G6nKD/Thanh-Truc.jpg" class="player-avatar"> Thanh Trúc</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/wTCN2gdm/Mau-Quoc.jpg" class="player-avatar"> Mậu Quốc</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/5NhzgbM7/Quang-Minh.jpg" class="player-avatar"> Quang Minh</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/BQrFp4Gj/Khanh-Hung.jpg" class="player-avatar"> Khánh Hưng</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/Dy9G6nK4/Manh-Tuan.jpg" class="player-avatar"> Mạnh Tuấn</div>
+                    </div>
+                </div>
+                <div class="team-box">
+                    <div class="t-name">TEAM T</div>
+                    <div class="player-list">
+                        <div class="player-item"><img src="https://i.postimg.cc/VLxtgmcM/Minh-The.jpg" class="player-avatar"> Minh Thế</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/YCQWyZpX/Tuong-Khanh.jpg" class="player-avatar"> Tường Khánh</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/WbBZ8TPD/Hoang-Nam.jpg" class="player-avatar"> Hoàng Nam</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/zXbWT34L/Dang-Quan.jpg" class="player-avatar"> Đăng Quân</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/wjDmbZ6w/Thanh-Tu.jpg" class="player-avatar"> Thanh Tú</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/Nf9TRLZ2/Chi-Dai.jpg" class="player-avatar"> Chí Đại</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/SNB9dkpg/Quang-Toan.jpg" class="player-avatar"> Quang Toàn</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/7YFz9wyV/Phat-Tai.jpg" class="player-avatar"> Phát Tài</div>
+                    </div>
+                </div>
+                <div class="team-box">
+                    <div class="t-name">TEAM X</div>
+                    <div class="player-list">
+                        <div class="player-item"><img src="https://i.postimg.cc/J4fXxMWD/Dinh-Huy.jpg" class="player-avatar"> Đình Huy</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/L6cPD2Mj/Nguyen-Su.jpg" class="player-avatar"> Xuân Sử</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/VkXCHpYH/Van-Lan.jpg" class="player-avatar"> Văn Lân</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/Z56dD2TV/Thien-Phu.jpg" class="player-avatar"> Thiên Phú</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/L6YfjhGY/Bao-Anh.jpg" class="player-avatar"> Bảo Anh</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/dtbC6wKn/Phuong-Toan.jpg" class="player-avatar"> Phương Toàn</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/7YFz9wyz/Minh-Hieu.jpg" class="player-avatar"> Minh Hiếu</div>
+                        <div class="player-item"><img src="https://i.postimg.cc/PrgDyTkF/Thanh-Thai.jpg" class="player-avatar"> Thành Thái</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RULES -->
+    <div class="container section-gap" id="rules">
+        <div class="section-header">
+            <div class="icon">📜</div>
+            <h2 data-vi="THỂ LỆ <span>GIẢI ĐẤU</span>" data-en="TOURNAMENT <span>RULES</span>">THỂ LỆ <span>GIẢI ĐẤU</span></h2>
+            <div class="sub" data-vi="Tournament Rules" data-en="Tournament Rules">Tournament Rules</div>
+        </div>
+        <div class="card">
+            <ul class="rules-list">
+                <li><strong>⚽ Đội hình thi đấu:</strong> <span>05 cầu thủ trên sân (01 thủ môn, 04 cầu thủ); mỗi đội từ 5–8 người.</span></li>
+                <li><strong>⏱️ Thời gian:</strong> <span>02 hiệp × 15 phút; nghỉ giữa hiệp 5 phút; nghỉ giữa các trận 15 phút.</span></li>
+                <li><strong>🔄 Thay người:</strong> <span>Không giới hạn, được vào sân trở lại.</span></li>
+                <li><strong>📐 Quy tắc cơ bản:</strong> <span>Giao bóng, đá biên, phạt góc, phát bóng theo luật bóng đá sân 5.</span></li>
+                <li><strong>🧤 Thủ môn:</strong> <span>Không được bắt bóng khi đồng đội cố ý chuyền về bằng chân.</span></li>
+                <li><strong>✋ Lỗi dùng tay:</strong> <span>Ngoại trừ thủ môn được sử dụng tay trong vòng cấm, bất cứ cầu thủ nào chạm tay trực tiếp vào bóng đều dính phạt (Trong vòng cấm: phạt đền; Ngoài vòng cấm: phạt đá trực tiếp).</span></li>
+                <li><strong>🟨🟥 Thẻ phạt:</strong> <span>Có thẻ vàng và thẻ đỏ (thẻ đỏ bị ra sân 3 phút, không được thay người vào vị trí người bị thẻ đỏ trong thời gian 3 phút). 2 thẻ vàng = 1 thẻ đỏ.</span></li>
+                <li><strong>📏 Luật chung:</strong> <span>Các lỗi và đá phạt xử lý theo luật bóng đá sân 5.</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- VINH DANH MÙA GIẢI (2025-2030) -->
+    <div class="container section-gap" id="hof">
+        <div class="section-header">
+            <div class="icon">🏆</div>
+            <h2 data-vi="VINH DANH <span>MÙA GIẢI</span>" data-en="HALL OF <span>FAME</span>">VINH DANH <span>MÙA GIẢI</span></h2>
+            <div class="sub" data-vi="Hall of Fame" data-en="Hall of Fame">Hall of Fame</div>
+        </div>
+        <div class="hof-grid" id="hofGrid">
+            <!-- Nội dung sẽ được JS tạo ra -->
+        </div>
+    </div>
+
+    <!-- SPONSOR CAROUSEL (Logo CD & PTX) -->
+    <div class="container section-gap">
+        <div class="section-header">
+            <div class="icon">🤝</div>
+            <h2 data-vi="NHÀ TÀI TRỢ" data-en="SPONSORS">NHÀ TÀI TRỢ</h2>
+            <div class="sub" data-vi="Official Partners" data-en="Official Partners">Official Partners</div>
+        </div>
+        <div class="sponsor-carousel">
+            <div class="sponsor-track">
+                <img src="https://i.postimg.cc/J4BFgJp7/CD.jpg" alt="Logo Công đoàn PTX Group">
+                <img src="https://i.postimg.cc/02J43mVm/PTX.png" alt="Logo PTX Group">
+                <img src="https://i.postimg.cc/J4BFgJp7/CD.jpg" alt="Logo Công đoàn PTX Group">
+                <img src="https://i.postimg.cc/02J43mVm/PTX.png" alt="Logo PTX Group">
+            </div>
+        </div>
+    </div>
+
+    <!-- AWARDS -->
+    <div class="container section-gap" id="awards">
+        <div class="section-header">
+            <div class="icon">🏅</div>
+            <h2 data-vi="GIẢI <span>THƯỞNG</span>" data-en="TOURNAMENT <span>AWARDS</span>">GIẢI <span>THƯỞNG</span></h2>
+            <div class="sub" data-vi="Awards & Prizes" data-en="Awards & Prizes">Awards & Prizes</div>
+        </div>
+        <div class="card" style="padding:0; overflow:hidden;">
+            <table class="awards-table">
+                <thead><tr><th data-vi="Giải thưởng" data-en="Award">Giải thưởng</th><th data-vi="Phần thưởng" data-en="Prize">Phần thưởng</th></tr></thead>
+                <tbody>
+                    <tr><td>🏆 Giải nhất</td><td>1.000.000đ + Cúp + Huy chương</td></tr>
+                    <tr><td>🥈 Giải nhì</td><td>500.000đ + Huy chương</td></tr>
+                    <tr><td>🥉 Giải ba</td><td>300.000đ + Huy chương</td></tr>
+                    <tr><td>⚽ Vua phá lưới</td><td>200.000đ</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- THANKS -->
+    <section class="thanks-section">
+        <h2 data-vi="🙏 LỜI CẢM ƠN" data-en="🙏 THANK YOU">🙏 LỜI CẢM ƠN</h2>
+        <div class="intro" data-vi="Xin chân thành cảm ơn:" data-en="We sincerely thank:">Xin chân thành cảm ơn:</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; max-width: 800px; margin: 0 auto 30px;">
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">🏛️ Ban Chấp hành Công đoàn</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">🏢 Ban Lãnh đạo Công ty</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">⚽ Các đội bóng</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">📣 Các cổ động viên</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">📸 Đội truyền thông</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">⚖️ Đội trọng tài</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">🚑 Đội y tế</div>
+            <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">📦 Đội hậu cần</div>
+        </div>
+        <div class="thanks-footer" data-vi="Hẹn gặp lại tất cả mọi người ở PTX Summer Cup mùa tiếp theo!" data-en="See you all at the next PTX Summer Cup!">
+            Hẹn gặp lại tất cả mọi người ở PTX Summer Cup mùa tiếp theo!
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="official-site">
+            <div class="domain-link">
+                <a href="https://ptxsummercup2026.gt.tc" target="_blank">🔗 ptxsummercup2026.gt.tc</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 data-vi="Ban Tổ chức" data-en="Organizing Committee">Ban Tổ chức</h4>
+                <p>PTX Group Vietnam</p>
+                <p data-vi="Hotline: 1900 6767" data-en="Hotline: 1900 6767">Hotline: 1900 6767</p>
+                <p>Email: contact@ptxgroup.vn</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-vi="Đội ngũ chính thức" data-en="Official Teams">Đội ngũ chính thức</h4>
+                <p>📸 Media Team</p>
+                <p>🛡️ Security Team</p>
+                <p>🚑 Medical Team</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-vi="Theo dõi chúng tôi" data-en="Follow us">Theo dõi chúng tôi</h4>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+            </div>
+        </div>
+        <div class="footer-logo-box">
+            <img src="https://i.postimg.cc/sxXFczDM/logo-Cong-doan-cong-ty.jpg" alt="Logo Công đoàn công ty">
+        </div>
+        <div class="footer-bottom">
+            <div class="org-line">
+                <span data-vi="Đơn vị chủ trì: <strong>CÔNG ĐOÀN PTX GROUP VIỆT NAM</strong>" data-en="Lead Organizer: <strong>PTX GROUP VIETNAM TRADE UNION</strong>">Đơn vị chủ trì: <strong>CÔNG ĐOÀN PTX GROUP VIỆT NAM</strong></span><br>
+                <span data-vi="Đơn vị đồng tổ chức: <strong>PTX GROUP VIỆT NAM</strong>" data-en="Co-organizer: <strong>PTX GROUP VIETNAM</strong>">Đơn vị đồng tổ chức: <strong>PTX GROUP VIỆT NAM</strong></span>
+            </div>
+            &copy; 2026 PTX Summer Cup. <span data-vi="Bản quyền thuộc về Kylian mBAppé" data-en="Copyright belongs to Kylian mBAppé">Bản quyền thuộc về Kylian mBAppé</span>
+        </div>
+    </footer>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal">
+        <div class="login-box">
+            <span class="close-modal" onclick="closeLogin()">×</span>
+            <h3>🔐 Quản trị viên</h3>
+            <input type="text" id="userInput" placeholder="Tên đăng nhập (User)">
+            <input type="password" id="passInput" placeholder="Mật khẩu (Password)">
+            <button onclick="handleLogin()">Đăng nhập</button>
+            <div class="error" id="loginError">Sai tên đăng nhập hoặc mật khẩu!</div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANEL (Đã cập nhật phần Vinh danh & Thư viện ảnh 6 năm) -->
+    <div class="container">
+        <div id="adminPanel">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <h3>🛠️ Admin Control Panel</h3>
+                <button onclick="handleLogout()" style="background: #dc2626; color: #fff; border: none; padding: 8px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;">Đăng xuất</button>
+            </div>
+            <p class="desc">*Dữ liệu lưu LocalStorage. Nhập theo định dạng bên dưới để cập nhật Hall of Fame & Gallery.</p>
+            
+            <div class="admin-grid">
+                <!-- Cột 1: Nội dung chung & HOF -->
+                <div class="admin-card">
+                    <label>Nội dung Slogan (Hero)</label>
+                    <input type="text" id="admin-slogan" placeholder="Slogan chính">
+                    
+                    <label>Thông điệp Ban tổ chức</label>
+                    <textarea id="admin-msg" placeholder="Nội dung thông điệp..."></textarea>
+
+                    <label>Ngày thi đấu (Lịch)</label>
+                    <input type="text" id="admin-date" placeholder="VD: 07/08/2026">
+
+                    <label>Địa điểm thi đấu (Lịch)</label>
+                    <input type="text" id="admin-location" placeholder="VD: 152 Hoàng Hoa Thám...">
+
+                    <button onclick="saveContentAdmin()">Lưu Nội dung & Sự kiện</button>
+
+                    <hr style="margin: 15px 0; border-color: var(--border-color);">
+
+                    <label>Vinh danh các năm (2025-2030)</label>
+                    <label style="font-weight:400; font-size:11px; color:var(--text-muted);">Định dạng: Vô địch | Nhì | Ba | Vua phá lưới</label>
+                    <input type="text" id="admin-hof-2025" placeholder="2025 (VD: Team A | Team B | Team C | Player D)">
+                    <input type="text" id="admin-hof-2026" placeholder="2026">
+                    <input type="text" id="admin-hof-2027" placeholder="2027">
+                    <input type="text" id="admin-hof-2028" placeholder="2028">
+                    <input type="text" id="admin-hof-2029" placeholder="2029">
+                    <input type="text" id="admin-hof-2030" placeholder="2030">
+                    <button onclick="saveHallOfFameAdmin()">Lưu Hall of Fame</button>
+                </div>
+
+                <!-- Cột 2: Thống kê, Gallery -->
+                <div class="admin-card">
+                    <label>Thống kê chung</label>
+                    <input type="text" id="admin-goals" placeholder="Số bàn thắng">
+                    <input type="text" id="admin-matches" placeholder="Số trận đấu">
+                    <input type="text" id="admin-players" placeholder="Số cầu thủ">
+                    <input type="text" id="admin-yellow" placeholder="Số thẻ vàng">
+                    <input type="text" id="admin-red" placeholder="Số thẻ đỏ">
+                    <button onclick="updateStatsAdmin()">Cập nhật Thống kê</button>
+
+                    <hr style="margin: 15px 0; border-color: var(--border-color);">
+
+                    <label>Kết quả 3 trận đấu (VD: 2-1, 0-0, 3-2)</label>
+                    <input type="text" id="admin-result1" placeholder="Trận 1: TEAM P vs TEAM T">
+                    <input type="text" id="admin-result2" placeholder="Trận 2: TEAM P vs TEAM X">
+                    <input type="text" id="admin-result3" placeholder="Trận 3: TEAM X vs TEAM T">
+                    <button onclick="updateStandingsAndResults()">Cập nhật BXH & Kết quả trận</button>
+
+                    <hr style="margin: 15px 0; border-color: var(--border-color);">
+
+                    <label>Thư viện ảnh các năm (2025-2030)</label>
+                    <label style="font-weight:400; font-size:11px; color:var(--text-muted);">Định dạng: Link Khai mạc | Link Thi đấu | Link Trao giải</label>
+                    <input type="text" id="admin-gallery-2025" placeholder="2025 (Khai mạc | Thi đấu | Trao giải)">
+                    <input type="text" id="admin-gallery-2026" placeholder="2026">
+                    <input type="text" id="admin-gallery-2027" placeholder="2027">
+                    <input type="text" id="admin-gallery-2028" placeholder="2028">
+                    <input type="text" id="admin-gallery-2029" placeholder="2029">
+                    <input type="text" id="admin-gallery-2030" placeholder="2030">
+                    <button onclick="saveGalleryAdmin()">Lưu Thư viện ảnh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Splash Screen
+            setTimeout(() => {
+                const screen = document.getElementById('splash-screen');
+                if (screen) screen.classList.add('hidden');
+            }, 2800);
+
+            // Theme Toggle
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', function() {
+                    const html = document.documentElement;
+                    const icon = document.getElementById('themeIcon');
+                    const label = document.getElementById('themeLabel');
+                    if (html.getAttribute('data-theme') === 'dark') {
+                        html.removeAttribute('data-theme');
+                        if (icon) icon.innerText = '🌙';
+                        if (label) label.innerText = 'Dark';
+                    } else {
+                        html.setAttribute('data-theme', 'dark');
+                        if (icon) icon.innerText = '☀️';
+                        if (label) label.innerText = 'Light';
+                    }
+                });
+            }
+
+            // Mobile Menu
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.getElementById('navLinks');
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                });
+                navLinks.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        navLinks.classList.remove('active');
+                    });
+                });
+            }
+
+            // Plyr
+            const player = new Plyr('#player', {
+                controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+                fullscreen: { enabled: true, fallback: true, iosNative: true },
+                autoplay: false,
+            });
+
+            // Language Switch
+            document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const lang = this.innerText.toLowerCase();
+                    document.querySelectorAll('.lang-switch button').forEach(function(b) {
+                        b.classList.toggle('active', b.innerText.toLowerCase() === lang);
+                    });
+                    document.querySelectorAll('[data-vi]').forEach(function(el) {
+                        const text = el.getAttribute('data-' + lang);
+                        if (text) el.innerHTML = text;
+                    });
+                });
+            });
+
+            // --- LOAD DATA FROM LOCALSTORAGE ---
+            if(localStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('adminPanel').classList.add('active');
+                document.getElementById('loginBtn').style.display = 'none';
+            }
+
+            // Load Content Data
+            const savedSlogan = localStorage.getItem('ptx_slogan');
+            if(savedSlogan) document.getElementById('heroSlogan').innerText = savedSlogan;
+
+            const savedMsg = localStorage.getItem('ptx_msg');
+            if(savedMsg) document.getElementById('organizerMsg').innerText = savedMsg;
+
+            const savedDate = localStorage.getItem('ptx_date');
+            if(savedDate) document.getElementById('scheduleDate').innerText = savedDate;
+
+            const savedLocation = localStorage.getItem('ptx_location');
+            if(savedLocation) document.getElementById('scheduleLocation').innerText = savedLocation;
+
+            // Load Stats
+            const stats = ['goals', 'matches', 'players', 'yellow', 'red'];
+            stats.forEach(s => {
+                const val = localStorage.getItem('ptx_stat_' + s);
+                if(val) document.getElementById('stat-' + s).innerText = val;
+            });
+
+            // Load Match Results & Auto Update Standings
+            const r1 = localStorage.getItem('ptx_result_1');
+            const r2 = localStorage.getItem('ptx_result_2');
+            const r3 = localStorage.getItem('ptx_result_3');
+            if(r1 || r2 || r3) {
+                if(r1) document.getElementById('result1').innerText = r1;
+                if(r2) document.getElementById('result2').innerText = r2;
+                if(r3) document.getElementById('result3').innerText = r3;
+                calculateAndUpdateStandings(r1, r2, r3);
+            }
+
+            // Init Hall of Fame
+            initHallOfFame();
+
+            // Init Gallery
+            initGallery();
+
+            // --- LOGIC MATCH STATUS (UPCOMING - LIVE - FINISHED) ---
+            const baseDate = new Date('2026-08-07');
+            const matchesData = [
+                { id: 1, startH: 17, startM: 0, endH: 17, endM: 35 },
+                { id: 2, startH: 17, startM: 50, endH: 18, endM: 25 },
+                { id: 3, startH: 18, startM: 40, endH: 19, endM: 15 }
+            ];
+
+            function updateMatchStatus() {
+                const now = new Date();
+                const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const targetDate = new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
+
+                if(todayDate.getTime() < targetDate.getTime()) {
+                    matchesData.forEach(m => {
+                        const el = document.getElementById('match' + m.id);
+                        el.classList.remove('live', 'finished');
+                        document.getElementById('badge' + m.id).innerText = 'Sắp diễn ra';
+                        document.getElementById('badge' + m.id).className = 'badge badge-upcoming';
+                        document.getElementById('countdown' + m.id).style.display = 'flex';
+                        document.getElementById('timer' + m.id).style.display = 'none';
+                        document.getElementById('result' + m.id).style.display = 'none';
+                    });
+                    return;
+                }
+
+                matchesData.forEach(m => {
+                    const startTime = new Date(targetDate);
+                    startTime.setHours(m.startH, m.startM, 0, 0);
+                    
+                    const endTime = new Date(targetDate);
+                    endTime.setHours(m.endH, m.endM, 0, 0);
+
+                    const el = document.getElementById('match' + m.id);
+                    const badge = document.getElementById('badge' + m.id);
+                    const countdown = document.getElementById('countdown' + m.id);
+                    const timerEl = document.getElementById('timer' + m.id);
+                    const resultEl = document.getElementById('result' + m.id);
+
+                    if (now < startTime) {
+                        el.classList.remove('live', 'finished');
+                        badge.innerText = 'Sắp diễn ra';
+                        badge.className = 'badge badge-upcoming';
+                        countdown.style.display = 'flex';
+                        timerEl.style.display = 'none';
+                        resultEl.style.display = 'none';
+                    } else if (now >= startTime && now <= endTime) {
+                        el.classList.add('live');
+                        el.classList.remove('finished');
+                        badge.innerText = 'Đang diễn ra';
+                        badge.className = 'badge badge-live';
+                        countdown.style.display = 'none';
+                        timerEl.style.display = 'block';
+                        resultEl.style.display = 'none';
+                        const diffSec = Math.floor((now - startTime) / 1000);
+                        const mm = String(Math.floor(diffSec / 60)).padStart(2, '0');
+                        const ss = String(diffSec % 60).padStart(2, '0');
+                        timerEl.innerText = mm + ':' + ss;
+                    } else if (now > endTime) {
+                        el.classList.remove('live');
+                        el.classList.add('finished');
+                        badge.innerText = 'Đã kết thúc';
+                        badge.className = 'badge badge-finished';
+                        countdown.style.display = 'none';
+                        timerEl.style.display = 'none';
+                        resultEl.style.display = 'block';
+                    }
+                });
+            }
+
+            setInterval(updateMatchStatus, 1000);
+            updateMatchStatus();
+        });
+
+        // --- HALL OF FAME FUNCTIONS ---
+        function initHallOfFame() {
+            const years = [2025, 2026, 2027, 2028, 2029, 2030];
+            const grid = document.getElementById('hofGrid');
+            grid.innerHTML = '';
+
+            years.forEach(y => {
+                const data = localStorage.getItem('hof_' + y);
+                let parts = data ? data.split('|') : ['', '', '', ''];
+                // Ensure 4 parts
+                while(parts.length < 4) parts.push('');
+
+                const card = document.createElement('div');
+                card.className = 'card hof-card';
+                card.innerHTML = `
+                    <div class="year">${y}</div>
+                    <div class="award-item"><span class="title">🏆 Vô địch</span><span class="winner">${parts[0] || '—'}</span></div>
+                    <div class="award-item"><span class="title">🥈 Giải nhì</span><span class="winner">${parts[1] || '—'}</span></div>
+                    <div class="award-item"><span class="title">🥉 Giải ba</span><span class="winner">${parts[2] || '—'}</span></div>
+                    <div class="award-item"><span class="title">⚽ Vua phá lưới</span><span class="winner">${parts[3] || '—'}</span></div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function saveHallOfFameAdmin() {
+            const years = [2025, 2026, 2027, 2028, 2029, 2030];
+            years.forEach(y => {
+                const val = document.getElementById('admin-hof-' + y).value;
+                if(val) localStorage.setItem('hof_' + y, val);
+            });
+            initHallOfFame();
+            alert('Đã lưu Hall of Fame!');
+        }
+
+        // --- GALLERY FUNCTIONS ---
+        function initGallery() {
+            const years = [2025, 2026, 2027, 2028, 2029, 2030];
+            const container = document.getElementById('galleryYearsContainer');
+            container.innerHTML = '';
+
+            // Create tab contents
+            years.forEach((y, index) => {
+                const data = localStorage.getItem('gallery_' + y);
+                let parts = data ? data.split('|') : ['', '', ''];
+                while(parts.length < 3) parts.push('');
+
+                const div = document.createElement('div');
+                div.className = 'gallery-year-content' + (index === 0 ? ' active' : '');
+                div.id = 'gallery-' + y;
+
+                const labels = ['Khai mạc', 'Thi đấu', 'Trao giải'];
+                let innerHTML = `<div class="gallery-inner-grid">`;
+                for(let i=0; i<3; i++) {
+                    innerHTML += `
+                        <div class="gallery-item-box">
+                            <div class="label">📸 ${labels[i]}</div>
+                            ${parts[i] ? `<img src="${parts[i]}" alt="${labels[i]} ${y}" onclick="openLightbox(this.src)">` : `<div class="placeholder">[Chưa có ảnh]</div>`}
+                        </div>
+                    `;
+                }
+                innerHTML += `</div>`;
+                div.innerHTML = innerHTML;
+                container.appendChild(div);
+            });
+
+            // Setup tabs
+            document.querySelectorAll('.gallery-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.gallery-year-content').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById('gallery-' + this.dataset.year).classList.add('active');
+                });
+            });
+        }
+
+        function saveGalleryAdmin() {
+            const years = [2025, 2026, 2027, 2028, 2029, 2030];
+            years.forEach(y => {
+                const val = document.getElementById('admin-gallery-' + y).value;
+                if(val) localStorage.setItem('gallery_' + y, val);
+            });
+            initGallery();
+            alert('Đã lưu Thư viện ảnh!');
+        }
+
+        // --- STANDINGS FUNCTIONS ---
+        function calculateAndUpdateStandings(r1, r2, r3) {
+            let p = { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, gd: 0, pts: 0 };
+            let t = { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, gd: 0, pts: 0 };
+            let x = { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, gd: 0, pts: 0 };
+
+            function processMatch(teamA, teamB, scoreStr) {
+                if(!scoreStr) return;
+                const parts = scoreStr.split('-');
+                if(parts.length !== 2) return;
+                const goalsA = parseInt(parts[0]);
+                const goalsB = parseInt(parts[1]);
+                if(isNaN(goalsA) || isNaN(goalsB)) return;
+
+                teamA.played++; teamB.played++;
+                teamA.goalsFor += goalsA; teamA.goalsAgainst += goalsB;
+                teamB.goalsFor += goalsB; teamB.goalsAgainst += goalsA;
+
+                if(goalsA > goalsB) { teamA.wins++; teamA.pts += 3; teamB.losses++; }
+                else if(goalsA < goalsB) { teamB.wins++; teamB.pts += 3; teamA.losses++; }
+                else { teamA.draws++; teamA.pts += 1; teamB.draws++; teamB.pts += 1; }
+            }
+
+            processMatch(p, t, r1);
+            processMatch(p, x, r2);
+            processMatch(x, t, r3);
+
+            p.gd = p.goalsFor - p.goalsAgainst;
+            t.gd = t.goalsFor - t.goalsAgainst;
+            x.gd = x.goalsFor - x.goalsAgainst;
+
+            const teams = [
+                { id: 'p', obj: p },
+                { id: 't', obj: t },
+                { id: 'x', obj: x }
+            ];
+
+            teams.sort((a, b) => {
+                if (b.obj.pts !== a.obj.pts) return b.obj.pts - a.obj.pts;
+                return b.obj.gd - a.obj.gd;
+            });
+
+            teams.forEach((team, index) => {
+                const id = team.id;
+                const obj = team.obj;
+                document.getElementById(id + '-pld').innerText = obj.played;
+                document.getElementById(id + '-w').innerText = obj.wins;
+                document.getElementById(id + '-d').innerText = obj.draws;
+                document.getElementById(id + '-l').innerText = obj.losses;
+                document.getElementById(id + '-gd').innerText = obj.gd;
+                document.getElementById(id + '-pts').innerText = obj.pts;
+                const row = document.getElementById('row' + id.toUpperCase());
+                row.children[0].innerText = index + 1;
+            });
+        }
+
+        function updateStandingsAndResults() {
+            const r1 = document.getElementById('admin-result1').value;
+            const r2 = document.getElementById('admin-result2').value;
+            const r3 = document.getElementById('admin-result3').value;
+
+            if(r1) { localStorage.setItem('ptx_result_1', r1); document.getElementById('result1').innerText = r1; }
+            if(r2) { localStorage.setItem('ptx_result_2', r2); document.getElementById('result2').innerText = r2; }
+            if(r3) { localStorage.setItem('ptx_result_3', r3); document.getElementById('result3').innerText = r3; }
+
+            calculateAndUpdateStandings(r1, r2, r3);
+            alert('Cập nhật Bảng xếp hạng & Kết quả trận đấu thành công!');
+        }
+
+        // --- ADMIN LOGIN & CONTENT FUNCTIONS ---
+        function openLogin() { document.getElementById('loginModal').classList.add('active'); }
+        function closeLogin() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('loginError').style.display = 'none';
+            document.getElementById('userInput').value = '';
+            document.getElementById('passInput').value = '';
+        }
+        function handleLogin() {
+            const user = document.getElementById('userInput').value;
+            const pass = document.getElementById('passInput').value;
+            if(user === 'Baoanh' && pass === '071096') {
+                localStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('loginModal').classList.remove('active');
+                document.getElementById('adminPanel').classList.add('active');
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('loginError').style.display = 'none';
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+        function handleLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById('loginBtn').style.display = 'block';
+        }
+        function saveContentAdmin() {
+            const slogan = document.getElementById('admin-slogan').value;
+            const msg = document.getElementById('admin-msg').value;
+            const date = document.getElementById('admin-date').value;
+            const location = document.getElementById('admin-location').value;
+
+            if(slogan) { localStorage.setItem('ptx_slogan', slogan); document.getElementById('heroSlogan').innerText = slogan; }
+            if(msg) { localStorage.setItem('ptx_msg', msg); document.getElementById('organizerMsg').innerText = msg; }
+            if(date) { localStorage.setItem('ptx_date', date); document.getElementById('scheduleDate').innerText = date; }
+            if(location) { localStorage.setItem('ptx_location', location); document.getElementById('scheduleLocation').innerText = location; }
+            alert('Cập nhật Nội dung & Sự kiện thành công!');
+        }
+        function updateStatsAdmin() {
+            const goals = document.getElementById('admin-goals').value;
+            const matches = document.getElementById('admin-matches').value;
+            const players = document.getElementById('admin-players').value;
+            const yellow = document.getElementById('admin-yellow').value;
+            const red = document.getElementById('admin-red').value;
+            if(goals) { localStorage.setItem('ptx_stat_goals', goals); document.getElementById('stat-goals').innerText = goals; }
+            if(matches) { localStorage.setItem('ptx_stat_matches', matches); document.getElementById('stat-matches').innerText = matches; }
+            if(players) { localStorage.setItem('ptx_stat_players', players); document.getElementById('stat-players').innerText = players; }
+            if(yellow) { localStorage.setItem('ptx_stat_yellow', yellow); document.getElementById('stat-yellow').innerText = yellow; }
+            if(red) { localStorage.setItem('ptx_stat_red', red); document.getElementById('stat-red').innerText = red; }
+            alert('Cập nhật Thống kê thành công!');
+        }
+
+        // Lightbox function for gallery (simple replacement)
+        function openLightbox(src) {
+            // Requires lightbox2 library which is already included.
+            // We trigger the click on the hidden anchor.
+            const a = document.createElement('a');
+            a.href = src;
+            a.setAttribute('data-lightbox', 'gallery');
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => document.body.removeChild(a), 1000);
+        }
+    </script>
+</body>
+</html>
