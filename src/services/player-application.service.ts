@@ -9,8 +9,8 @@ export class PlayerApplicationService {
   private memoryPlayers: Map<string, PlayerEntity> = new Map();
   private damService: MediaAssetV12ApplicationService;
 
-  constructor() {
-    this.damService = new MediaAssetV12ApplicationService();
+  constructor(damService?: MediaAssetV12ApplicationService) {
+    this.damService = damService || new MediaAssetV12ApplicationService();
   }
 
   async createPlayer(input: CreatePlayerInput): Promise<PlayerProfileDTO> {
@@ -43,7 +43,6 @@ export class PlayerApplicationService {
       throw new Error(`ERR_PLAYER_NOT_FOUND: Player ${playerId} does not exist.`);
     }
 
-    // Integrated DAM AssetResolver Call
     let resolvedAvatarUrl = 'https://ptx.vn/assets/default-avatar-placeholder.png';
     if (player.avatarAssetId) {
       resolvedAvatarUrl = await this.damService.resolveAssetUrlV12(player.avatarAssetId, {

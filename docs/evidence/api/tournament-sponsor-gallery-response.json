@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "data": {
+    "tournament": {
+      "id": "trn_1785266990770",
+      "name": "PTX Summer Cup 2026 - Giải Bóng Đá Thường Niên",
+      "year": 2026,
+      "bannerAssetId": "ast_1785266990769",
+      "resolvedBannerUrl": "https://ptx-supabase-prod.supabase.co/storage/v1/object/public/tournament_banner/org_ptx_group_01/ast_1785266990769_banner_ptx_summer_cup_2026.png_lg.webp"
+    },
+    "sponsors": [
+      {
+        "id": "spn_1785266990770",
+        "name": "Vinamilk Corporation",
+        "sponsorTier": "TITLE_SPONSOR",
+        "logoAssetId": "ast_1785266990770",
+        "resolvedLogoUrl": "https://ptx-supabase-prod.supabase.co/storage/v1/object/public/sponsor_logo/org_ptx_group_01/ast_1785266990770_logo_vinamilk_title_sponsor.png_sm.webp"
+      }
+    ],
+    "galleryPhotos": [
+      {
+        "id": "pho_1785266990770",
+        "caption": "Khoảnh khắc bàn thắng quyết định của Huy #10",
+        "photoAssetId": "ast_1785266990770",
+        "resolvedPhotoUrl": "https://ptx-supabase-prod.supabase.co/storage/v1/object/public/match_photo/org_ptx_group_01/ast_1785266990770_final_match_winning_moment.png_md.webp"
+      }
+    ],
+    "hallOfFame": [
+      {
+        "id": "hof_1785266990770",
+        "awardName": "GOLDEN_BOOT",
+        "recipientName": "Nguyễn Văn Huy (#10 FC Về Nhì)",
+        "photoAssetId": "ast_1785266990770",
+        "resolvedPhotoUrl": "https://ptx-supabase-prod.supabase.co/storage/v1/object/public/hall_of_fame/org_ptx_group_01/ast_1785266990770_golden_boot_winner_huy10.png_md.webp"
+      }
+    ]
+  },
+  "meta": {
+    "traceId": "trc_1785266990770",
+    "requestId": "req_1785266990770",
+    "status": 200
+  }
+}

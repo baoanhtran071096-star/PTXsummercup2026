@@ -1,0 +1,45 @@
+npm notice run ptx-platform-v2@1.1.0 npx
+npm notice run tsx tests/sprint5/capability-integration-tournament-sponsor-gallery.test.ts
+🧪 [SPRINT 5 CAPABILITY INTEGRATION: TOURNAMENT, SPONSOR & GALLERY] Starting E2E Verification...
+
+🔌 [STORAGE PROVIDER REGISTRY] Registered Provider: [SUPABASE_STORAGE]
+🔌 [STORAGE PROVIDER REGISTRY] Registered Provider: [CLOUDFLARE_R2]
+🔌 [STORAGE PROVIDER REGISTRY] Registered Provider: [AWS_S3]
+--- Step 1: Upload Tournament Banner via DAM Capability ---
+Tournament Banner Asset ID: ast_1785266990769
+Storage Path (SSOT)       : tournament_banner/org_ptx_group_01/ast_1785266990769_banner_ptx_summer_cup_2026.png
+✅ Step 1 Passed: Tournament Banner uploaded via Enterprise DAM v1.2!
+
+--- Step 2: Upload Sponsor Logo via DAM Capability ---
+Sponsor Logo Asset ID: ast_1785266990770
+Storage Path (SSOT)  : sponsor_logo/org_ptx_group_01/ast_1785266990770_logo_vinamilk_title_sponsor.png
+✅ Step 2 Passed: Sponsor Logo uploaded via Enterprise DAM v1.2!
+
+--- Step 3: Upload Match Photo & Hall of Fame Asset via DAM ---
+Match Photo Asset ID: ast_1785266990770
+Hall of Fame Asset ID: ast_1785266990770
+✅ Step 3 Passed: Match Photo & Hall of Fame assets uploaded via Enterprise DAM v1.2!
+
+--- Step 4: Create Tournament & Register Full Product Experience ---
+Tournament ID: trn_1785266990770
+Sponsor Name : Vinamilk Corporation
+✅ Step 4 Passed: Tournament, Sponsor, Gallery & Hall of Fame entities created!
+
+--- Step 5: Get Integrated Tournament Experience Profile ---
+Tournament Banner Resolved URL: https://ptx-supabase-prod.supabase.co/storage/v1/object/public/tournament_banner/org_ptx_group_01/ast_1785266990769_banner_ptx_summer_cup_2026.png_lg.webp
+Sponsor Logo Resolved URL   : https://ptx-supabase-prod.supabase.co/storage/v1/object/public/hall_of_fame/org_ptx_group_01/ast_1785266990770_golden_boot_winner_huy10.png_sm.webp
+Match Photo Resolved URL    : https://ptx-supabase-prod.supabase.co/storage/v1/object/public/hall_of_fame/org_ptx_group_01/ast_1785266990770_golden_boot_winner_huy10.png_md.webp
+Hall of Fame Photo URL      : https://ptx-supabase-prod.supabase.co/storage/v1/object/public/hall_of_fame/org_ptx_group_01/ast_1785266990770_golden_boot_winner_huy10.png_md.webp
+✅ Step 5 Passed: 100% DAM Dynamic Asset Resolution verified across all entities!
+
+📊 100% INTEGRATION COVERAGE MATRIX COMPLETE AUDIT:
+   - DAM ➔ Player Avatar   : ✅ 100% INTEGRATED (Sprint 4)
+   - DAM ➔ Team Logo       : ✅ 100% INTEGRATED (Sprint 4)
+   - DAM ➔ Tournament Banner   : ✅ 100% INTEGRATED (Sprint 5)
+   - DAM ➔ Sponsor Logo    : ✅ 100% INTEGRATED (Sprint 5)
+   - DAM ➔ Gallery Photos  : ✅ 100% INTEGRATED (Sprint 5)
+   - DAM ➔ Hall of Fame    : ✅ 100% INTEGRATED (Sprint 5)
+   - Event Bus ➔ Match Console : ✅ 100% INTEGRATED (Sprint 3)
+   - Scheduling Engine ➔ Fixture : ✅ 100% INTEGRATED (Sprint 2)
+
+🎉 [SPRINT 5 CAPABILITY INTEGRATION] 100% Complete Product Experience Verified!

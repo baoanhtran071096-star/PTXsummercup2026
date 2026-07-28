@@ -9,8 +9,8 @@ export class TeamApplicationService {
   private memoryTeams: Map<string, TeamEntity> = new Map();
   private damService: MediaAssetV12ApplicationService;
 
-  constructor() {
-    this.damService = new MediaAssetV12ApplicationService();
+  constructor(damService?: MediaAssetV12ApplicationService) {
+    this.damService = damService || new MediaAssetV12ApplicationService();
   }
 
   async createTeam(input: CreateTeamInput): Promise<TeamProfileDTO> {
@@ -39,7 +39,6 @@ export class TeamApplicationService {
       throw new Error(`ERR_TEAM_NOT_FOUND: Team ${teamId} does not exist.`);
     }
 
-    // Integrated DAM AssetResolver Call
     let resolvedLogoUrl = 'https://ptx.vn/assets/default-logo-placeholder.png';
     if (team.logoAssetId) {
       resolvedLogoUrl = await this.damService.resolveAssetUrlV12(team.logoAssetId, {
