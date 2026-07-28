@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "data": {
+    "releaseCandidate": "v1.0.0-rc1",
+    "personaResults": [
+      {
+        "persona": "ORGANIZER",
+        "status": "PASSED",
+        "latencyMs": 1.07,
+        "details": "Ban tổ chức tạo giải đấu & đăng tải Banner thành công. Banner Asset ID: ast_1785267339981"
+      },
+      {
+        "persona": "TEAM_MANAGER",
+        "status": "PASSED",
+        "latencyMs": 0.44,
+        "details": "Trưởng đội đăng ký Đội (FC Về Nhì) và Cầu thủ (Nguyễn Văn Huy) thành công với logo & avatar sắc nét."
+      },
+      {
+        "persona": "REFEREE",
+        "status": "PASSED",
+        "latencyMs": 0.54,
+        "details": "Trọng tài điều hành trận đấu & ghi nhận 100% sự kiện realtime thành công qua Event Bus."
+      },
+      {
+        "persona": "AUDIENCE",
+        "status": "PASSED",
+        "latencyMs": 0.09,
+        "details": "Khán giả theo dõi lịch thi đấu, bảng xếp hạng và khoảnh khắc trận đấu mượt mà 0% ảnh lỗi."
+      }
+    ],
+    "releaseGates": {
+      "functionalGate": "PASSED",
+      "integrationGate": "PASSED",
+      "performanceGate": "PASSED",
+      "securityGate": "PASSED",
+      "uatGate": "PASSED",
+      "releaseGate": "PASSED"
+    }
+  },
+  "meta": {
+    "traceId": "trc_1785267339983",
+    "requestId": "req_1785267339983",
+    "status": 200
+  }
+}
