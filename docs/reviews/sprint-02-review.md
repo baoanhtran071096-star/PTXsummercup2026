@@ -16,13 +16,14 @@ updated: 2026-07-29
 
 ---
 
-## 📢 GITHUB REVIEW LINKS (OFFICIAL PROPOSAL FORMAT)
+## 📢 GITHUB REVIEW LINKS (FEATURE BRANCH: `feature/scheduling`)
 
 * **Repository**: `https://github.com/baoanhtran071096-star/PTXsummercup2026`
-* **Commits / Branch**: `https://github.com/baoanhtran071096-star/PTXsummercup2026/commits/main`
-* **Release Notes**: [docs/release/sprint-02-release.md](https://github.com/baoanhtran071096-star/PTXsummercup2026/blob/main/docs/release/sprint-02-release.md)
-* **Engineering Report**: [docs/reviews/sprint-02-review.md](https://github.com/baoanhtran071096-star/PTXsummercup2026/blob/main/docs/reviews/sprint-02-review.md)
-* **Delivery Dashboard**: [docs/reviews/PTX_DELIVERY_DASHBOARD.md](https://github.com/baoanhtran071096-star/PTXsummercup2026/blob/main/docs/reviews/PTX_DELIVERY_DASHBOARD.md)
+* **Feature Branch**: `https://github.com/baoanhtran071096-star/PTXsummercup2026/tree/feature/scheduling`
+* **Create Pull Request**: `https://github.com/baoanhtran071096-star/PTXsummercup2026/pull/new/feature/scheduling`
+* **Release Notes**: [docs/release/sprint-02-release.md](https://github.com/baoanhtran071096-star/PTXsummercup2026/blob/feature/scheduling/docs/release/sprint-02-release.md)
+* **Engineering Report**: [docs/reviews/sprint-02-review.md](https://github.com/baoanhtran071096-star/PTXsummercup2026/blob/feature/scheduling/docs/reviews/sprint-02-review.md)
+* **Delivery Dashboard**: [docs/reviews/PTX_DELIVERY_DASHBOARD.md](https://github.com/baoanhtran071096-star/PTXsummercup2026/blob/feature/scheduling/docs/reviews/PTX_DELIVERY_DASHBOARD.md)
 
 ### Changed Files Index
 ```text
