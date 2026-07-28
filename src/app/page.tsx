@@ -3,9 +3,19 @@
 import React, { useState, useEffect } from 'react';
 
 export default function PublicBetaDemoPage() {
+  const [showSplash, setShowSplash] = useState(true);
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TEAMS' | 'MATCHES' | 'STANDINGS' | 'GALLERY' | 'HALL_OF_FAME'>('OVERVIEW');
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [demoTourStep, setDemoTourStep] = useState<number | null>(null);
+  const [showClosingSlide, setShowClosingSlide] = useState(false);
+  const [storyTimelineStep, setStoryTimelineStep] = useState<number | null>(null);
+
+  // 2.5 Second Professional Intro Splash Effect
+  useEffect(() => {
+    const splashTimer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500);
+    return () => clearTimeout(splashTimer);
+  }, []);
 
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({ days: 12, hours: 8, minutes: 45, seconds: 30 });
@@ -54,18 +64,18 @@ export default function PublicBetaDemoPage() {
     ]);
   };
 
-  const start15MinDemoTour = () => {
-    setDemoTourStep(1);
+  const startStorytellingTour = () => {
+    setStoryTimelineStep(1);
     setActiveTab('OVERVIEW');
   };
 
-  const nextDemoStep = () => {
-    if (demoTourStep === 1) { setDemoTourStep(2); setActiveTab('OVERVIEW'); }
-    else if (demoTourStep === 2) { setDemoTourStep(3); setActiveTab('TEAMS'); }
-    else if (demoTourStep === 3) { setDemoTourStep(4); setActiveTab('MATCHES'); }
-    else if (demoTourStep === 4) { setDemoTourStep(5); setActiveTab('GALLERY'); }
-    else if (demoTourStep === 5) { setDemoTourStep(6); setActiveTab('OVERVIEW'); }
-    else { setDemoTourStep(null); setShowFeedbackModal(true); }
+  const nextStoryStep = () => {
+    if (storyTimelineStep === 1) { setStoryTimelineStep(2); setActiveTab('TEAMS'); }
+    else if (storyTimelineStep === 2) { setStoryTimelineStep(3); setActiveTab('MATCHES'); }
+    else if (storyTimelineStep === 3) { setStoryTimelineStep(4); setActiveTab('STANDINGS'); }
+    else if (storyTimelineStep === 4) { setStoryTimelineStep(5); setActiveTab('GALLERY'); }
+    else if (storyTimelineStep === 5) { setStoryTimelineStep(6); setActiveTab('HALL_OF_FAME'); }
+    else { setStoryTimelineStep(null); setShowClosingSlide(true); }
   };
 
   const handleFeedbackSubmit = (e: React.FormEvent) => {
@@ -77,6 +87,18 @@ export default function PublicBetaDemoPage() {
       setFeedbackAnswers({ hesitationPoint: '', timeConsumingStep: '', singleChangeRequest: '', rating: 5 });
     }, 2500);
   };
+
+  if (showSplash) {
+    return (
+      <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: '#0b0f19', zIndex: 99999, display: 'grid', placeItems: 'center', textAlign: 'center' }}>
+        <div>
+          <div style={{ fontSize: '1rem', letterSpacing: '4px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px' }}>PTX GROUP PRESENTS</div>
+          <h1 className="gradient-text" style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '8px' }}>PTX SUMMER CUP 2026</h1>
+          <div style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.1rem' }}>POWERED BY PTX PLATFORM ENTERPRISE</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '16px' }}>
@@ -90,8 +112,8 @@ export default function PublicBetaDemoPage() {
           </div>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
-          <button onClick={start15MinDemoTour} style={{ background: 'linear-gradient(135deg, #00f2fe, #4facfe)', color: '#000', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', cursor: 'pointer' }}>
-            ▶️ Kịch Bản Demo 15 Phút
+          <button onClick={startStorytellingTour} style={{ background: 'linear-gradient(135deg, #00f2fe, #4facfe)', color: '#000', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '800', cursor: 'pointer' }}>
+            🎬 Hành Trình Storytelling Day 1
           </button>
           <button onClick={() => setShowFeedbackModal(true)} style={{ background: 'var(--accent-gold)', color: '#000', border: 'none', padding: '6px 14px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}>
             💬 Gửi Góp Ý Beta
@@ -99,22 +121,22 @@ export default function PublicBetaDemoPage() {
         </div>
       </div>
 
-      {/* Guided Tour Banner Step Display */}
-      {demoTourStep !== null && (
+      {/* Cinematic Timeline Storytelling Display */}
+      {storyTimelineStep !== null && (
         <div className="glass-panel" style={{ padding: '16px 24px', marginBottom: '16px', background: 'rgba(0, 242, 254, 0.15)', border: '1px solid var(--accent-cyan)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <span style={{ fontWeight: '800', color: 'var(--accent-cyan)', marginRight: '10px' }}>KỊCH BẢN DEMO 15 PHÚT (BƯỚC {demoTourStep}/6):</span>
+            <span style={{ fontWeight: '800', color: 'var(--accent-cyan)', marginRight: '10px' }}>HÀNH TRÌNH NGÀY KHAI MẠC (BƯỚC {storyTimelineStep}/6):</span>
             <span style={{ fontWeight: '600' }}>
-              {demoTourStep === 1 && 'Phần 1: Ấn tượng Landing Page & Đếm ngược khai mạc'}
-              {demoTourStep === 2 && 'Phần 2: Góc nhìn Ban Tổ Chức (Quản lý giải đấu, Banner, Logo)'}
-              {demoTourStep === 3 && 'Phần 3: Góc nhìn Trưởng Đội (Quản lý FC Về Nhì & Cầu thủ)'}
-              {demoTourStep === 4 && 'Phần 4: Live Match Console (Khoảnh khắc Bùng nổ Bàn thắng Realtime)'}
-              {demoTourStep === 5 && 'Phần 5: DAM Photo Gallery, Hall of Fame & Title Sponsor'}
-              {demoTourStep === 6 && 'Phần 6: Dashboard Vận Hành APM & Thu Nhận Phản Hồi Insight'}
+              {storyTimelineStep === 1 && '⏰ 08:00 — Ban Tổ Chức mở PTX Platform kiểm tra 8 đội, lịch đấu & sân thi đấu'}
+              {storyTimelineStep === 2 && '⏰ 08:30 — Đội trưởng FC Về Nhì mở điện thoại xem giờ đấu & danh sách cầu thủ'}
+              {storyTimelineStep === 3 && '⏰ 09:00 — Trọng tài bắt đầu trận đấu, ghi nhận Goal, Card & Live Score nhảy 2-1'}
+              {storyTimelineStep === 4 && '⏰ 09:45 — Khán giả truy cập xem tỉ số trực tiếp & Bảng xếp hạng thay đổi'}
+              {storyTimelineStep === 5 && '⏰ 10:00 — Ban tổ chức upload ảnh trận đấu lên DAM Gallery & Vinh danh Title Sponsor'}
+              {storyTimelineStep === 6 && '⏰ 17:00 — Bế mạc giải đấu, Hall of Fame vinh danh Nhà Vô Địch FC Về Nhì!'}
             </span>
           </div>
-          <button className="btn-primary" onClick={nextDemoStep}>
-            {demoTourStep < 6 ? 'Bước Tiếp Theo →' : 'Hoàn Thành & Mở Phản Hồi ✨'}
+          <button className="btn-primary" onClick={nextStoryStep}>
+            {storyTimelineStep < 6 ? 'Tiếp Tục Hành Trình →' : 'Kết Thúc & Mở Slide Cảm Ơn ✨'}
           </button>
         </div>
       )}
@@ -134,7 +156,7 @@ export default function PublicBetaDemoPage() {
         </div>
       </header>
 
-      {/* 5-Question Hero Landing Section */}
+      {/* Hero Landing Section */}
       <section className="glass-panel" style={{ padding: '36px', marginBottom: '24px', position: 'relative', overflow: 'hidden', borderRadius: '20px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', alignItems: 'center', zIndex: 2, position: 'relative' }}>
           <div>
@@ -157,7 +179,6 @@ export default function PublicBetaDemoPage() {
             </div>
           </div>
 
-          {/* Countdown Timer Widget */}
           <div style={{ background: 'rgba(0,0,0,0.4)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-glass)', textAlign: 'center' }}>
             <span style={{ fontSize: '0.8rem', color: 'var(--accent-gold)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>⏱️ ĐẾM NGƯỢC KHAI MẠC</span>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginTop: '16px' }}>
@@ -409,6 +430,24 @@ export default function PublicBetaDemoPage() {
               <p style={{ fontWeight: '700', fontSize: '1.1rem', marginTop: '6px' }}>Trần Tuấn Anh (#6)</p>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Rồng Vàng — 5 Assists</span>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Ren's Closing Slide Modal */}
+      {showClosingSlide && (
+        <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)', zIndex: 99999, display: 'grid', placeItems: 'center', padding: '16px', textAlign: 'center' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '600px', padding: '48px', borderRadius: '24px', position: 'relative' }}>
+            <button onClick={() => setShowClosingSlide(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
+            <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>🏆</div>
+            <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '12px' }}>CẢM ƠN QUÝ VỊ!</h2>
+            <h3 style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.4rem', marginBottom: '24px' }}>PTX PLATFORM PUBLIC BETA PREVIEW</h3>
+            <p style={{ color: 'var(--text-main)', fontSize: '1.1rem', lineHeight: 1.6, background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px', border: '1px solid var(--border-glass)', marginBottom: '24px' }}>
+              Mọi góp ý hôm nay của quý vị sẽ trực tiếp đóng góp tạo nên bản nâng cấp <strong>PTX Platform v1.1</strong> ngày càng xuất sắc hơn!
+            </p>
+            <button className="btn-primary" onClick={() => { setShowClosingSlide(false); setShowFeedbackModal(true); }}>
+              💬 Gửi Đánh Giá Trực Tiếp
+            </button>
           </div>
         </div>
       )}
