@@ -1,15 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { REAL_PTX_ROSTER_DATA, RosterPlayerItem } from '../domain/player/roster-data-migration';
 
 export default function PublicBetaDemoPage() {
   const [splashStage, setSplashStage] = useState<'INTRO' | 'INIT' | 'DONE'>('INTRO');
   const [initItems, setInitItems] = useState({ teams: false, fixtures: false, sponsors: false, media: false });
-  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TEAMS' | 'MATCHES' | 'STANDINGS' | 'GALLERY' | 'HALL_OF_FAME'>('OVERVIEW');
+  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TEAMS' | 'MATCHES' | 'STANDINGS' | 'GALLERY' | 'HALL_OF_FAME' | 'JERSEY_MGMT'>('OVERVIEW');
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [showChampClimax, setShowChampClimax] = useState(false);
   const [showClosingSlide, setShowClosingSlide] = useState(false);
-  const [showPlayerModal, setShowPlayerModal] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState<RosterPlayerItem | null>(null);
+  const [jerseyFilter, setJerseyFilter] = useState<'ALL' | 'UNPRINTED' | 'UNDELIVERED'>('ALL');
   const [storyTimelineStep, setStoryTimelineStep] = useState<number | null>(null);
 
   // Splash & Tournament Initialization sequence
@@ -40,7 +42,7 @@ export default function PublicBetaDemoPage() {
 
   const [matchScore, setMatchScore] = useState({ home: 2, away: 1 });
   const [events, setEvents] = useState([
-    { minute: 14, type: 'GOAL_SCORED', player: 'Kylian mBAppé (#10)', team: 'FC Về Nhì', details: 'Sút xa đẹp mắt 25m' },
+    { minute: 14, type: 'GOAL_SCORED', player: 'Kylian mBAppé (#9.5)', team: 'FC Về Nhì', details: 'Sút xa đẹp mắt 25m' },
     { minute: 32, type: 'YELLOW_CARD', player: 'Trần Tuấn Anh (#6)', team: 'FC Rồng Vàng', details: 'Phạm lỗi nguy hiểm' },
     { minute: 68, type: 'GOAL_SCORED', player: 'Phạm Minh Đức (#9)', team: 'FC Về Nhì', details: 'Đánh đầu cận thành' }
   ]);
@@ -67,7 +69,7 @@ export default function PublicBetaDemoPage() {
   const handleSimulateGoal = () => {
     setMatchScore(prev => ({ ...prev, home: prev.home + 1 }));
     setEvents(prev => [
-      { minute: 78, type: 'GOAL_SCORED', player: 'Kylian mBAppé (#10)', team: 'FC Về Nhì', details: 'Đệm bóng cận thành (Hattrick siêu phẩm!)' },
+      { minute: 78, type: 'GOAL_SCORED', player: 'Kylian mBAppé (#9.5)', team: 'FC Về Nhì', details: 'Đệm bóng cận thành (Hattrick siêu phẩm!)' },
       ...prev
     ]);
   };
@@ -79,9 +81,9 @@ export default function PublicBetaDemoPage() {
 
   const nextStoryStep = () => {
     if (storyTimelineStep === 1) { setStoryTimelineStep(2); setActiveTab('TEAMS'); }
-    else if (storyTimelineStep === 2) { setStoryTimelineStep(3); setActiveTab('MATCHES'); }
-    else if (storyTimelineStep === 3) { setStoryTimelineStep(4); setActiveTab('STANDINGS'); }
-    else if (storyTimelineStep === 4) { setStoryTimelineStep(5); setActiveTab('GALLERY'); }
+    else if (storyTimelineStep === 2) { setStoryTimelineStep(3); setActiveTab('JERSEY_MGMT'); }
+    else if (storyTimelineStep === 3) { setStoryTimelineStep(4); setActiveTab('MATCHES'); }
+    else if (storyTimelineStep === 4) { setStoryTimelineStep(5); setActiveTab('STANDINGS'); }
     else if (storyTimelineStep === 5) { setStoryTimelineStep(6); setActiveTab('HALL_OF_FAME'); }
     else {
       setStoryTimelineStep(null);
@@ -102,6 +104,12 @@ export default function PublicBetaDemoPage() {
       setFeedbackAnswers({ hesitationPoint: '', timeConsumingStep: '', singleChangeRequest: '', rating: 5 });
     }, 2500);
   };
+
+  const filteredRoster = REAL_PTX_ROSTER_DATA.filter(p => {
+    if (jerseyFilter === 'UNPRINTED') return !p.shirtPrinted;
+    if (jerseyFilter === 'UNDELIVERED') return !p.shirtDelivered;
+    return true;
+  });
 
   if (splashStage !== 'DONE') {
     return (
@@ -135,8 +143,8 @@ export default function PublicBetaDemoPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{ fontSize: '1.2rem' }}>🚧</span>
           <div>
-            <strong style={{ color: 'var(--accent-gold)' }}>PTX Platform Public Beta Preview</strong>
-            <span style={{ color: 'var(--text-muted)', marginLeft: '10px', fontSize: '0.9rem' }}>Chúng tôi đang hoàn thiện sản phẩm. Mọi góp ý của bạn sẽ giúp PTX Platform ngày càng tốt hơn.</span>
+            <strong style={{ color: 'var(--accent-gold)' }}>PTX Platform Public Beta Preview v1.0.1</strong>
+            <span style={{ color: 'var(--text-muted)', marginLeft: '10px', fontSize: '0.9rem' }}>Tính năng mới: Quản lý Áo đấu & Roster Data 26 Cầu thủ thật!</span>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
@@ -156,7 +164,7 @@ export default function PublicBetaDemoPage() {
             <span style={{ fontWeight: '800', color: 'var(--accent-cyan)', marginRight: '10px' }}>HÀNH TRÌNH NGÀY KHAI MẠC (BƯỚC {storyTimelineStep}/6):</span>
             <span style={{ fontWeight: '600' }}>
               {storyTimelineStep === 1 && '⏰ 08:00 — Ban Tổ Chức mở PTX Platform kiểm tra 8 đội, lịch đấu & sân thi đấu'}
-              {storyTimelineStep === 2 && '⏰ 08:30 — Đội trưởng FC Về Nhì mở điện thoại xem giờ đấu & danh sách cầu thủ (Kylian mBAppé #10)'}
+              {storyTimelineStep === 2 && '⏰ 08:30 — Quản lý kiểm tra Roster 26 cầu thủ & Size áo đấu (Kylian mBAppé #9.5 Size 2XL)'}
               {storyTimelineStep === 3 && '⏰ 09:00 — Trọng tài bắt đầu trận đấu, ghi nhận Goal từ Kylian mBAppé & Live Score nhảy 2-1'}
               {storyTimelineStep === 4 && '⏰ 09:45 — Khán giả truy cập xem tỉ số trực tiếp & Bảng xếp hạng thay đổi'}
               {storyTimelineStep === 5 && '⏰ 10:00 — Ban tổ chức upload ảnh trận đấu lên DAM Gallery & Vinh danh Title Sponsor'}
@@ -175,11 +183,11 @@ export default function PublicBetaDemoPage() {
           <div style={{ width: '42px', height: '42px', background: 'linear-gradient(135deg, #00f2fe, #4facfe)', borderRadius: '10px', display: 'grid', placeItems: 'center', fontWeight: '800', color: '#000', fontSize: '1.1rem' }}>PTX</div>
           <div>
             <h1 style={{ fontSize: '1.3rem', fontWeight: '800', lineHeight: 1.1 }}>PTX PLATFORM</h1>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Enterprise Tournament Engine v1.0.0</p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Enterprise Tournament Engine v1.0.1</p>
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span className="badge-beta">🚀 PUBLIC BETA</span>
+          <span className="badge-beta">🚀 PUBLIC BETA v1.0.1</span>
           <button className="btn-primary" onClick={() => setShowFeedbackModal(true)}>💬 Đánh Giá Beta</button>
         </div>
       </header>
@@ -193,13 +201,13 @@ export default function PublicBetaDemoPage() {
               PTX SUMMER CUP 2026
             </h2>
             <p style={{ color: 'var(--text-main)', fontSize: '1.05rem', marginBottom: '20px', lineHeight: 1.6 }}>
-              Hệ thống điều hành bóng đá tự động hóa 100%: <strong>Lập lịch Round Robin trong 2 giây</strong>, <strong>Live Match Console realtime</strong> và <strong>Enterprise Digital Asset Management (DAM v1.2)</strong>.
+              Hệ thống điều hành bóng đá tự động hóa 100%: <strong>Lập lịch Round Robin trong 2 giây</strong>, <strong>Live Match Console realtime</strong> và <strong>Jersey Management Module (Quản lý Roster & Áo đấu)</strong>.
             </p>
 
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <button className="btn-primary" onClick={() => setActiveTab('MATCHES')}>⚡ Xem Live Match Console</button>
-              <button style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid var(--border-glass)', padding: '12px 24px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer' }} onClick={() => setActiveTab('TEAMS')}>
-                📝 Quản Lý Đội Bóng
+              <button className="btn-primary" onClick={() => setActiveTab('JERSEY_MGMT')}>👕 Quản Lý Áo Đấu & Roster (26 Cầu Thủ)</button>
+              <button style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px solid var(--border-glass)', padding: '12px 24px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer' }} onClick={() => setActiveTab('MATCHES')}>
+                ⚡ Live Match Console
               </button>
               <button style={{ background: 'transparent', color: 'var(--accent-cyan)', border: 'none', padding: '12px 16px', fontWeight: '700', cursor: 'pointer' }} onClick={() => setActiveTab('STANDINGS')}>
                 🏆 Bảng Xếp Hạng →
@@ -238,6 +246,7 @@ export default function PublicBetaDemoPage() {
       <div style={{ display: 'flex', gap: '10px', marginBottom: '24px', overflowX: 'auto', paddingBottom: '4px' }}>
         {[
           { key: 'OVERVIEW', label: '🌐 Tổng Quan Demo' },
+          { key: 'JERSEY_MGMT', label: '👕 Jersey & Roster (26 Cầu Thủ)' },
           { key: 'TEAMS', label: '🛡️ 8 Đội Bóng (Live Data)' },
           { key: 'MATCHES', label: '⚡ Live Match Console' },
           { key: 'STANDINGS', label: '🏆 Bảng Xếp Hạng' },
@@ -263,12 +272,84 @@ export default function PublicBetaDemoPage() {
         ))}
       </div>
 
+      {/* Tab Content: JERSEY MANAGEMENT (NEW P1/P2 MODULE) */}
+      {activeTab === 'JERSEY_MGMT' && (
+        <div className="glass-panel" style={{ padding: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+            <div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: 'var(--accent-gold)' }}>👕 Jersey & Roster Operations Management</h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '2px' }}>Tự động hóa quản lý Size áo, Số in áo và Tiến độ phát áo 26 cầu thủ thật thay thế Excel!</p>
+            </div>
+
+            {/* Jersey Progress KPI Cards */}
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <div style={{ background: 'rgba(56,176,0,0.15)', border: '1px solid rgba(56,176,0,0.4)', padding: '8px 16px', borderRadius: '10px', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--accent-green)', fontWeight: '700' }}>ĐÃ IN ÁO</span>
+                <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#fff' }}>25 / 26</div>
+              </div>
+              <div style={{ background: 'rgba(0,242,254,0.15)', border: '1px solid rgba(0,242,254,0.4)', padding: '8px 16px', borderRadius: '10px', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--accent-cyan)', fontWeight: '700' }}>ĐÃ PHÁT ÁO</span>
+                <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#fff' }}>24 / 26</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Operation Filters */}
+          <div style={{ display: 'flex', gap: '10px', marginBottom: '16px' }}>
+            <button onClick={() => setJerseyFilter('ALL')} style={{ padding: '6px 14px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: jerseyFilter === 'ALL' ? 'var(--accent-cyan)' : 'rgba(255,255,255,0.05)', color: jerseyFilter === 'ALL' ? '#000' : '#fff', fontWeight: '700', cursor: 'pointer' }}>Tất Cả 26 Cầu Thủ</button>
+            <button onClick={() => setJerseyFilter('UNPRINTED')} style={{ padding: '6px 14px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: jerseyFilter === 'UNPRINTED' ? 'var(--accent-red)' : 'rgba(255,255,255,0.05)', color: jerseyFilter === 'UNPRINTED' ? '#fff' : '#fff', fontWeight: '700', cursor: 'pointer' }}>□ Chưa In Áo</button>
+            <button onClick={() => setJerseyFilter('UNDELIVERED')} style={{ padding: '6px 14px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: jerseyFilter === 'UNDELIVERED' ? 'var(--accent-gold)' : 'rgba(255,255,255,0.05)', color: jerseyFilter === 'UNDELIVERED' ? '#000' : '#fff', fontWeight: '700', cursor: 'pointer' }}>□ Chưa Phát Áo</button>
+          </div>
+
+          {/* Roster Table */}
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border-glass)', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+                  <th style={{ padding: '12px' }}>Số Áo</th>
+                  <th style={{ padding: '12px' }}>Tên In Áo (Jersey Name)</th>
+                  <th style={{ padding: '12px' }}>Họ Tên Thật (Full Name)</th>
+                  <th style={{ padding: '12px' }}>Size Áo</th>
+                  <th style={{ padding: '12px' }}>Đã In</th>
+                  <th style={{ padding: '12px' }}>Đã Phát</th>
+                  <th style={{ padding: '12px' }}>Ghi Chú Nghiệp Vụ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredRoster.map(p => (
+                  <tr key={p.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', background: p.jerseyName.includes('Kylian') ? 'rgba(0, 242, 254, 0.1)' : 'transparent' }}>
+                    <td style={{ padding: '12px', fontWeight: '800', fontFamily: 'var(--font-mono)', color: 'var(--accent-gold)' }}>#{p.jerseyNumber}</td>
+                    <td style={{ padding: '12px', fontWeight: '700', cursor: 'pointer' }} onClick={() => setSelectedPlayer(p)}>
+                      {p.jerseyName} {p.isCaptain && <span style={{ color: 'var(--accent-gold)', fontSize: '0.75rem', marginLeft: '6px' }}>[C]</span>}
+                    </td>
+                    <td style={{ padding: '12px', color: 'var(--text-muted)' }}>{p.fullName}</td>
+                    <td style={{ padding: '12px', fontWeight: '700', color: 'var(--accent-cyan)' }}>{p.shirtSize}</td>
+                    <td style={{ padding: '12px', color: p.shirtPrinted ? 'var(--accent-green)' : 'var(--accent-red)', fontWeight: '700' }}>
+                      {p.shirtPrinted ? '☑ Đã In' : '❌ Chưa In'}
+                    </td>
+                    <td style={{ padding: '12px', color: p.shirtDelivered ? 'var(--accent-green)' : 'var(--accent-gold)', fontWeight: '700' }}>
+                      {p.shirtDelivered ? '☑ Đã Phát' : '⏳ Chưa Phát'}
+                    </td>
+                    <td style={{ padding: '12px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>{p.notes || '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {/* Tab Content: OVERVIEW */}
       {activeTab === 'OVERVIEW' && (
         <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
           <div className="glass-panel" style={{ padding: '24px' }}>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '16px' }}>🚀 Tính Năng Nổi Bật Bản Beta Preview</h3>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '16px' }}>🚀 Tính Năng Nổi Bật Bản Beta Preview v1.0.1</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-glass)' }}>
+                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>👕</div>
+                <h4 style={{ fontWeight: '700', color: 'var(--accent-gold)' }}>Jersey Operations Module</h4>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>Quản lý Size áo & số in áo thay thế Excel cho Ban tổ chức.</p>
+              </div>
               <div style={{ background: 'rgba(255,255,255,0.03)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-glass)' }}>
                 <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>⚡</div>
                 <h4 style={{ fontWeight: '700', color: 'var(--accent-cyan)' }}>Scheduling Engine RPC</h4>
@@ -284,11 +365,6 @@ export default function PublicBetaDemoPage() {
                 <h4 style={{ fontWeight: '700', color: 'var(--accent-gold)' }}>Enterprise DAM v1.2</h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>Quản lý tài sản số WebP biến thể tự động với 0% URL thô.</p>
               </div>
-              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-glass)' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>📜</div>
-                <h4 style={{ fontWeight: '700', color: 'var(--accent-red)' }}>OpenAPI v3.0 REST API</h4>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>Chuẩn API Contract sẵn sàng kết nối Mobile App & Web Frontend.</p>
-              </div>
             </div>
           </div>
 
@@ -296,16 +372,16 @@ export default function PublicBetaDemoPage() {
             <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '16px' }}>📊 Live APM & Monitoring</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-glass)', paddingBottom: '8px' }}>
+                <span style={{ color: 'var(--text-muted)' }}>Tiến độ in phát áo:</span>
+                <span style={{ fontWeight: '700', color: 'var(--accent-green)' }}>25/26 Đã In (96%)</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-glass)', paddingBottom: '8px' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Trạng thái APM:</span>
                 <span style={{ fontWeight: '700', color: 'var(--accent-green)' }}>100% Operational</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-glass)', paddingBottom: '8px' }}>
                 <span style={{ color: 'var(--text-muted)' }}>API Error Rate:</span>
                 <span style={{ fontWeight: '700', color: 'var(--accent-green)' }}>0.00%</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-glass)', paddingBottom: '8px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>DAM Storage Latency:</span>
-                <span style={{ fontWeight: '700', color: 'var(--accent-cyan)' }}>0.15 ms</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Đội bóng tham gia:</span>
@@ -374,7 +450,7 @@ export default function PublicBetaDemoPage() {
               {events.map((evt, idx) => (
                 <div key={idx} style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '8px', borderLeft: evt.type === 'GOAL_SCORED' ? '4px solid var(--accent-green)' : '4px solid var(--accent-gold)' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontWeight: '700', color: 'var(--accent-cyan)', marginRight: '8px' }}>{evt.minute}&apos;</span>
-                  <span style={{ fontWeight: '700', cursor: evt.player.includes('Kylian') ? 'pointer' : 'default', textDecoration: evt.player.includes('Kylian') ? 'underline' : 'none' }} onClick={() => evt.player.includes('Kylian') && setShowPlayerModal(true)}>
+                  <span style={{ fontWeight: '700', cursor: evt.player.includes('Kylian') ? 'pointer' : 'default', textDecoration: evt.player.includes('Kylian') ? 'underline' : 'none' }} onClick={() => evt.player.includes('Kylian') && setSelectedPlayer(REAL_PTX_ROSTER_DATA[5])}>
                     {evt.player}
                   </span>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{evt.details}</p>
@@ -448,11 +524,11 @@ export default function PublicBetaDemoPage() {
         <div className="glass-panel" style={{ padding: '24px' }}>
           <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '16px' }}>🏅 Hall of Fame & Danh Hiệu Vinh Danh</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div style={{ background: 'rgba(255,183,3,0.1)', border: '1px solid rgba(255,183,3,0.3)', padding: '20px', borderRadius: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setShowPlayerModal(true)}>
+            <div style={{ background: 'rgba(255,183,3,0.1)', border: '1px solid rgba(255,183,3,0.3)', padding: '20px', borderRadius: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setSelectedPlayer(REAL_PTX_ROSTER_DATA[5])}>
               <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>👟</div>
               <h4 style={{ fontWeight: '800', color: 'var(--accent-gold)', fontSize: '1.2rem' }}>Vua Dội Bom Golden Boot</h4>
-              <p style={{ fontWeight: '700', fontSize: '1.2rem', marginTop: '6px', textDecoration: 'underline' }}>Kylian mBAppé (#10) ⚡</p>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Về Nhì — 8 Bàn Thắng | Lead Developer</span>
+              <p style={{ fontWeight: '700', fontSize: '1.2rem', marginTop: '6px', textDecoration: 'underline' }}>Kylian mBAppé (#9.5) ⚡</p>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Về Nhì — 8 Bàn Thắng | (Trần Bảo Anh • Lead Developer)</span>
             </div>
             <div style={{ background: 'rgba(0,242,254,0.1)', border: '1px solid rgba(0,242,254,0.3)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>🏆</div>
@@ -464,20 +540,22 @@ export default function PublicBetaDemoPage() {
         </div>
       )}
 
-      {/* Player Profile Easter Egg Modal for Kylian mBAppé */}
-      {showPlayerModal && (
+      {/* Extended Player Profile Modal for Roster Items */}
+      {selectedPlayer && (
         <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', zIndex: 99999, display: 'grid', placeItems: 'center', padding: '16px' }}>
           <div className="glass-panel" style={{ width: '100%', maxWidth: '480px', padding: '32px', textAlign: 'center', position: 'relative' }}>
-            <button onClick={() => setShowPlayerModal(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
+            <button onClick={() => setSelectedPlayer(null)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
             <div style={{ fontSize: '3.5rem', marginBottom: '8px' }}>⚽</div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--accent-gold)' }}>Kylian mBAppé (#10)</h3>
-            <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)', fontWeight: '700' }}>FORWARD • FC VỀ NHÌ</span>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--accent-gold)' }}>{selectedPlayer.jerseyName} (#{selectedPlayer.jerseyNumber})</h3>
+            <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)', fontWeight: '700' }}>{selectedPlayer.fullName} • SIZE {selectedPlayer.shirtSize}</span>
             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '12px', margin: '20px 0', border: '1px solid var(--border-glass)', textAlign: 'left' }}>
-              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Role in Tournament:</strong> Striker & Golden Boot Contender 👟</p>
-              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Role in Product:</strong> Creator & Lead Developer of PTX Platform 💻</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '10px' }}>"Football lover. Creator of PTX Platform Enterprise System."</p>
+              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Tên In Áo (Jersey Name):</strong> {selectedPlayer.jerseyName}</p>
+              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Họ Tên Thật (Full Name):</strong> {selectedPlayer.fullName}</p>
+              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Số Áo / Size Áo:</strong> #{selectedPlayer.jerseyNumber} / Size {selectedPlayer.shirtSize}</p>
+              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Trạng Thái Phát Áo:</strong> {selectedPlayer.shirtDelivered ? '☑ Đã Phát' : '⏳ Chưa Phát'}</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '10px' }}>Ghi chú: {selectedPlayer.notes || 'Cầu thủ chính thức của giải đấu.'}</p>
             </div>
-            <button className="btn-primary" onClick={() => setShowPlayerModal(false)}>Đóng Hồ Sơ Cầu Thủ</button>
+            <button className="btn-primary" onClick={() => setSelectedPlayer(null)}>Đóng Hồ Sơ Cầu Thủ</button>
           </div>
         </div>
       )}
@@ -494,19 +572,18 @@ export default function PublicBetaDemoPage() {
         </div>
       )}
 
-      {/* Ren's Closing Slide Modal with Credits for Kylian mBAppé */}
+      {/* Ren's Closing Slide Modal with Credits */}
       {showClosingSlide && (
         <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)', zIndex: 99999, display: 'grid', placeItems: 'center', padding: '16px', textAlign: 'center' }}>
           <div className="glass-panel" style={{ width: '100%', maxWidth: '640px', padding: '48px', borderRadius: '24px', position: 'relative' }}>
             <button onClick={() => setShowClosingSlide(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
             <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>🏆</div>
             <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '8px' }}>CẢM ƠN QUÝ VỊ!</h2>
-            <h3 style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.3rem', marginBottom: '24px' }}>PTX PLATFORM PUBLIC BETA PREVIEW</h3>
+            <h3 style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.3rem', marginBottom: '24px' }}>PTX PLATFORM PUBLIC BETA PREVIEW v1.0.1</h3>
             
-            {/* Developer & Governance Credits */}
             <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px', border: '1px solid var(--border-glass)', marginBottom: '24px', textAlign: 'center' }}>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Designed & Created with ❤️ by</p>
-              <h4 style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--accent-cyan)', margin: '4px 0 12px 0' }}>Kylian mBAppé • Lead Developer</h4>
+              <h4 style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--accent-cyan)', margin: '4px 0 12px 0' }}>Trần Bảo Anh (Kylian mBAppé #9.5) • Lead Developer</h4>
               <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.85rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-glass)', paddingTop: '10px' }}>
                 <span><strong>Chief Architecture:</strong> Ren</span>
                 <span>•</span>
