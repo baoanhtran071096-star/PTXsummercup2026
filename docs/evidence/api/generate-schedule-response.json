@@ -1,0 +1,66 @@
+{
+  "success": true,
+  "data": {
+    "tournamentId": "trn_summer_cup_2026",
+    "totalRounds": 3,
+    "totalMatchesScheduled": 6,
+    "venueConflictsDetected": 0,
+    "timeConflictsDetected": 0,
+    "scheduledSlots": [
+      {
+        "matchId": "mth_r1_1",
+        "roundNumber": 1,
+        "homeTeam": "FC Về Nhì",
+        "awayTeam": "FC Hà Nội",
+        "venue": "Sân 1 PTX Stadium",
+        "scheduledTime": "2026-07-29T18:00:00.000Z"
+      },
+      {
+        "matchId": "mth_r1_2",
+        "roundNumber": 1,
+        "homeTeam": "FC Anh Em",
+        "awayTeam": "FC Sài Gòn",
+        "venue": "Sân 2 PTX Stadium",
+        "scheduledTime": "2026-07-29T19:00:00.000Z"
+      },
+      {
+        "matchId": "mth_r2_3",
+        "roundNumber": 2,
+        "homeTeam": "FC Về Nhì",
+        "awayTeam": "FC Sài Gòn",
+        "venue": "Sân 1 PTX Stadium",
+        "scheduledTime": "2026-07-30T18:00:00.000Z"
+      },
+      {
+        "matchId": "mth_r2_4",
+        "roundNumber": 2,
+        "homeTeam": "FC Hà Nội",
+        "awayTeam": "FC Anh Em",
+        "venue": "Sân 2 PTX Stadium",
+        "scheduledTime": "2026-07-30T19:00:00.000Z"
+      },
+      {
+        "matchId": "mth_r3_5",
+        "roundNumber": 3,
+        "homeTeam": "FC Về Nhì",
+        "awayTeam": "FC Anh Em",
+        "venue": "Sân 1 PTX Stadium",
+        "scheduledTime": "2026-07-31T18:00:00.000Z"
+      },
+      {
+        "matchId": "mth_r3_6",
+        "roundNumber": 3,
+        "homeTeam": "FC Sài Gòn",
+        "awayTeam": "FC Hà Nội",
+        "venue": "Sân 2 PTX Stadium",
+        "scheduledTime": "2026-07-31T19:00:00.000Z"
+      }
+    ],
+    "executionTimeSec": "0.00 sec"
+  },
+  "meta": {
+    "traceId": "trc_1785264766579",
+    "requestId": "req_1785264766579",
+    "status": 200
+  }
+}

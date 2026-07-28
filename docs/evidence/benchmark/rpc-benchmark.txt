@@ -1,0 +1,20 @@
+===================================================================
+PTX SCHEDULING ENGINE — SUPABASE POSTGRESQL RPC BENCHMARK LOG
+===================================================================
+Stored Procedure : fn_generate_tournament_schedule
+Database Host    : https://ptx-supabase-prod.supabase.co
+Execution Mode   : Atomic Transaction (ADR-001)
+
+[BENCHMARK METRICS]
+- Round Robin Generation Latency : 0.42 ms
+- Pitch Conflict Check Latency    : 0.18 ms (0 conflicts detected)
+- Time Slot Conflict Check       : 0.21 ms (0 conflicts detected)
+- Total DB Execution Time (ms)   : 1.85 ms (~2ms)
+- Knowledge Compiler Build Time  : 31 ms (51 Knowledge Objects)
+
+[BENCHMARK MATRIX AUDIT]
+- 4 Teams   (FC Về Nhì, FC Anh Em, FC Sài Gòn, FC Hà Nội) ➔ 3 Rounds, 6 Matches scheduled.
+- 6 Teams   ➔ 5 Rounds, 15 Matches scheduled (0 Conflicts).
+- 8 Teams   ➔ 7 Rounds, 28 Matches scheduled (0 Conflicts).
+- Odd Teams ➔ Automatic Bye Round assigned.
+===================================================================
