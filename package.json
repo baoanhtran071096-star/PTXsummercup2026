@@ -1,0 +1,18 @@
+{
+  "name": "ptx-platform-v2",
+  "version": "1.1.0",
+  "description": "PTX Platform V2 - Enterprise Product Engineering Knowledge System",
+  "main": "generated/types/domain-models.ts",
+  "scripts": {
+    "docs:build": "npx -y tsx tools/knowledge/compiler/build.ts",
+    "test": "npx -y tsx tests/contract/match-api-contract.test.ts",
+    "clean": "powershell -Command \"Remove-Item -Recurse -Force node_modules, generated/*\""
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

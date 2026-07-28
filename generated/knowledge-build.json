@@ -1,0 +1,88 @@
+{
+  "version": "3.0.0",
+  "compiler": "ptx-kos-compiler-v3.0.0",
+  "commit": "compiler-v3.0-governance-release",
+  "generated_at": "2026-07-28T18:20:44.931Z",
+  "governance_status": {
+    "compliance_score": 100,
+    "status": "COMPLIANT",
+    "active_adrs_count": 2,
+    "approved_rfcs_count": 1
+  },
+  "benchmark_suite_metrics": {
+    "parse_duration_ms": 22,
+    "cir_duration_ms": 5,
+    "parallel_generation_duration_ms": 3,
+    "total_duration_ms": 31,
+    "heap_memory_usage_mb": 16,
+    "total_objects_parsed": 49,
+    "registered_plugins_count": 5,
+    "is_incremental_build": false
+  },
+  "change_impact_analysis": {
+    "targetObjectId": "PROD-MATCH-001",
+    "impactedCapabilities": [],
+    "impactedEvents": [
+      "EVT-001",
+      "EVT-002",
+      "EVT-003"
+    ],
+    "impactedContracts": [
+      "API-MATCH-001",
+      "API-TOURN-001",
+      "API-PLAY-001"
+    ],
+    "impactedEntities": [
+      "ENT-ORG-001",
+      "ENT-SEASON-001",
+      "ENT-TEAM-001",
+      "ENT-PLAYER-001",
+      "ENT-MATCH-001",
+      "ENT-EVENT-001"
+    ],
+    "totalImpactedNodes": 12
+  },
+  "source_deterministic_checksum_sha256": "7b790054d259505934a12065640bb3e0b27cc67a21b187e143e047b79492daa1",
+  "artifacts": [
+    {
+      "artifactName": "TypeScript Domain Models",
+      "path": "generated/types/domain-models.ts",
+      "generatorId": "gen-typescript-models",
+      "generatorVersion": "1.0.0",
+      "cirVersion": "1.2.0",
+      "sha256": "3e5d27043ab24b7e9ec90b99d61a0bf31a13209ce0aa0663971f5e6b348809da"
+    },
+    {
+      "artifactName": "Zod Contracts",
+      "path": "generated/contracts/zod-schemas.ts",
+      "generatorId": "gen-zod-contracts",
+      "generatorVersion": "1.0.0",
+      "cirVersion": "1.2.0",
+      "sha256": "5de628fb90b34ad5af7b6c6eaf80cd590791708b82f7f85fc9da0d182befc56a"
+    },
+    {
+      "artifactName": "OpenAPI Specification",
+      "path": "generated/api/openapi.json",
+      "generatorId": "gen-openapi-spec",
+      "generatorVersion": "1.0.0",
+      "cirVersion": "1.2.0",
+      "sha256": "4e0819d7716d34bb90e8158eab325c73dfb9878dff5b3e5724be317a926b1193"
+    },
+    {
+      "artifactName": "PostgreSQL DDL & RPC SQL",
+      "path": "generated/db/schema-v1.0.7.sql",
+      "generatorId": "gen-postgresql-schema",
+      "generatorVersion": "1.0.0",
+      "cirVersion": "1.2.0",
+      "sha256": "3fabffce3be71be19a36100d7d8038693104cb43da9cd2e94eab3ae6895b766b"
+    },
+    {
+      "artifactName": "Contract Test Skeletons",
+      "path": "generated/tests/contract-tests.ts",
+      "generatorId": "gen-vitest-contract-tests",
+      "generatorVersion": "1.0.0",
+      "cirVersion": "1.2.0",
+      "sha256": "4e1e126e99a2147fc2419facca633e613318017ece4dadc5382212e5782e5cfd"
+    }
+  ]
+}

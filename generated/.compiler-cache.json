@@ -1,0 +1,251 @@
+{
+  "version": "2.0.0",
+  "lastBuildAt": "2026-07-28T18:20:44.931Z",
+  "files": {
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\ARCHITECTURE_DASHBOARD.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\ARCHITECTURE_DASHBOARD.md",
+      "sha256": "554976bf51a47808cd30d31e12fe1114250cdec1548a2a868ea2cd8c3a66ed93",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\DOMAIN_MODEL.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\DOMAIN_MODEL.md",
+      "sha256": "5bb89bf5e98d66011b52a0c6620902a22dd86e20da549c9cd7312979f8819751",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\ENGINEERING_PRINCIPLES.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\ENGINEERING_PRINCIPLES.md",
+      "sha256": "5db4fd14bd7f2e65e33df5604f11fa36427e5db591467ce5cbe42dcce1b894e1",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\GLOSSARY.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\GLOSSARY.md",
+      "sha256": "51f18b3c4d95a673e6651042d66be11d6a2fed2cefe0bf38bf165f5838585e51",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\KNOWLEDGE_ARCHITECTURE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\KNOWLEDGE_ARCHITECTURE.md",
+      "sha256": "f4cfa3e192d5785eb63d6cb833d61b7c42e12fe1ec054970e98e15f40ffd1609",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\KNOWLEDGE_LIFECYCLE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\KNOWLEDGE_LIFECYCLE.md",
+      "sha256": "bae36a613c7baf8f4f2adc028f9f7823998de51d4bda326effd162e05c3176f9",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\KNOWLEDGE_SLO.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\KNOWLEDGE_SLO.md",
+      "sha256": "46f72ae7ccb710054eda0bd967816ee1f1595d51799c145a25c21bc8cd3fd54b",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\MANIFESTO.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\MANIFESTO.md",
+      "sha256": "b31b410284188521651af50dfb7df8d5679dc165e4774732c7f05e0598eda947",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\PRODUCT_DNA.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\PRODUCT_DNA.md",
+      "sha256": "c378ca60fafa4c10f7413dfe6b98237f0a471e87b1c5198ae14c063462c0e9fb",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\QUALITY_MODEL.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\00-foundation\\QUALITY_MODEL.md",
+      "sha256": "d04f60d728e5edeb4593a6ae0c359713db378beb3cacd78bc462d32b09c76c42",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\BUSINESS_RULES.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\BUSINESS_RULES.md",
+      "sha256": "37012f3b856cb0b87b3876e704ce49a0232cc2bb767576f41efe4d1de9f9f39b",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\CAPABILITY_MODEL.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\CAPABILITY_MODEL.md",
+      "sha256": "2da9140f2210873c8f5688d32dbde2094156bf8def4cdc38e79b26f12c5ad2c9",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\EVENT_CATALOG.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\EVENT_CATALOG.md",
+      "sha256": "b5ff2ca4d958ac464455d6d4d5dc054b24b1f2098c97f51f4f66a11fc4bddcd1",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\EVENT_STORMING_MATCH.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\EVENT_STORMING_MATCH.md",
+      "sha256": "bc1a0fc5d4a7e2b0c29bc2182ad1f52c01b9f63af86b92c1afc4d20fe070abb9",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\NON_FUNCTIONAL_REQUIREMENTS.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\NON_FUNCTIONAL_REQUIREMENTS.md",
+      "sha256": "9420f204cd0e580b669033665e2b160c794581be4281d2605b720091f617f41c",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\TOURNAMENT_WORKFLOWS.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\02-business\\TOURNAMENT_WORKFLOWS.md",
+      "sha256": "4195164b2f1469015df7847fc6ee6eb5bf8a59b37f6b15e3f3d31345e3339eb4",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\MODULE_TEMPLATE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\MODULE_TEMPLATE.md",
+      "sha256": "35fc0e440c245bd1822d17eec2c9dbfaa715f64d03d206bd2ed3fd323fab796b",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\PROD-MATCH-001.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\PROD-MATCH-001.md",
+      "sha256": "568ec07a9d285cdfdc86824b31bd8d5f438e9ddd81b968ffb5647f7b9f5b88cc",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\PROD-PLAYER-001.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\PROD-PLAYER-001.md",
+      "sha256": "bdd00b1f8202c042fc702c668cdff3a10ce48107d723e600c6e5afe69e58dc14",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\PROD-TOURNAMENT-001.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\03-product\\PROD-TOURNAMENT-001.md",
+      "sha256": "13db2b2e1fcfad827c0544efa5d89c6c8623ecbdcaa8cc4c1ca245f12eccdee6",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\API-SPECIFICATIONS.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\API-SPECIFICATIONS.md",
+      "sha256": "8a0110686e3be4717ee5647d7d8b634d7bcce8db034414b7ca02801f4516d9ad",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ARCHITECTURE_FITNESS_FUNCTIONS.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ARCHITECTURE_FITNESS_FUNCTIONS.md",
+      "sha256": "8327e10da14669b294421b6c8f7c7c526bdec10476b41cc23b6c755f322af969",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\CONTRACT_STANDARDS.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\CONTRACT_STANDARDS.md",
+      "sha256": "f0a2987482a5a41573e18522c0d25a83790627c81df3557f45074598e177d766",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\DB-SCHEMA-V1.0.7.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\DB-SCHEMA-V1.0.7.md",
+      "sha256": "81c0c99ca1a99efb506c854f7c68fbc646cfb8d3b9a6ff21587e3dbcd508b68a",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ENG-ARCH-001.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ENG-ARCH-001.md",
+      "sha256": "c14340698eb0c1877151ccf2134261dbc6031c1a53ee365da709e010edfab673",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ENGINEERING_CONTRACTS.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ENGINEERING_CONTRACTS.md",
+      "sha256": "7c6ac1d314bd129c8f1636857773be00a5cc14f6cffc90f1207aa199f39531f5",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ERROR_TAXONOMY.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\ERROR_TAXONOMY.md",
+      "sha256": "2dbaebcceff616a9520aa601c8f5c95d46322acb268dad96a69dd3c275e33d35",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\KNOWLEDGE_API.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\KNOWLEDGE_API.md",
+      "sha256": "7c182f1d7327412055df498f2bd91d25b354d185ad6ffa3ed121fd663441bedd",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\OBSERVABILITY_STANDARD.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\OBSERVABILITY_STANDARD.md",
+      "sha256": "55797cfe4363ccbeacb6b3e639b042d2beb6be5c17ae1090072e36f5a8f97034",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\RUNTIME_ARCHITECTURE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\04-engineering\\RUNTIME_ARCHITECTURE.md",
+      "sha256": "719e9f4cb9f13c2737530d4bb8ac80e2a69b5b3aa26b6b2c8cf6033d243b691b",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\AI_CONTEXT_BUILDER.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\AI_CONTEXT_BUILDER.md",
+      "sha256": "4a7429838230bd65d20bfe0a1c22d35c601b9452c36d15699130f260c5ebf832",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\AI_GOVERNANCE_CONSTITUTION.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\AI_GOVERNANCE_CONSTITUTION.md",
+      "sha256": "70b1fa32eb49f82302a562d5e5433295b274603d431dcb6a74dcc9c18656942c",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\CONTINUOUS_ARCHITECTURE_VERIFICATION.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\CONTINUOUS_ARCHITECTURE_VERIFICATION.md",
+      "sha256": "e855e05183c56509f120b983ba354aca350d4d29a62bca5ce438a55a7918c2a6",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_CI_CD.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_CI_CD.md",
+      "sha256": "9bdea5abb471e9ad8feb458b03fca92ac00236e5f1f8bcdc37be21d25953cf6d",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_COMPILER.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_COMPILER.md",
+      "sha256": "28afb73bed95c8d4397d17a861294251787fa91f1939262851d9c8e69982b0b1",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_GRAPH_ENGINE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_GRAPH_ENGINE.md",
+      "sha256": "7019eccfaae2786c8635cac6e7fa2062c82a2be0a73e22f8dd0f72a47734416f",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_PACKAGE_SPEC.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\05-ai\\KNOWLEDGE_PACKAGE_SPEC.md",
+      "sha256": "3aad0feacc6e9efbf1182f151f5f42a3414fa351fe70c498da29428fdff6402a",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ADQ_REGISTRY.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ADQ_REGISTRY.md",
+      "sha256": "c002e790d6fe9c3814bd6f0915d5bdf807880026b9823eda4f67aa7ecf7fb490",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ADR-001-POSTGRESQL-RPC-ATOMICITY.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ADR-001-POSTGRESQL-RPC-ATOMICITY.md",
+      "sha256": "a1d241ee2696e0fbd2e27e2a4acfb294ae0953a3208d5c045b46e59df2540b07",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ARCHITECTURE_DECISION_LOG.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ARCHITECTURE_DECISION_LOG.md",
+      "sha256": "25f9a6eb60a7501ba73ac4b3b3f6051948aa285b861d7e9a66788a1c256db9a1",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ARCHITECTURE_GOVERNANCE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\07-adr\\ARCHITECTURE_GOVERNANCE.md",
+      "sha256": "f55f4fb687d6103e2b54124104a4f9a0b4b81a47aeb99815a6a7a34c3212085f",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\08-product\\PRODUCT_METRICS_HISTORY.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\08-product\\PRODUCT_METRICS_HISTORY.md",
+      "sha256": "eb12b7f199ac5f8d9f1e0ea0e4fb8374bf28f989983e790fd0b38d10bf0bdd8f",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\08-product\\SUMMER_CUP_LEGACY_AUDIT_REPORT.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\08-product\\SUMMER_CUP_LEGACY_AUDIT_REPORT.md",
+      "sha256": "e087ff2b907e73ed81918fbd74137c25e0b29a13b3d3a4b14f458a0f57f32104",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\08-product\\SUMMER_CUP_PRODUCT_BLUEPRINT_V1.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\08-product\\SUMMER_CUP_PRODUCT_BLUEPRINT_V1.md",
+      "sha256": "3238c686658a126fe0d0d8200efdb4ceb4c9cb0c336e588e5959020b33404253",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\09-design-research\\PTX_DESIGN_LANGUAGE.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\09-design-research\\PTX_DESIGN_LANGUAGE.md",
+      "sha256": "be51975cc939dc40ef039b25cced1d172780d9ea5133ec544a5cf633776e2042",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\09-design-research\\UX_DECISION_LOG.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\09-design-research\\UX_DECISION_LOG.md",
+      "sha256": "875c73e03d2e3e91cb780c5cb4d1195291437104695af0fdfd7f4c63bf2892a1",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\release\\sprint-01-release.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\release\\sprint-01-release.md",
+      "sha256": "3356189f442046e9816c789bfb4e638dd2a9ca6f920bae866a0a64da9709d63a",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\reviews\\PTX_DELIVERY_DASHBOARD.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\reviews\\PTX_DELIVERY_DASHBOARD.md",
+      "sha256": "56a773bb67b149f50db56522eb188430e935e344a72926b5cafd5351b29c78aa",
+      "lastModified": 1785262844931
+    },
+    "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\reviews\\sprint-01-review.md": {
+      "filePath": "C:\\Users\\ASUS\\Documents\\antigravity\\fervent-goodall\\docs\\reviews\\sprint-01-review.md",
+      "sha256": "20599ad90dee29d39883d528244db007ab842fde4280f71557ae504f25c21d96",
+      "lastModified": 1785262844931
+    }
+  }
+}

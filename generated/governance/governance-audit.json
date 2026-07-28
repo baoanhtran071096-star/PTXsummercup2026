@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-07-28T18:20:44.928Z",
+  "complianceScore": 100,
+  "totalPolicyViolations": 10,
+  "violations": [
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-001",
+      "message": "Capability [CAP-001] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-002",
+      "message": "Capability [CAP-002] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-003",
+      "message": "Capability [CAP-003] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-004",
+      "message": "Capability [CAP-004] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-005",
+      "message": "Capability [CAP-005] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-006",
+      "message": "Capability [CAP-006] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-007",
+      "message": "Capability [CAP-007] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-008",
+      "message": "Capability [CAP-008] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-009",
+      "message": "Capability [CAP-009] has no associated API Contract"
+    },
+    {
+      "ruleId": "GOV-RULE-003",
+      "severity": "WARNING",
+      "target": "CAP-010",
+      "message": "Capability [CAP-010] has no associated API Contract"
+    }
+  ],
+  "activeAdrsCount": 2,
+  "approvedRfcsCount": 1,
+  "auditSummary": {
+    "status": "COMPLIANT",
+    "totalObjectsAudited": 49,
+    "zeroDriftVerified": true
+  }
+}

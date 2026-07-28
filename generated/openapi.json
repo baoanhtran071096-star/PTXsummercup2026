@@ -1,0 +1,219 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PTX Platform Master API Specification",
+    "version": "1.2.0",
+    "description": "OpenAPI Specification auto-generated from PTX Foundation Knowledge Objects."
+  },
+  "paths": {
+    "/api/v1/matches/add-goal": {
+      "post": {
+        "summary": "Ghi nhận bàn thắng Atomic RPC",
+        "operationId": "API-MATCH-001",
+        "tags": [
+          "Generated API Contracts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddGoalContractSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Lỗi Validation Input (Zod Contract Failure)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/seasons/generate-fixtures": {
+      "post": {
+        "summary": "Kích hoạt động cơ tự động xếp lịch thi đấu",
+        "operationId": "API-TOURN-001",
+        "tags": [
+          "Generated API Contracts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateFixturesContractSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Lỗi Validation Input (Zod Contract Failure)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/players/add": {
+      "post": {
+        "summary": "Thêm cầu thủ vào danh sách thi đấu",
+        "operationId": "API-PLAY-001",
+        "tags": [
+          "Generated API Contracts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPlayerContractSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Thành công",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Lỗi Validation Input (Zod Contract Failure)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponseEnvelope": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object"
+          },
+          "meta": {
+            "type": "object"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorResponseEnvelope": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "ERR_VALIDATION_FAILED"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AddGoalContractSchema": {
+        "type": "object",
+        "required": [
+          "match_id",
+          "team_id",
+          "player_id",
+          "minute",
+          "goal_type"
+        ],
+        "properties": {
+          "match_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "team_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "player_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minute": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 120
+          },
+          "goal_type": {
+            "type": "string",
+            "enum": [
+              "NORMAL",
+              "PENALTY",
+              "FREE_KICK",
+              "OWN_GOAL"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
