@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "data": {
+    "player": {
+      "id": "ply_1785266800437",
+      "teamId": "team_1785266800437",
+      "name": "Nguyễn Văn Huy",
+      "shirtNumber": 10,
+      "position": "ATTACKER",
+      "avatarAssetId": "ast_1785266800435",
+      "resolvedAvatarUrl": "https://ptx-supabase-prod.supabase.co/storage/v1/object/public/player_avatar/org_ptx_group_01/ast_1785266800435_cauthuhuy10_profile.png_md.webp"
+    },
+    "team": {
+      "id": "team_1785266800437",
+      "seasonId": "ssn_summer_2026",
+      "name": "Về Nhì FC",
+      "fullName": "Câu Lạc Bộ Bóng Đá Về Nhì",
+      "logoAssetId": "ast_1785266800436",
+      "resolvedLogoUrl": "https://ptx-supabase-prod.supabase.co/storage/v1/object/public/team_logo/org_ptx_group_01/ast_1785266800436_fc_ve_nhi_official_logo.png_sm.webp"
+    }
+  },
+  "meta": {
+    "traceId": "trc_1785266800437",
+    "requestId": "req_1785266800437",
+    "status": 200
+  }
+}

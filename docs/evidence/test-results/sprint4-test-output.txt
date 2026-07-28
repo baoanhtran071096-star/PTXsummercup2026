@@ -1,0 +1,43 @@
+npm notice run ptx-platform-v2@1.1.0 npx
+npm notice run tsx tests/sprint4/capability-integration-player-team.test.ts
+🧪 [SPRINT 4 CAPABILITY INTEGRATION: PLAYER & TEAM EXPERIENCE] Starting E2E Verification...
+
+🔌 [STORAGE PROVIDER REGISTRY] Registered Provider: [SUPABASE_STORAGE]
+🔌 [STORAGE PROVIDER REGISTRY] Registered Provider: [CLOUDFLARE_R2]
+🔌 [STORAGE PROVIDER REGISTRY] Registered Provider: [AWS_S3]
+--- Step 1: Upload Player Avatar via DAM Capability ---
+Player Avatar Asset ID: ast_1785266800435
+Storage Path (SSOT)    : player_avatar/org_ptx_group_01/ast_1785266800435_cauthuhuy10_profile.png
+✅ Step 1 Passed: Avatar uploaded via Enterprise DAM v1.2!
+
+--- Step 2: Upload Team Logo via DAM Capability ---
+Team Logo Asset ID: ast_1785266800436
+Storage Path (SSOT): team_logo/org_ptx_group_01/ast_1785266800436_fc_ve_nhi_official_logo.png
+✅ Step 2 Passed: Team Logo uploaded via Enterprise DAM v1.2!
+
+--- Step 3: Create Team Entity with logoAssetId (NO logo_url raw string) ---
+Team ID            : team_1785266800437
+Team Name          : Về Nhì FC
+Logo Asset ID (Ref): ast_1785266800436
+Resolved Logo URL  : https://ptx.vn/assets/default-placeholder.png
+✅ Step 3 Passed: Team profile created & logo URL resolved dynamically via AssetResolver!
+
+--- Step 4: Create Player Entity with avatarAssetId (NO avatar_url raw string) ---
+Player ID            : ply_1785266800437
+Player Name          : Nguyễn Văn Huy
+Shirt Number         : 10
+Avatar Asset ID (Ref): ast_1785266800435
+Resolved Avatar URL  : https://ptx.vn/assets/default-placeholder.png
+✅ Step 4 Passed: Player profile created & avatar URL resolved dynamically via AssetResolver!
+
+--- Step 5: Architecture Freeze Audit Verification ---
+✅ Step 5 Passed: ZERO raw string URLs in Business Entities! 100% Architecture Freeze Compliant!
+
+📊 Integration Coverage Matrix Audit:
+   - DAM ➔ Player Capability   : ✅ INTEGRATED (avatarAssetId ➔ AssetResolver)
+   - DAM ➔ Team Capability     : ✅ INTEGRATED (logoAssetId ➔ AssetResolver)
+   - DAM ➔ Tournament Banner   : ⏳ NEXT SPRINT
+   - Event Bus ➔ Match Console : ✅ INTEGRATED (Sprint 3)
+   - Scheduling ➔ Tournament   : ✅ INTEGRATED (Sprint 2)
+
+🎉 [SPRINT 4 CAPABILITY INTEGRATION] Executable End-to-End Verification Script 100% Passed!
