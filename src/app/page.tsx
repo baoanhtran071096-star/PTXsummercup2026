@@ -9,6 +9,7 @@ export default function PublicBetaDemoPage() {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [showChampClimax, setShowChampClimax] = useState(false);
   const [showClosingSlide, setShowClosingSlide] = useState(false);
+  const [showPlayerModal, setShowPlayerModal] = useState(false);
   const [storyTimelineStep, setStoryTimelineStep] = useState<number | null>(null);
 
   // Splash & Tournament Initialization sequence
@@ -39,7 +40,7 @@ export default function PublicBetaDemoPage() {
 
   const [matchScore, setMatchScore] = useState({ home: 2, away: 1 });
   const [events, setEvents] = useState([
-    { minute: 14, type: 'GOAL_SCORED', player: 'Nguyễn Văn Huy (#10)', team: 'FC Về Nhì', details: 'Sút xa đẹp mắt 25m' },
+    { minute: 14, type: 'GOAL_SCORED', player: 'Kylian mBAppé (#10)', team: 'FC Về Nhì', details: 'Sút xa đẹp mắt 25m' },
     { minute: 32, type: 'YELLOW_CARD', player: 'Trần Tuấn Anh (#6)', team: 'FC Rồng Vàng', details: 'Phạm lỗi nguy hiểm' },
     { minute: 68, type: 'GOAL_SCORED', player: 'Phạm Minh Đức (#9)', team: 'FC Về Nhì', details: 'Đánh đầu cận thành' }
   ]);
@@ -66,7 +67,7 @@ export default function PublicBetaDemoPage() {
   const handleSimulateGoal = () => {
     setMatchScore(prev => ({ ...prev, home: prev.home + 1 }));
     setEvents(prev => [
-      { minute: 78, type: 'GOAL_SCORED', player: 'Nguyễn Văn Huy (#10)', team: 'FC Về Nhì', details: 'Đệm bóng cận thành (Hattrick siêu phẩm!)' },
+      { minute: 78, type: 'GOAL_SCORED', player: 'Kylian mBAppé (#10)', team: 'FC Về Nhì', details: 'Đệm bóng cận thành (Hattrick siêu phẩm!)' },
       ...prev
     ]);
   };
@@ -155,11 +156,11 @@ export default function PublicBetaDemoPage() {
             <span style={{ fontWeight: '800', color: 'var(--accent-cyan)', marginRight: '10px' }}>HÀNH TRÌNH NGÀY KHAI MẠC (BƯỚC {storyTimelineStep}/6):</span>
             <span style={{ fontWeight: '600' }}>
               {storyTimelineStep === 1 && '⏰ 08:00 — Ban Tổ Chức mở PTX Platform kiểm tra 8 đội, lịch đấu & sân thi đấu'}
-              {storyTimelineStep === 2 && '⏰ 08:30 — Đội trưởng FC Về Nhì mở điện thoại xem giờ đấu & danh sách cầu thủ'}
-              {storyTimelineStep === 3 && '⏰ 09:00 — Trọng tài bắt đầu trận đấu, ghi nhận Goal, Card & Live Score nhảy 2-1'}
+              {storyTimelineStep === 2 && '⏰ 08:30 — Đội trưởng FC Về Nhì mở điện thoại xem giờ đấu & danh sách cầu thủ (Kylian mBAppé #10)'}
+              {storyTimelineStep === 3 && '⏰ 09:00 — Trọng tài bắt đầu trận đấu, ghi nhận Goal từ Kylian mBAppé & Live Score nhảy 2-1'}
               {storyTimelineStep === 4 && '⏰ 09:45 — Khán giả truy cập xem tỉ số trực tiếp & Bảng xếp hạng thay đổi'}
               {storyTimelineStep === 5 && '⏰ 10:00 — Ban tổ chức upload ảnh trận đấu lên DAM Gallery & Vinh danh Title Sponsor'}
-              {storyTimelineStep === 6 && '⏰ 17:00 — Bế mạc giải đấu, Hall of Fame vinh danh Nhà Vô Địch FC Về Nhì!'}
+              {storyTimelineStep === 6 && '⏰ 17:00 — Bế mạc giải đấu, Hall of Fame vinh danh Kylian mBAppé & Vua Dội Bom Golden Boot!'}
             </span>
           </div>
           <button className="btn-primary" onClick={nextStoryStep}>
@@ -373,7 +374,9 @@ export default function PublicBetaDemoPage() {
               {events.map((evt, idx) => (
                 <div key={idx} style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.03)', borderRadius: '8px', borderLeft: evt.type === 'GOAL_SCORED' ? '4px solid var(--accent-green)' : '4px solid var(--accent-gold)' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontWeight: '700', color: 'var(--accent-cyan)', marginRight: '8px' }}>{evt.minute}&apos;</span>
-                  <span style={{ fontWeight: '700' }}>{evt.player}</span>
+                  <span style={{ fontWeight: '700', cursor: evt.player.includes('Kylian') ? 'pointer' : 'default', textDecoration: evt.player.includes('Kylian') ? 'underline' : 'none' }} onClick={() => evt.player.includes('Kylian') && setShowPlayerModal(true)}>
+                    {evt.player}
+                  </span>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{evt.details}</p>
                 </div>
               ))}
@@ -445,11 +448,11 @@ export default function PublicBetaDemoPage() {
         <div className="glass-panel" style={{ padding: '24px' }}>
           <h3 style={{ fontSize: '1.2rem', fontWeight: '700', marginBottom: '16px' }}>🏅 Hall of Fame & Danh Hiệu Vinh Danh</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-            <div style={{ background: 'rgba(255,183,3,0.1)', border: '1px solid rgba(255,183,3,0.3)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
+            <div style={{ background: 'rgba(255,183,3,0.1)', border: '1px solid rgba(255,183,3,0.3)', padding: '20px', borderRadius: '12px', textAlign: 'center', cursor: 'pointer' }} onClick={() => setShowPlayerModal(true)}>
               <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>👟</div>
               <h4 style={{ fontWeight: '800', color: 'var(--accent-gold)', fontSize: '1.2rem' }}>Vua Dội Bom Golden Boot</h4>
-              <p style={{ fontWeight: '700', fontSize: '1.1rem', marginTop: '6px' }}>Nguyễn Văn Huy (#10)</p>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Về Nhì — 8 Bàn Thắng</span>
+              <p style={{ fontWeight: '700', fontSize: '1.2rem', marginTop: '6px', textDecoration: 'underline' }}>Kylian mBAppé (#10) ⚡</p>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Về Nhì — 8 Bàn Thắng | Lead Developer</span>
             </div>
             <div style={{ background: 'rgba(0,242,254,0.1)', border: '1px solid rgba(0,242,254,0.3)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>🏆</div>
@@ -457,6 +460,24 @@ export default function PublicBetaDemoPage() {
               <p style={{ fontWeight: '700', fontSize: '1.1rem', marginTop: '6px' }}>Trần Tuấn Anh (#6)</p>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Rồng Vàng — 5 Assists</span>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Player Profile Easter Egg Modal for Kylian mBAppé */}
+      {showPlayerModal && (
+        <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)', zIndex: 99999, display: 'grid', placeItems: 'center', padding: '16px' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '480px', padding: '32px', textAlign: 'center', position: 'relative' }}>
+            <button onClick={() => setShowPlayerModal(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
+            <div style={{ fontSize: '3.5rem', marginBottom: '8px' }}>⚽</div>
+            <h3 style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--accent-gold)' }}>Kylian mBAppé (#10)</h3>
+            <span style={{ fontSize: '0.85rem', color: 'var(--accent-cyan)', fontWeight: '700' }}>FORWARD • FC VỀ NHÌ</span>
+            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '12px', margin: '20px 0', border: '1px solid var(--border-glass)', textAlign: 'left' }}>
+              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Role in Tournament:</strong> Striker & Golden Boot Contender 👟</p>
+              <p style={{ fontSize: '0.9rem', marginBottom: '6px' }}><strong>Role in Product:</strong> Creator & Lead Developer of PTX Platform 💻</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '10px' }}>"Football lover. Creator of PTX Platform Enterprise System."</p>
+            </div>
+            <button className="btn-primary" onClick={() => setShowPlayerModal(false)}>Đóng Hồ Sơ Cầu Thủ</button>
           </div>
         </div>
       )}
@@ -473,16 +494,28 @@ export default function PublicBetaDemoPage() {
         </div>
       )}
 
-      {/* Ren's Closing Slide Modal */}
+      {/* Ren's Closing Slide Modal with Credits for Kylian mBAppé */}
       {showClosingSlide && (
         <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)', zIndex: 99999, display: 'grid', placeItems: 'center', padding: '16px', textAlign: 'center' }}>
-          <div className="glass-panel" style={{ width: '100%', maxWidth: '600px', padding: '48px', borderRadius: '24px', position: 'relative' }}>
+          <div className="glass-panel" style={{ width: '100%', maxWidth: '640px', padding: '48px', borderRadius: '24px', position: 'relative' }}>
             <button onClick={() => setShowClosingSlide(false)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>✖</button>
             <div style={{ fontSize: '3.5rem', marginBottom: '16px' }}>🏆</div>
-            <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '12px' }}>CẢM ƠN QUÝ VỊ!</h2>
-            <h3 style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.4rem', marginBottom: '24px' }}>PTX PLATFORM PUBLIC BETA PREVIEW</h3>
-            <p style={{ color: 'var(--text-main)', fontSize: '1.1rem', lineHeight: 1.6, background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px', border: '1px solid var(--border-glass)', marginBottom: '24px' }}>
-              Mọi góp ý hôm nay của quý vị sẽ trực tiếp đóng góp tạo nên bản nâng cấp <strong>PTX Platform v1.1</strong> ngày càng xuất sắc hơn!
+            <h2 className="gradient-text" style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '8px' }}>CẢM ƠN QUÝ VỊ!</h2>
+            <h3 style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.3rem', marginBottom: '24px' }}>PTX PLATFORM PUBLIC BETA PREVIEW</h3>
+            
+            {/* Developer & Governance Credits */}
+            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px', border: '1px solid var(--border-glass)', marginBottom: '24px', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Designed & Created with ❤️ by</p>
+              <h4 style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--accent-cyan)', margin: '4px 0 12px 0' }}>Kylian mBAppé • Lead Developer</h4>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', fontSize: '0.85rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-glass)', paddingTop: '10px' }}>
+                <span><strong>Chief Architecture:</strong> Ren</span>
+                <span>•</span>
+                <span><strong>AI Coding Team:</strong> Antigravity AI</span>
+              </div>
+            </div>
+
+            <p style={{ color: 'var(--text-main)', fontSize: '1rem', lineHeight: 1.5, marginBottom: '20px' }}>
+              Mọi góp ý hôm nay của quý vị sẽ trực tiếp đóng góp tạo nên bản nâng cấp <strong>PTX Platform v1.1</strong>!
             </p>
             <button className="btn-primary" onClick={() => { setShowClosingSlide(false); setShowFeedbackModal(true); }}>
               💬 Gửi Đánh Giá Trực Tiếp
