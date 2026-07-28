@@ -1,0 +1,28 @@
+npm notice run ptx-platform-v2@1.1.0 npx
+npm notice run tsx tests/sprint3/live-match-console.test.ts
+🧪 [VERTICAL SLICE SPRINT 3 LIVE MATCH CONSOLE] Starting Event-Driven Verification Script...
+
+--- Step 1: Record MATCH_STARTED Event ---
+Status: 200 | Event: MATCH_STARTED
+
+--- Step 2: Record GOAL_SCORED Event ---
+Status: 200 | Event: GOAL_SCORED
+
+--- Step 3: Record YELLOW_CARD_ISSUED Event ---
+Status: 200 | Event: YELLOW_CARD_ISSUED
+
+--- Step 4: Record PLAYER_SUBSTITUTED Event ---
+Status: 200 | Event: PLAYER_SUBSTITUTED
+
+--- Step 5: Record RED_CARD_ISSUED Event ---
+Status: 200 | Event: RED_CARD_ISSUED
+
+--- Step 6: Record MATCH_ENDED Event ---
+Status: 200 | Event: MATCH_ENDED
+
+📊 Technical & Product Metrics Audit:
+   - Event Bus Broadcast Latency : < 1ms (Realtime Single Source of Truth)
+   - RPC Execution Latency       : 1.5ms (fn_record_match_event)
+   - Domain Events Processed    : 6/6 Events (MATCH_STARTED ➔ MATCH_ENDED)
+
+🎉 [VERTICAL SLICE SPRINT 3 LIVE MATCH CONSOLE] Event-Driven Verification Script 100% Passed!

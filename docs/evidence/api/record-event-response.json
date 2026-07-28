@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "data": {
+    "eventId": "evt_1785265451184",
+    "status": "PROCESSED_AND_BROADCAST",
+    "latencyMs": 1,
+    "event": {
+      "eventId": "evt_1785265451184",
+      "eventType": "GOAL_SCORED",
+      "matchId": "mth_final_summer_cup_2026",
+      "minute": 14,
+      "timestamp": "2026-07-28T19:04:11.184Z",
+      "teamId": "team_ve_nhi",
+      "scorerPlayerId": "ply_huy_10",
+      "goalType": "OPEN_PLAY",
+      "currentScore": {
+        "home": 1,
+        "away": 0
+      }
+    }
+  },
+  "meta": {
+    "traceId": "trc_1785265451184",
+    "requestId": "req_1785265451184",
+    "status": 200
+  }
+}

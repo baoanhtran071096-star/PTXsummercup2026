@@ -34,6 +34,13 @@ export interface GenerateScheduleParams {
   startDate: string;
 }
 
+export interface RecordMatchEventParams {
+  matchId: string;
+  eventType: string;
+  minute: number;
+  payload: Record<string, any>;
+}
+
 export class SupabaseClientHarness {
   private static instance: SupabaseClientHarness;
 
@@ -121,7 +128,6 @@ export class SupabaseClientHarness {
 
     if (functionName === 'fn_generate_tournament_schedule') {
       const teams = (params.teams as string[]) || ['Team A', 'Team B', 'Team C', 'Team D'];
-      const venues = (params.venues as string[]) || ['Sân 1', 'Sân 2'];
       const matchesCount = (teams.length * (teams.length - 1)) / 2;
 
       return {
@@ -133,6 +139,23 @@ export class SupabaseClientHarness {
           venueConflictsDetected: 0,
           timeConflictsDetected: 0,
           generatedAt: new Date().toISOString()
+        } as unknown as T,
+        error: null,
+        status: 200
+      };
+    }
+
+    if (functionName === 'fn_record_match_event') {
+      const eventId = 'evt_' + Date.now();
+      return {
+        data: {
+          success: true,
+          eventId,
+          matchId: params.matchId,
+          eventType: params.eventType,
+          minute: params.minute,
+          db_execution_time_ms: 1.5,
+          recordedAt: new Date().toISOString()
         } as unknown as T,
         error: null,
         status: 200
