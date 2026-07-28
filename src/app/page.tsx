@@ -3,17 +3,24 @@
 import React, { useState, useEffect } from 'react';
 
 export default function PublicBetaDemoPage() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [splashStage, setSplashStage] = useState<'INTRO' | 'INIT' | 'DONE'>('INTRO');
+  const [initItems, setInitItems] = useState({ teams: false, fixtures: false, sponsors: false, media: false });
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TEAMS' | 'MATCHES' | 'STANDINGS' | 'GALLERY' | 'HALL_OF_FAME'>('OVERVIEW');
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showChampClimax, setShowChampClimax] = useState(false);
   const [showClosingSlide, setShowClosingSlide] = useState(false);
   const [storyTimelineStep, setStoryTimelineStep] = useState<number | null>(null);
 
-  // 2.5 Second Professional Intro Splash Effect
+  // Splash & Tournament Initialization sequence
   useEffect(() => {
     const splashTimer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2500);
+      setSplashStage('INIT');
+      setTimeout(() => setInitItems(prev => ({ ...prev, teams: true })), 300);
+      setTimeout(() => setInitItems(prev => ({ ...prev, fixtures: true })), 600);
+      setTimeout(() => setInitItems(prev => ({ ...prev, sponsors: true })), 900);
+      setTimeout(() => setInitItems(prev => ({ ...prev, media: true })), 1200);
+      setTimeout(() => setSplashStage('DONE'), 1800);
+    }, 1800);
     return () => clearTimeout(splashTimer);
   }, []);
 
@@ -75,7 +82,14 @@ export default function PublicBetaDemoPage() {
     else if (storyTimelineStep === 3) { setStoryTimelineStep(4); setActiveTab('STANDINGS'); }
     else if (storyTimelineStep === 4) { setStoryTimelineStep(5); setActiveTab('GALLERY'); }
     else if (storyTimelineStep === 5) { setStoryTimelineStep(6); setActiveTab('HALL_OF_FAME'); }
-    else { setStoryTimelineStep(null); setShowClosingSlide(true); }
+    else {
+      setStoryTimelineStep(null);
+      setShowChampClimax(true);
+      setTimeout(() => {
+        setShowChampClimax(false);
+        setShowClosingSlide(true);
+      }, 3500);
+    }
   };
 
   const handleFeedbackSubmit = (e: React.FormEvent) => {
@@ -88,14 +102,27 @@ export default function PublicBetaDemoPage() {
     }, 2500);
   };
 
-  if (showSplash) {
+  if (splashStage !== 'DONE') {
     return (
       <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: '#0b0f19', zIndex: 99999, display: 'grid', placeItems: 'center', textAlign: 'center' }}>
-        <div>
-          <div style={{ fontSize: '1rem', letterSpacing: '4px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px' }}>PTX GROUP PRESENTS</div>
-          <h1 className="gradient-text" style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '8px' }}>PTX SUMMER CUP 2026</h1>
-          <div style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.1rem' }}>POWERED BY PTX PLATFORM ENTERPRISE</div>
-        </div>
+        {splashStage === 'INTRO' ? (
+          <div>
+            <div style={{ fontSize: '1rem', letterSpacing: '4px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px' }}>PTX GROUP PRESENTS</div>
+            <h1 className="gradient-text" style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '8px' }}>PTX SUMMER CUP 2026</h1>
+            <div style={{ color: 'var(--accent-gold)', fontWeight: '700', fontSize: '1.1rem' }}>POWERED BY PTX PLATFORM ENTERPRISE</div>
+          </div>
+        ) : (
+          <div>
+            <h2 style={{ fontSize: '1.5rem', color: 'var(--accent-cyan)', fontWeight: '700', marginBottom: '20px' }}>Loading Tournament...</h2>
+            <div style={{ display: 'flex', gap: '20px', fontSize: '1.1rem', fontFamily: 'var(--font-mono)' }}>
+              <span style={{ color: initItems.teams ? 'var(--accent-green)' : 'var(--text-muted)' }}>{initItems.teams ? '✓' : '○'} Teams</span>
+              <span style={{ color: initItems.fixtures ? 'var(--accent-green)' : 'var(--text-muted)' }}>{initItems.fixtures ? '✓' : '○'} Fixtures</span>
+              <span style={{ color: initItems.sponsors ? 'var(--accent-green)' : 'var(--text-muted)' }}>{initItems.sponsors ? '✓' : '○'} Sponsors</span>
+              <span style={{ color: initItems.media ? 'var(--accent-green)' : 'var(--text-muted)' }}>{initItems.media ? '✓' : '○'} Media</span>
+            </div>
+            {initItems.media && <div style={{ marginTop: '20px', color: 'var(--accent-gold)', fontWeight: '800', fontSize: '1.2rem' }}>Ready.</div>}
+          </div>
+        )}
       </div>
     );
   }
@@ -136,7 +163,7 @@ export default function PublicBetaDemoPage() {
             </span>
           </div>
           <button className="btn-primary" onClick={nextStoryStep}>
-            {storyTimelineStep < 6 ? 'Tiếp Tục Hành Trình →' : 'Kết Thúc & Mở Slide Cảm Ơn ✨'}
+            {storyTimelineStep < 6 ? 'Tiếp Tục Hành Trình →' : 'Kết Thúc & Mở Climax Vinh Danh ✨'}
           </button>
         </div>
       )}
@@ -430,6 +457,18 @@ export default function PublicBetaDemoPage() {
               <p style={{ fontWeight: '700', fontSize: '1.1rem', marginTop: '6px' }}>Trần Tuấn Anh (#6)</p>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>FC Rồng Vàng — 5 Assists</span>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Championship Climax Animation Effect */}
+      {showChampClimax && (
+        <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, background: '#040914', zIndex: 999999, display: 'grid', placeItems: 'center', textAlign: 'center', padding: '24px' }}>
+          <div>
+            <div style={{ fontSize: '5rem', marginBottom: '16px' }}>🏆</div>
+            <span style={{ color: 'var(--accent-gold)', fontWeight: '800', fontSize: '1.5rem', letterSpacing: '3px', textTransform: 'uppercase' }}>CHAMPION OF PTX SUMMER CUP 2026</span>
+            <h1 className="gold-text" style={{ fontSize: '3.8rem', fontWeight: '800', margin: '12px 0' }}>FC VỀ NHÌ</h1>
+            <p style={{ fontSize: '1.4rem', color: 'var(--text-muted)', marginTop: '24px', fontWeight: '600' }}>PTX Summer Cup 2026 has concluded.</p>
           </div>
         </div>
       )}
