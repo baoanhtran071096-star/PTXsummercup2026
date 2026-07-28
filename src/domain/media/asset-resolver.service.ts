@@ -1,42 +1,51 @@
-import { MediaAssetV11 } from './asset-v1-1-models';
-import { StorageAdapter, SupabaseStorageAdapter, CloudflareR2Adapter, S3StorageAdapter } from './storage-adapter.interface';
+import { MediaAssetV12, SIGNED_URL_POLICY_MATRIX, ImageVariantSize } from './dam-v1-2-models';
+import { StorageProviderRegistry } from './storage-provider.registry';
 
-export interface AssetResolveOptions {
+export interface AssetResolveOptionsV12 {
   signedUrl?: boolean;
   expiresInSec?: number;
+  variantSize?: ImageVariantSize;
   width?: number;
   height?: number;
   format?: 'webp' | 'png' | 'jpg';
 }
 
 export class AssetResolverService {
-  private adapters: Map<string, StorageAdapter> = new Map();
+  private registry: StorageProviderRegistry;
 
   constructor() {
-    const supabase = new SupabaseStorageAdapter();
-    const r2 = new CloudflareR2Adapter();
-    const s3 = new S3StorageAdapter();
-
-    this.adapters.set(supabase.providerName, supabase);
-    this.adapters.set(r2.providerName, r2);
-    this.adapters.set(s3.providerName, s3);
+    this.registry = StorageProviderRegistry.getInstance();
   }
 
-  async resolveAsset(asset?: MediaAssetV11, options?: AssetResolveOptions): Promise<string> {
-    if (!asset) {
+  async resolveAssetUrlV12(asset?: MediaAssetV12, options?: AssetResolveOptionsV12): Promise<string> {
+    if (!asset || asset.status === 'DELETED') {
       return 'https://ptx.vn/assets/default-placeholder.png';
     }
 
-    const adapter = this.adapters.get(asset.storageProvider) || this.adapters.get('SUPABASE_STORAGE')!;
+    const adapter = this.registry.getProvider(asset.storageProvider);
+    const policy = SIGNED_URL_POLICY_MATRIX[asset.assetType] || { isSignedOnly: false, defaultExpiresInSec: 3600 };
 
-    let baseUrl: string;
-    if (options?.signedUrl) {
-      baseUrl = await adapter.getSignedUrl(asset.storagePath, options.expiresInSec || 3600);
-    } else {
-      baseUrl = await adapter.getPublicUrl(asset.storagePath);
+    let targetPath = asset.storagePath;
+
+    // Check if Variant requested
+    if (options?.variantSize && options.variantSize !== 'original') {
+      const variant = asset.variants.find((v) => v.size === options.variantSize);
+      if (variant) {
+        targetPath = variant.storagePath;
+      }
     }
 
-    // Dynamic Image Processing Pipeline Query Parameters
+    let baseUrl: string;
+    const isSignedRequired = options?.signedUrl ?? (asset.isSignedOnly || policy.isSignedOnly);
+
+    if (isSignedRequired) {
+      const expiresIn = options?.expiresInSec || policy.defaultExpiresInSec;
+      baseUrl = await adapter.getSignedUrl(targetPath, expiresIn);
+    } else {
+      baseUrl = await adapter.getPublicUrl(targetPath);
+    }
+
+    // Processing Query Parameters
     const queryParams: string[] = [];
     if (options?.width) queryParams.push(`w=${options.width}`);
     if (options?.height) queryParams.push(`h=${options.height}`);
