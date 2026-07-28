@@ -1,0 +1,5 @@
+[
+  { "rank": 1, "teamId": "team_01", "teamName": "FC QUẢN LÝ", "played": 4, "won": 3, "drawn": 1, "lost": 0, "gf": 14, "ga": 4, "gd": 10, "pts": 10 },
+  { "rank": 2, "teamId": "team_02", "teamName": "FC VỀ NHÌ", "played": 4, "won": 2, "drawn": 1, "lost": 1, "gf": 9, "ga": 6, "gd": 3, "pts": 7 },
+  { "rank": 3, "teamId": "team_03", "teamName": "FC TIÊN PHONG", "played": 4, "won": 0, "drawn": 0, "lost": 4, "gf": 3, "ga": 16, "gd": -13, "pts": 0 }
+]

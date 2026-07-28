@@ -1,0 +1,35 @@
+[
+  {
+    "id": "team_01",
+    "name": "FC QUẢN LÝ",
+    "code": "QL",
+    "logo": "🛡️",
+    "logoAssetId": "ast_logo_fc_quan_ly",
+    "captain": "Trần Bảo Anh (Kylian mBAppé #9.5)",
+    "playerCount": 26,
+    "primaryColor": "#00f2fe",
+    "secondaryColor": "#4facfe"
+  },
+  {
+    "id": "team_02",
+    "name": "FC VỀ NHÌ",
+    "code": "VN",
+    "logo": "⭐",
+    "logoAssetId": "ast_logo_fc_ve_nhi",
+    "captain": "Trần Tuấn Anh (#6)",
+    "playerCount": 18,
+    "primaryColor": "#ffb703",
+    "secondaryColor": "#fb8500"
+  },
+  {
+    "id": "team_03",
+    "name": "FC TIÊN PHONG",
+    "code": "TP",
+    "logo": "🚀",
+    "logoAssetId": "ast_logo_fc_tien_phong",
+    "captain": "Đình Huy (#14)",
+    "playerCount": 16,
+    "primaryColor": "#ff4d6d",
+    "secondaryColor": "#c77dff"
+  }
+]

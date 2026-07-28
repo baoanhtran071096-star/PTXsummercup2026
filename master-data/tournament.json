@@ -1,0 +1,14 @@
+{
+  "id": "tour_ptx_2026",
+  "name": "PTX Summer Cup 2026",
+  "season": "2026",
+  "format": "5-a-side",
+  "formatName": "Giải bóng đá Sân 5",
+  "venue": "Sân bóng đá mini PTX Sports Complex",
+  "city": "Thành phố Hồ Chí Minh",
+  "totalTeams": 3,
+  "totalPlayers": 26,
+  "status": "PUBLIC_BETA_PREVIEW",
+  "bannerAssetId": "ast_banner_ptx_summer_cup_2026",
+  "createdAt": "2026-07-29T00:00:00Z"
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "match_01",
+    "round": 1,
+    "homeTeamId": "team_01",
+    "homeTeamName": "FC QUẢN LÝ",
+    "awayTeamId": "team_02",
+    "awayTeamName": "FC VỀ NHÌ",
+    "homeScore": 3,
+    "awayScore": 1,
+    "status": "COMPLETED",
+    "date": "2026-08-01",
+    "time": "09:00",
+    "venue": "Sân 1 - PTX Sports Complex",
+    "events": [
+      { "minute": 14, "type": "GOAL", "player": "Kylian mBAppé (#9.5)", "team": "FC QUẢN LÝ" },
+      { "minute": 32, "type": "YELLOW_CARD", "player": "VERL (#11)", "team": "FC QUẢN LÝ" },
+      { "minute": 68, "type": "GOAL", "player": "Erling HaaTháiland (#9)", "team": "FC QUẢN LÝ" },
+      { "minute": 78, "type": "GOAL", "player": "Kylian mBAppé (#9.5)", "team": "FC QUẢN LÝ", "note": "Hattrick" }
+    ]
+  },
+  {
+    "id": "match_02",
+    "round": 2,
+    "homeTeamId": "team_01",
+    "homeTeamName": "FC QUẢN LÝ",
+    "awayTeamId": "team_03",
+    "awayTeamName": "FC TIÊN PHONG",
+    "homeScore": 4,
+    "awayScore": 1,
+    "status": "COMPLETED",
+    "date": "2026-08-08",
+    "time": "09:00",
+    "venue": "Sân 1 - PTX Sports Complex"
+  },
+  {
+    "id": "match_03",
+    "round": 3,
+    "homeTeamId": "team_02",
+    "homeTeamName": "FC VỀ NHÌ",
+    "awayTeamId": "team_03",
+    "awayTeamName": "FC TIÊN PHONG",
+    "homeScore": 2,
+    "awayScore": 1,
+    "status": "COMPLETED",
+    "date": "2026-08-15",
+    "time": "09:00",
+    "venue": "Sân 1 - PTX Sports Complex"
+  }
+]

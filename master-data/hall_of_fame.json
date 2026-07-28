@@ -1,0 +1,27 @@
+{
+  "goldenBoot": {
+    "awardName": "Vua Dội Bom Golden Boot",
+    "playerId": "ply_006",
+    "jerseyName": "Kylian mBAppé",
+    "fullName": "Trần Bảo Anh",
+    "jerseyNumber": "9.5",
+    "teamName": "FC QUẢN LÝ",
+    "goals": 8,
+    "role": "Lead Developer & Striker"
+  },
+  "mvp": {
+    "awardName": "Cầu Thủ Xuất Sắc Nhất MVP",
+    "playerId": "ply_001",
+    "jerseyName": "Nguyễn Sử",
+    "fullName": "Nguyễn Sử",
+    "jerseyNumber": "10",
+    "teamName": "FC QUẢN LÝ",
+    "assists": 5
+  },
+  "champion": {
+    "awardName": "Đội Vô Địch Champion",
+    "teamId": "team_01",
+    "teamName": "FC QUẢN LÝ",
+    "points": 10
+  }
+}
