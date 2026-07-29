@@ -1,0 +1,75 @@
+# PTX Platform Machine-Readable Audit DSL Manifest v1.1.0
+manifestVersion: "1.1.0"
+packageName: "PTX_Platform_v2_Knowledge_System"
+packageVersion: "1.0.1"
+reviewAuthority: "Ren (Chief Product & Architecture Officer)"
+reviewResult: "RC1_APPROVED"
+auditTimestamp: "2026-07-30T02:31:00Z"
+targetGatesCount: 10
+evaluatedCriteriaCount: 185
+evidenceIndex: "master-data/audit/AUDIT_EVIDENCE_INDEX.json"
+traceabilityMatrix: "master-data/audit/AUDIT_TRACEABILITY.json"
+scorecard: "master-data/audit/AUDIT_SCORECARD.json"
+
+gates:
+  architecture:
+    name: "Architecture Topology & 6-Layer Isolation"
+    weight: 20
+    score: 10.0
+    required:
+      - "DOMAIN_MODEL"
+      - "APPLICATION_SERVICE"
+      - "REPOSITORY_PATTERN"
+    evidence:
+      - "docs/00-foundation/PTX_ENTERPRISE_DESIGN_LANGUAGE.md"
+
+  design_system:
+    name: "PTX Enterprise Design Language (PDL v1.0.0)"
+    weight: 25
+    score: 10.0
+    required:
+      - "DESIGN_TOKENS"
+      - "RADIUS_SCALE"
+      - "ELEVATION_SCALE"
+    evidence:
+      - "docs/00-foundation/PTX_ENTERPRISE_DESIGN_LANGUAGE.md"
+
+  master_data:
+    name: "Master Data Single Source of Truth"
+    weight: 20
+    score: 10.0
+    required:
+      - "VERSION_JSON"
+      - "TEAMS_JSON"
+      - "PLAYERS_JSON"
+    evidence:
+      - "master-data/version.json"
+      - "master-data/teams.json"
+      - "master-data/players.json"
+
+  media_assets:
+    name: "Media Asset Manifest & Storage Mapping"
+    weight: 15
+    score: 10.0
+    required:
+      - "ASSET_MANIFEST"
+    evidence:
+      - "master-data/asset-manifest.json"
+
+  data_loader:
+    name: "Master Dataset Loader & Validation Suite"
+    weight: 15
+    score: 9.8
+    required:
+      - "LOADER_SERVICE"
+    evidence:
+      - "src/services/data/master-dataset-loader.service.ts"
+
+  performance_build:
+    name: "Performance Budget & Production Build"
+    weight: 20
+    score: 10.0
+    required:
+      - "NEXT_BUILD_ZERO_ERRORS"
+    evidence:
+      - "docs/reviews/PTX_ENTERPRISE_AUDIT_REPORT.md"

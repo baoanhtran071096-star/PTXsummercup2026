@@ -1,0 +1,11 @@
+{
+  "version": "1.1.0",
+  "evidenceFiles": [
+    { "id": "ev_01", "name": "Enterprise Audit Report", "path": "docs/reviews/PTX_ENTERPRISE_AUDIT_REPORT.md" },
+    { "id": "ev_02", "name": "Data Audit Report", "path": "docs/reviews/DATA_AUDIT_REPORT.md" },
+    { "id": "ev_03", "name": "Migration Log", "path": "docs/reviews/migration-log.md" },
+    { "id": "ev_04", "name": "Design Spec PDL v1.0.0", "path": "docs/00-foundation/PTX_ENTERPRISE_DESIGN_LANGUAGE.md" },
+    { "id": "ev_05", "name": "Asset Manifest", "path": "master-data/asset-manifest.json" },
+    { "id": "ev_06", "name": "Audit Manifest DSL", "path": "master-data/audit/AUDIT_MANIFEST.yaml" }
+  ]
+}

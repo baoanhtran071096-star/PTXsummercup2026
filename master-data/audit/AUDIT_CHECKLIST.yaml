@@ -1,0 +1,17 @@
+# PTX Automated Audit Checklist v1.1.0
+checklistVersion: "1.1.0"
+totalChecks: 10
+passedChecks: 10
+checks:
+  - id: CHK_01
+    name: "Master Dataset Teams Reconciliation"
+    status: PASSED
+  - id: CHK_02
+    name: "Player IDs Continuity & Typing"
+    status: PASSED
+  - id: CHK_03
+    name: "Match Events Player Reference"
+    status: PASSED
+  - id: CHK_04
+    name: "Production Build Type Checking"
+    status: PASSED

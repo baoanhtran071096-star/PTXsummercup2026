@@ -1,0 +1,19 @@
+{
+  "systemVersion": "1.0.1",
+  "overallScore": 9.8,
+  "maxScore": 10.0,
+  "grade": "EXCELLENT",
+  "status": "RC1_APPROVED",
+  "gateScores": {
+    "ArchitectureTopology": 10.0,
+    "DesignLanguage": 10.0,
+    "MasterDataSingleSource": 10.0,
+    "AssetManifest": 10.0,
+    "MasterDatasetLoader": 9.8,
+    "ComponentScales": 9.8,
+    "SecurityAuth": 9.7,
+    "PerformanceBuild": 10.0,
+    "Accessibility": 9.6,
+    "AiSystemIntegration": 9.8
+  }
+}

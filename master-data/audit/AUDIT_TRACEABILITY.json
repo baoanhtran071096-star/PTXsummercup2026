@@ -1,0 +1,9 @@
+{
+  "version": "1.1.0",
+  "traceabilityMatrix": [
+    { "requirementId": "REQ_ARCH_01", "gate": "architecture", "status": "VERIFIED", "evidenceId": "ev_04" },
+    { "requirementId": "REQ_DATA_01", "gate": "master_data", "status": "VERIFIED", "evidenceId": "ev_02" },
+    { "requirementId": "REQ_MEDIA_01", "gate": "media_assets", "status": "VERIFIED", "evidenceId": "ev_05" },
+    { "requirementId": "REQ_BUILD_01", "gate": "performance_build", "status": "VERIFIED", "evidenceId": "ev_01" }
+  ]
+}
