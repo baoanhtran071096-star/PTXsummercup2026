@@ -13,10 +13,10 @@
     "time": "09:00",
     "venue": "Sân 1 - PTX Sports Complex",
     "events": [
-      { "minute": 14, "type": "GOAL", "player": "Kylian mBAppé (#9.5)", "team": "Đội P" },
-      { "minute": 32, "type": "YELLOW_CARD", "player": "VERL (#11)", "team": "Đội P" },
-      { "minute": 68, "type": "GOAL", "player": "Erling HaaTháiland (#9)", "team": "Đội P" },
-      { "minute": 78, "type": "GOAL", "player": "Kylian mBAppé (#9.5)", "team": "Đội P", "note": "Hattrick" }
+      { "minute": 14, "type": "GOAL", "playerId": "ply_006", "player": "Kylian mBAppé (#9.5)", "teamId": "team_01", "team": "Đội P" },
+      { "minute": 32, "type": "YELLOW_CARD", "playerId": "ply_010", "player": "VERL (#11)", "teamId": "team_01", "team": "Đội P" },
+      { "minute": 68, "type": "GOAL", "playerId": "ply_005", "player": "Erling HaaTháiland (#9)", "teamId": "team_01", "team": "Đội P" },
+      { "minute": 78, "type": "GOAL", "playerId": "ply_006", "player": "Kylian mBAppé (#9.5)", "teamId": "team_01", "team": "Đội P", "note": "Hattrick" }
     ]
   },
   {
