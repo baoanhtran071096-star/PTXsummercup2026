@@ -1,0 +1,73 @@
+# PTX OS Master Declarative Domain-Specific Language (PTX DSL v3.0)
+version: "3.0.0"
+operatingSystem: "PTX_OS"
+systemName: "PTX Summer Cup 2026 Platform"
+
+organization:
+  id: "org_ptx_group"
+  name: "PTX Group"
+  type: "COMMUNITY_ORGANIZATION"
+
+tournament:
+  id: "trn_summer_cup_2026"
+  name: "PTX Summer Cup 2026"
+  season: "2026"
+  format: "FIVE_A_SIDE"
+
+rules:
+  points:
+    win: 3
+    draw: 1
+    loss: 0
+  tieBreakers:
+    - "POINTS"
+    - "GOAL_DIFFERENCE"
+    - "GOALS_FOR"
+    - "HEAD_TO_HEAD"
+  disciplinary:
+    yellowCardFineVnd: 50000
+    redCardFineVnd: 100000
+    yellowCardSuspensionThreshold: 2
+
+workflow:
+  currentPhase: "PLAYING"
+  phases:
+    - id: "REGISTRATION"
+      name: "Đăng Ký Đội & Cầu Thủ"
+      allowedActions: ["REGISTER_TEAM", "REGISTER_PLAYER"]
+    - id: "SCHEDULING"
+      name: "Bốc Thăm & Tạo Lịch Thi Đấu"
+      allowedActions: ["GENERATE_SCHEDULE", "PUBLISH_FIXTURES"]
+    - id: "PLAYING"
+      name: "Thi Đấu & Cập Nhật Realtime"
+      allowedActions: ["RECORD_GOAL", "RECORD_CARD", "SUBMIT_MATCH_RESULT"]
+    - id: "VERIFICATION"
+      name: "Đối Soát Kết Quả"
+      allowedActions: ["VERIFY_MATCH_REPORT"]
+    - id: "STANDINGS"
+      name: "Cập Nhật Bảng Xếp Hạng & Vua Phá Lưới"
+      allowedActions: ["CALCULATE_STANDINGS", "UPDATE_GOLDEN_BOOT"]
+    - id: "AWARDS"
+      name: "Bế Mạc & Trao Giải"
+      allowedActions: ["PUBLISH_HALL_OF_FAME"]
+    - id: "ARCHIVE"
+      name: "Lưu Trữ Dữ Liệu Giải"
+      allowedActions: ["FREEZE_DATASET"]
+
+policies:
+  architectureRules:
+    - id: "AR_01"
+      name: "UI Cannot Import Repository"
+      forbiddenImports: ["src/repository/"]
+      restrictedSourceDir: "src/app/"
+      severity: "ERROR"
+    - id: "AR_02"
+      name: "Domain Cannot Import React"
+      forbiddenImports: ["react", "next/"]
+      restrictedSourceDir: "src/domain/"
+      severity: "ERROR"
+
+audit:
+  manifestPath: "master-data/audit/AUDIT_MANIFEST.yaml"
+  scorecardPath: "master-data/audit/AUDIT_SCORECARD.json"
+  minimumComplianceScore: 9.5
