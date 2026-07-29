@@ -6,6 +6,8 @@ export const REAL_TEAMS = [
   { id: 'team_03', name: 'Đội X', code: 'X', logo: '🚀', captain: 'Đình Huy (#14)', playerCount: 16, primaryColor: '#ff4d6d' }
 ];
 
+export const LEGACY_REAL_TEAMS = REAL_TEAMS;
+
 export const REAL_ROSTER_PLAYERS: PlayerEntity[] = [
   { id: 'ply_001', teamId: 'team_01', fullName: 'Nguyễn Sử', jerseyName: 'Nguyễn Sử', jerseyNumber: '10', shirtSize: '2XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_002', teamId: 'team_01', fullName: 'Đình Huy', jerseyName: 'Đình Huy', jerseyNumber: '14', shirtSize: '2XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
@@ -19,7 +21,7 @@ export const REAL_ROSTER_PLAYERS: PlayerEntity[] = [
   { id: 'ply_010', teamId: 'team_01', fullName: 'VERL', jerseyName: 'VERL', jerseyNumber: '11', shirtSize: 'XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_011', teamId: 'team_01', fullName: 'AmphetamiN', jerseyName: 'AmphetamiN', jerseyNumber: '24', shirtSize: '3XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_012', teamId: 'team_01', fullName: 'Đăng Quân', jerseyName: 'ĐQ', jerseyNumber: '04', shirtSize: 'XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
-  { "id": 'ply_013', teamId: 'team_01', fullName: 'Mr.Cry', jerseyName: 'Mr.Cry', jerseyNumber: '76', shirtSize: 'XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
+  { id: 'ply_013', teamId: 'team_01', fullName: 'Mr.Cry', jerseyName: 'Mr.Cry', jerseyNumber: '76', shirtSize: 'XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_014', teamId: 'team_01', fullName: 'Marcus', jerseyName: 'Marcus', jerseyNumber: '12', shirtSize: 'S', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_015', teamId: 'team_01', fullName: 'De', jerseyName: 'De', jerseyNumber: '79', shirtSize: 'XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_016', teamId: 'team_01', fullName: 'Jub', jerseyName: 'Jub', jerseyNumber: '19', shirtSize: '2XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
@@ -34,3 +36,5 @@ export const REAL_ROSTER_PLAYERS: PlayerEntity[] = [
   { id: 'ply_025', teamId: 'team_01', fullName: 'Phương Toàn', jerseyName: 'Phương Toàn', jerseyNumber: '21', shirtSize: '2XL', isCaptain: false, shirtPrinted: true, shirtDelivered: true, notes: 'Cầu thủ chính' },
   { id: 'ply_026', teamId: 'team_01', fullName: 'Cầu thủ Dự bị', jerseyName: '(Chưa in)', jerseyNumber: 'N/A', shirtSize: 'XL', isCaptain: false, shirtPrinted: false, shirtDelivered: false, notes: 'Không tên, số' }
 ];
+
+export const REAL_PTX_ROSTER_DATA = REAL_ROSTER_PLAYERS;
