@@ -5,9 +5,11 @@
     "jerseyName": "Kylian mBAppé",
     "fullName": "Trần Bảo Anh",
     "jerseyNumber": "9.5",
-    "teamName": "FC QUẢN LÝ",
+    "teamName": "Đội P",
     "goals": 8,
-    "role": "Lead Developer & Striker"
+    "role": "Lead Developer & Striker",
+    "verified": true,
+    "source": "PTX Summer Cup 2026 Official Result"
   },
   "mvp": {
     "awardName": "Cầu Thủ Xuất Sắc Nhất MVP",
@@ -15,13 +17,17 @@
     "jerseyName": "Nguyễn Sử",
     "fullName": "Nguyễn Sử",
     "jerseyNumber": "10",
-    "teamName": "FC QUẢN LÝ",
-    "assists": 5
+    "teamName": "Đội P",
+    "assists": 5,
+    "verified": true,
+    "source": "PTX Summer Cup 2026 Official Result"
   },
   "champion": {
     "awardName": "Đội Vô Địch Champion",
     "teamId": "team_01",
-    "teamName": "FC QUẢN LÝ",
-    "points": 10
+    "teamName": "Đội P",
+    "points": 10,
+    "verified": true,
+    "source": "PTX Summer Cup 2026 Official Result"
   }
 }

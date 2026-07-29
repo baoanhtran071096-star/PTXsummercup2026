@@ -1,0 +1,11 @@
+{
+  "ast_logo_doi_p": { "path": "thư viện/ảnh logo - baner/PTX.jpg", "type": "logo", "checksum": "sha256-ptx-logo-p" },
+  "ast_logo_doi_t": { "path": "thư viện/ảnh logo - baner/CĐ.jpg", "type": "logo", "checksum": "sha256-ptx-logo-t" },
+  "ast_logo_doi_x": { "path": "thư viện/ảnh logo - baner/logo 3 đội.jpg", "type": "logo", "checksum": "sha256-ptx-logo-x" },
+  "ast_mascot_doi_p": { "path": "thư viện/ảnh logo - baner/linh vật đội P.jpg", "type": "mascot", "checksum": "sha256-mascot-p" },
+  "ast_mascot_doi_t": { "path": "thư viện/ảnh logo - baner/linh vật đội T.jpg", "type": "mascot", "checksum": "sha256-mascot-t" },
+  "ast_mascot_doi_x": { "path": "thư viện/ảnh logo - baner/linh vật đội X.jpg", "type": "mascot", "checksum": "sha256-mascot-x" },
+  "ast_jersey_doi_p": { "path": "thư viện/ảnh logo - baner/Áo đấu đội P.jpg", "type": "jersey", "checksum": "sha256-jersey-p" },
+  "ast_jersey_doi_x": { "path": "thư viện/ảnh logo - baner/áo đấu đội X.jpg", "type": "jersey", "checksum": "sha256-jersey-x" },
+  "ast_player_bao_anh": { "path": "thư viện/Ảnh cầu thủ/Bảo Anh.jpg", "type": "avatar", "checksum": "sha256-player-bao-anh" }
+}
