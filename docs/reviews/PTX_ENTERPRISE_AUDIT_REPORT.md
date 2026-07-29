@@ -64,20 +64,21 @@ Hội đồng Kiến trúc Sản phẩm PTX Platform đã tiến hành thẩm đ
 
 ---
 
-## 🚀 4. LỘ TRÌNH PHÁT TRIỂN V1.2 (5 SPRINT IMPLEMENTATION ROADMAP)
+## 🚀 4. LỘ TRÌNH PHÁT TRIỂN V1.2 (6-SPRINT ROADMAP & KNOWLEDGE GRAPH)
 
-### 🎯 5-Sprint Implementation Plan for v1.2 & Continuous Audit Engine
+### 🎯 6-Sprint Implementation Plan for v1.2
 1. **Sprint A — Audit Engine Foundation**: Tự động hóa sinh `PTX_ENTERPRISE_AUDIT_REPORT.md` từ Manifest.
-2. **Sprint B — Continuous Architecture**: Chặn PR vi phạm nguyên tắc 6 lớp kiến trúc trong CI.
+2. **Sprint B — Continuous Architecture**: Chặn PR vi phạm 6 lớp kiến trúc trong CI.
 3. **Sprint C — Continuous Compliance**: Đánh giá ma trận Document, Contract, API, Schema & Architecture Drift trên từng PR.
 4. **Sprint D — Evidence Automation**: Tự động thu thập minh chứng từ `npm audit`, `Vitest`, `Playwright` & `Lighthouse`.
 5. **Sprint E — Release Intelligence**: Dashboard tự động sinh Release Notes, Risk Analysis & Decision cho Product Owner.
+6. **Sprint F — Architecture Knowledge Graph**: Đồ thị liên kết `Capability ➔ Business Rule ➔ API Contract ➔ Implementation ➔ Test ➔ Evidence ➔ Release` hỗ trợ phân tích tác động (Impact Analysis) tự động.
 
 ### 📈 Maturity Model Roadmap
 * `v1.0`: Knowledge System ✅
 * `v1.1`: Machine-readable Audit ✅
 * `v1.2`: Continuous Audit Engine 🎯
-* `v1.3`: Continuous Architecture 🎯
+* `v1.3`: Continuous Architecture & Knowledge Graph 🎯
 * `v1.4`: AI Review Engine 🎯
 * `v2.0`: Self-Governed Engineering Platform 🚀
 
