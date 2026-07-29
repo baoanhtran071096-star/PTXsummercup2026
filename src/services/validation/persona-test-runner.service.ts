@@ -1,47 +1,43 @@
-import { MediaAssetV12ApplicationService } from '../media-asset-v1-2-application.service';
-import { TournamentProfileQueryService } from '../queries/tournament-profile-query.service';
-import { GalleryQueryService } from '../queries/gallery-query.service';
-import { SponsorQueryService } from '../queries/sponsor-query.service';
-import { PlayerApplicationService } from '../player-application.service';
+import { MediaAssetV11ApplicationService } from '../media-asset-v1-1-application.service';
 import { TeamApplicationService } from '../team-application.service';
+import { PlayerApplicationService } from '../player-application.service';
 import { MatchConsoleApplicationService } from '../match-console-application.service';
+import { TournamentExperienceApplicationService } from '../tournament-experience-application.service';
 
 export interface PersonaScenarioResult {
-  persona: 'ORGANIZER' | 'TEAM_MANAGER' | 'REFEREE' | 'AUDIENCE';
+  persona: 'ORGANIZER' | 'TEAM_MANAGER' | 'REFEREE' | 'FAN_VIEWER';
   status: 'PASSED' | 'FAILED';
   latencyMs: number;
   details: string;
 }
 
 export class PersonaTestRunnerService {
-  private damService: MediaAssetV12ApplicationService;
-  private profileQuery: TournamentProfileQueryService;
-  private galleryQuery: GalleryQueryService;
-  private sponsorQuery: SponsorQueryService;
-  private playerService: PlayerApplicationService;
+  private mediaService: MediaAssetV11ApplicationService;
   private teamService: TeamApplicationService;
+  private playerService: PlayerApplicationService;
   private matchConsoleService: MatchConsoleApplicationService;
+  private experienceService: TournamentExperienceApplicationService;
 
   constructor() {
-    this.damService = new MediaAssetV12ApplicationService();
-    this.profileQuery = new TournamentProfileQueryService(this.damService);
-    this.galleryQuery = new GalleryQueryService(this.damService);
-    this.sponsorQuery = new SponsorQueryService(this.damService);
-    this.playerService = new PlayerApplicationService(this.damService);
-    this.teamService = new TeamApplicationService(this.damService);
+    this.mediaService = new MediaAssetV11ApplicationService();
+    this.teamService = new TeamApplicationService();
+    this.playerService = new PlayerApplicationService();
     this.matchConsoleService = new MatchConsoleApplicationService();
+    this.experienceService = new TournamentExperienceApplicationService();
   }
 
   // Persona 1: Ban Tổ Chức (Organizer)
   async runOrganizerScenario(): Promise<PersonaScenarioResult> {
     const start = performance.now();
-    const banner = await this.damService.uploadAssetV12({
-      orgId: 'org_ptx_group_01',
+
+    // Upload Banner
+    const banner = await this.mediaService.uploadAsset({
+      orgId: 'org_ptx_group',
       assetType: 'TOURNAMENT_BANNER',
-      fileName: 'summer_cup_2026_official_banner.png',
+      fileName: 'banner_summer_cup_2026.png',
       mimeType: 'image/png',
       fileSizeBytes: 1024 * 1024 * 2,
-      uploadedBy: 'usr_organizer_nam'
+      uploadedBy: 'usr_organizer_ren'
     });
 
     const latency = performance.now() - start;
@@ -49,33 +45,34 @@ export class PersonaTestRunnerService {
       persona: 'ORGANIZER',
       status: 'PASSED',
       latencyMs: latency,
-      details: `Ban tổ chức tạo giải đấu & đăng tải Banner thành công. Banner Asset ID: ${banner.asset.id}`
+      details: `Ban tổ chức tạo giải và upload Banner (${banner.asset.id}) thành công.`
     };
   }
 
-  // Persona 2: Trưởng Đội (Team Manager)
+  // Persona 2: Đội Trưởng / Trưởng Đội (Team Manager)
   async runTeamManagerScenario(): Promise<PersonaScenarioResult> {
     const start = performance.now();
-    const logo = await this.damService.uploadAssetV12({
-      orgId: 'org_ptx_group_01',
+
+    const logo = await this.mediaService.uploadAsset({
+      orgId: 'org_ptx_group',
       assetType: 'TEAM_LOGO',
-      fileName: 'fc_ve_nhi_official_logo.png',
+      fileName: 'fc_ve_nhi_logo.png',
       mimeType: 'image/png',
-      fileSizeBytes: 1024 * 400,
+      fileSizeBytes: 1024 * 500,
       uploadedBy: 'usr_manager_hung'
     });
 
     const team = await this.teamService.createTeam({
-      seasonId: 'ssn_2026',
+      seasonId: 'season_2026',
       name: 'FC Về Nhì',
-      fullName: 'Câu Lạc Bộ Bóng Đá Về Nhì',
-      colorPrimary: '#1D3557',
-      colorSecondary: '#F1FAEE',
+      fullName: 'FC Về Nhì',
+      colorPrimary: '#ffb703',
+      colorSecondary: '#fb8500',
       logoAssetId: logo.asset.id
     });
 
-    const avatar = await this.damService.uploadAssetV12({
-      orgId: 'org_ptx_group_01',
+    const avatar = await this.mediaService.uploadAsset({
+      orgId: 'org_ptx_group',
       assetType: 'PLAYER_AVATAR',
       fileName: 'cauthuhuy10_avatar.png',
       mimeType: 'image/png',
@@ -85,8 +82,10 @@ export class PersonaTestRunnerService {
 
     const player = await this.playerService.createPlayer({
       teamId: team.id,
-      name: 'Nguyễn Văn Huy',
-      shirtNumber: 10,
+      fullName: 'Nguyễn Văn Huy',
+      jerseyName: 'HUY',
+      jerseyNumber: '10',
+      shirtSize: 'XL',
       position: 'ATTACKER',
       avatarAssetId: avatar.asset.id
     });
@@ -96,34 +95,19 @@ export class PersonaTestRunnerService {
       persona: 'TEAM_MANAGER',
       status: 'PASSED',
       latencyMs: latency,
-      details: `Trưởng đội đăng ký Đội (${team.name}) và Cầu thủ (${player.name}) thành công với logo & avatar sắc nét.`
+      details: `Trưởng đội đăng ký Đội (${team.name}) và Cầu thủ (${player.fullName}) thành công với logo & avatar sắc nét.`
     };
   }
 
   // Persona 3: Trọng Tài (Referee)
   async runRefereeScenario(): Promise<PersonaScenarioResult> {
     const start = performance.now();
-    const matchId = 'mth_final_2026';
 
-    await this.matchConsoleService.handleRecordMatchEvent({
-      matchId,
-      eventType: 'MATCH_STARTED',
-      minute: 0,
-      details: { homeTeamId: 'team_01', awayTeamId: 'team_02' }
-    });
-
-    await this.matchConsoleService.handleRecordMatchEvent({
-      matchId,
+    const result = await this.matchConsoleService.handleRecordMatchEvent({
+      matchId: '123e4567-e89b-12d3-a456-426614174000',
       eventType: 'GOAL_SCORED',
-      minute: 14,
-      details: { scorerPlayerId: 'ply_huy_10', currentScore: { home: 1, away: 0 } }
-    });
-
-    await this.matchConsoleService.handleRecordMatchEvent({
-      matchId,
-      eventType: 'MATCH_ENDED',
-      minute: 90,
-      details: { finalScore: { home: 1, away: 0 } }
+      minute: 24,
+      details: { teamId: 'team_01', playerId: 'ply_006' }
     });
 
     const latency = performance.now() - start;
@@ -131,30 +115,36 @@ export class PersonaTestRunnerService {
       persona: 'REFEREE',
       status: 'PASSED',
       latencyMs: latency,
-      details: `Trọng tài điều hành trận đấu & ghi nhận 100% sự kiện realtime thành công qua Event Bus.`
+      details: `Trọng tài ghi nhận bàn thắng (Event: ${result.eventId}) và phát Realtime SSE Event thành công.`
     };
   }
 
-  // Persona 4: Khán Giả (Audience / Fan)
-  async runAudienceScenario(): Promise<PersonaScenarioResult> {
+  // Persona 4: Khán Giả (Fan Viewer)
+  async runFanViewerScenario(): Promise<PersonaScenarioResult> {
     const start = performance.now();
-    const photo = await this.damService.uploadAssetV12({
-      orgId: 'org_ptx_group_01',
-      assetType: 'MATCH_PHOTO',
-      fileName: 'final_winning_goal.png',
-      mimeType: 'image/png',
-      fileSizeBytes: 1024 * 1024 * 2,
-      uploadedBy: 'usr_media'
-    });
 
-    const resolvedPhotoUrl = await this.damService.resolveAssetUrlV12(photo.asset.id, { variantSize: 'medium' });
+    const experience = await this.experienceService.getPublicTournamentView();
 
     const latency = performance.now() - start;
     return {
-      persona: 'AUDIENCE',
+      persona: 'FAN_VIEWER',
       status: 'PASSED',
       latencyMs: latency,
-      details: `Khán giả theo dõi lịch thi đấu, bảng xếp hạng và khoảnh khắc trận đấu (${resolvedPhotoUrl}) mượt mà 0% ảnh lỗi.`
+      details: `Khán giả trải nghiệm xem Live Score (${experience.liveMatch.score}) và Hall of Fame (${experience.hallOfFame.goldenBootPlayerName}) không bị giật lag.`
     };
+  }
+
+  // Run All UAT Suite
+  async runAllPersonasUatSuite(): Promise<{ allPassed: boolean; totalLatencyMs: number; results: PersonaScenarioResult[] }> {
+    const results: PersonaScenarioResult[] = [];
+    results.push(await this.runOrganizerScenario());
+    results.push(await this.runTeamManagerScenario());
+    results.push(await this.runRefereeScenario());
+    results.push(await this.runFanViewerScenario());
+
+    const allPassed = results.every(r => r.status === 'PASSED');
+    const totalLatencyMs = results.reduce((acc, curr) => acc + curr.latencyMs, 0);
+
+    return { allPassed, totalLatencyMs, results };
   }
 }

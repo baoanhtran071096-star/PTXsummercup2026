@@ -1,5 +1,7 @@
 import { AssetType, AssetStatus, AssetMetadata } from './asset-v1-1-models';
 
+export type { AssetType, AssetStatus, AssetMetadata };
+
 export type ImageVariantSize = 'thumbnail' | 'small' | 'medium' | 'large' | 'original';
 
 export interface ImageVariant {

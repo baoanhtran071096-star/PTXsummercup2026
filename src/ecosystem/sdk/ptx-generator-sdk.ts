@@ -1,4 +1,4 @@
-import { CanonicalIntermediateRepresentation } from '../../tools/knowledge/cir';
+import { CanonicalIntermediateRepresentation } from '../../../tools/knowledge/cir';
 
 export interface GeneratedArtifactResult {
   name: string;

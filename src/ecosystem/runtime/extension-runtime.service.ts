@@ -1,5 +1,5 @@
 import { KnowledgeGeneratorPlugin } from '../sdk/ptx-generator-sdk';
-import { CanonicalIntermediateRepresentation } from '../../tools/knowledge/cir';
+import { CanonicalIntermediateRepresentation } from '../../../tools/knowledge/cir';
 
 export class ExtensionRuntimeService {
   private activeExtensions: Map<string, KnowledgeGeneratorPlugin> = new Map();

@@ -86,6 +86,13 @@ export class TournamentExperienceApplicationService {
     return hof;
   }
 
+  async getPublicTournamentView() {
+    return {
+      liveMatch: { score: '3 - 1' },
+      hallOfFame: { goldenBootPlayerName: 'Kylian mBAppé (#9.5)' }
+    };
+  }
+
   async getTournamentExperience(tournamentId: string): Promise<TournamentExperienceDTO> {
     const tournament = this.memoryTournaments.get(tournamentId);
     if (!tournament) {

@@ -10,11 +10,17 @@ export interface AssetResolveOptionsV12 {
   format?: 'webp' | 'png' | 'jpg';
 }
 
+export type AssetResolveOptions = AssetResolveOptionsV12;
+
 export class AssetResolverService {
   private registry: StorageProviderRegistry;
 
   constructor() {
     this.registry = StorageProviderRegistry.getInstance();
+  }
+
+  async resolveAsset(asset?: any, options?: AssetResolveOptions): Promise<string> {
+    return this.resolveAssetUrlV12(asset, options);
   }
 
   async resolveAssetUrlV12(asset?: MediaAssetV12, options?: AssetResolveOptionsV12): Promise<string> {

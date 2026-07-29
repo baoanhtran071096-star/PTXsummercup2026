@@ -23,7 +23,7 @@ export class MatchApplicationService {
     // 2. Workstream B4: Trigger Realtime SSE Goal Broadcast Stream (< 500ms NFR Target)
     const broadcastPayload = {
       event_id: rpcResult.event_id,
-      event_type: 'MATCH_GOAL_ADDED',
+      event_type: 'MATCH_GOAL_ADDED' as const,
       match_id: input.match_id,
       team_id: input.team_id,
       player_id: input.player_id,

@@ -4,25 +4,27 @@ export type PlayerStatus = 'ACTIVE' | 'INJURED' | 'SUSPENDED';
 export interface PlayerEntity {
   id: string;
   teamId: string;
+  teamName?: string;
   fullName: string;
   jerseyName: string;
   jerseyNumber: string;
   shirtSize: string;
-  position: PlayerPosition;
+  position?: PlayerPosition;
   avatarAssetId?: string;
   isCaptain?: boolean;
   isViceCaptain?: boolean;
-  status: PlayerStatus;
+  status?: PlayerStatus;
   shirtPrinted: boolean;
   shirtDelivered: boolean;
   notes?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export function createPlayerEntity(params: {
   id: string;
   teamId: string;
+  teamName?: string;
   fullName: string;
   jerseyName: string;
   jerseyNumber: string;
@@ -38,6 +40,7 @@ export function createPlayerEntity(params: {
   return {
     id: params.id,
     teamId: params.teamId,
+    teamName: params.teamName || 'Đội P',
     fullName: params.fullName,
     jerseyName: params.jerseyName,
     jerseyNumber: params.jerseyNumber,

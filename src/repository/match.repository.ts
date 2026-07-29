@@ -1,4 +1,4 @@
-import { Match, MatchEvent } from '../../generated/types/domain-models';
+import { Matche as Match, MatchEvent } from '../../generated/types/domain-models';
 import { AddGoalContractInput } from '../../generated/contracts/zod-schemas';
 import { SupabaseDatabaseClient } from '../db/supabase-client';
 
@@ -12,7 +12,7 @@ export interface RpcGoalResponse {
 export class MatchRepository {
   private inMemoryMatches: Map<string, Match> = new Map();
   private inMemoryEvents: MatchEvent[] = [];
-  private supabaseClient: SupabaseDatabaseClient;
+  private supabaseClient: InstanceType<typeof SupabaseDatabaseClient>;
 
   constructor(supabaseConfig?: any) {
     this.supabaseClient = new SupabaseDatabaseClient(supabaseConfig);

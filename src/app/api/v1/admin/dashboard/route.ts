@@ -1,7 +1,8 @@
 import { AdminDashboardService } from '../../../../../admin/services/dashboard.service';
 import { JwtTenantAuthVerifier } from '../../../../../auth/jwt-verifier';
 import { ProductionStructuredLogger } from '../../../../../logger/structured-logger';
-import * as path from 'path';
+
+export const dynamic = 'force-dynamic';
 
 const dashboardService = new AdminDashboardService();
 
@@ -10,14 +11,14 @@ export async function GET(req: Request) {
     const authHeader = req.headers.get('Authorization');
     const tenantAuth = JwtTenantAuthVerifier.verifyTenantToken(authHeader);
 
-    const rootDir = path.resolve(__dirname, '../../../../../../');
+    const rootDir = process.cwd();
     const overview = dashboardService.getSystemOverview(rootDir);
     const history = dashboardService.getBuildHistory(rootDir);
 
     ProductionStructuredLogger.info(
       'ADMIN_DASHBOARD_OVERVIEW_FETCHED',
       { status: overview.status, totalObjects: overview.totalKnowledgeObjects },
-      tenantAuth.orgId
+      { orgId: tenantAuth.orgId }
     );
 
     return new Response(
