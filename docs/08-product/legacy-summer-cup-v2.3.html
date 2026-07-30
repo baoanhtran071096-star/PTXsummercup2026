@@ -3064,6 +3064,164 @@
     </style>
 </head>
 <body>
+<script>
+    // ============================================================
+    // BẢO MẬT ADMIN PANEL – KHÔNG CHO AI TRUY CẬP NẾU CHƯA ĐĂNG NHẬP
+    // ============================================================
+    (function() {
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASS = 'admin123'; // Sẽ được hash trong tương lai
+
+        // Kiểm tra trạng thái đăng nhập
+        const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+
+        // Hàm hiển thị form đăng nhập
+        function showLoginForm() {
+            const adminPanel = document.getElementById('adminPanel');
+            if (adminPanel) {
+                adminPanel.style.display = 'none';
+                adminPanel.classList.remove('active');
+            }
+            const loginContainer = document.createElement('div');
+            loginContainer.id = 'adminLoginContainer';
+            loginContainer.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--bg-card, #fff);
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                z-index: 9999;
+                max-width: 400px;
+                width: 90%;
+                border: 2px solid var(--ptx-orange, #F15A24);
+                color: var(--text-primary, #333);
+            `;
+            loginContainer.innerHTML = `
+                <h3 style="text-align:center;font-family:var(--font-title, sans-serif);color:var(--ptx-orange,#F15A24);font-size:1.5rem;margin-bottom:10px;">
+                    🔐 Đăng nhập Quản trị
+                </h3>
+                <p style="text-align:center;font-size:0.85rem;color:var(--text-muted, #666);margin-bottom:20px;">Trang web giải đấu PTX Summer Cup 2026</p>
+                <div style="margin: 20px 0;">
+                    <input type="text" id="adminUserInput" placeholder="Tên đăng nhập" 
+                           style="width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px;background:var(--bg-body, #fff);color:var(--text-primary, #000);">
+                    <input type="password" id="adminPassInput" placeholder="Mật khẩu" 
+                           style="width:100%;padding:12px;margin-bottom:12px;border:1px solid #ddd;border-radius:8px;background:var(--bg-body, #fff);color:var(--text-primary, #000);">
+                    <button id="adminLoginBtn" 
+                            style="width:100%;padding:12px;background:var(--ptx-orange,#F15A24);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;">
+                        Đăng nhập
+                    </button>
+                    <div id="adminLoginError" style="color:red;margin-top:10px;display:none;text-align:center;font-size:0.85rem;">
+                        Sai tên đăng nhập hoặc mật khẩu!
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(loginContainer);
+
+            // Xử lý đăng nhập
+            document.getElementById('adminLoginBtn').addEventListener('click', function() {
+                const user = document.getElementById('adminUserInput').value;
+                const pass = document.getElementById('adminPassInput').value;
+                if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    document.getElementById('adminLoginContainer').remove();
+                    showAdminPanel();
+                } else {
+                    document.getElementById('adminLoginError').style.display = 'block';
+                }
+            });
+
+            // Cho phép nhấn Enter để đăng nhập
+            document.getElementById('adminPassInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('adminLoginBtn').click();
+                }
+            });
+            document.getElementById('adminUserInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('adminLoginBtn').click();
+                }
+            });
+        }
+
+        // Hàm hiển thị Admin Panel (sau khi đăng nhập thành công)
+        function showAdminPanel() {
+            const adminPanel = document.getElementById('adminPanel');
+            const loginBtn = document.getElementById('loginBtn');
+            if (adminPanel) {
+                adminPanel.style.display = 'block';
+                adminPanel.classList.add('active');
+            }
+            if (loginBtn) {
+                loginBtn.style.display = 'none';
+            }
+            // Thêm nút đăng xuất
+            if (!document.getElementById('adminLogoutBtn')) {
+                const logoutBtn = document.createElement('button');
+                logoutBtn.id = 'adminLogoutBtn';
+                logoutBtn.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    z-index: 1002;
+                    background: #dc2626;
+                    color: #fff;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 30px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+                    font-family: var(--font-ui, sans-serif);
+                `;
+                logoutBtn.textContent = '🚪 Đăng xuất';
+                logoutBtn.addEventListener('click', function() {
+                    sessionStorage.removeItem('adminLoggedIn');
+                    location.reload();
+                });
+                document.body.appendChild(logoutBtn);
+            }
+        }
+
+        // Kiểm tra và xử lý khi DOM sẵn sàng
+        function initAdminSecurity() {
+            const adminPanel = document.getElementById('adminPanel');
+            if (!isLoggedIn) {
+                if (adminPanel) {
+                    adminPanel.style.display = 'none';
+                    adminPanel.classList.remove('active');
+                }
+                showLoginForm();
+            } else {
+                showAdminPanel();
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAdminSecurity);
+        } else {
+            initAdminSecurity();
+        }
+
+        // Xóa session sau 30 phút không hoạt động
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(function() {
+                sessionStorage.removeItem('adminLoggedIn');
+                location.reload();
+            }, 30 * 60 * 1000); // 30 phút
+        }
+        document.addEventListener('click', resetInactivityTimer);
+        document.addEventListener('keydown', resetInactivityTimer);
+        document.addEventListener('scroll', resetInactivityTimer);
+        resetInactivityTimer();
+
+        console.log('🛡️ Admin Panel is protected. Please login to access.');
+    })();
+</script>
 
     <!-- SPLASH SCREEN -->
     <div id="splash-screen">
@@ -3467,7 +3625,7 @@
             <div class="hero-content"><h1 class="font-title" style="font-size:clamp(40px,8vw,72px);color:#fff;letter-spacing:2px;" data-i18n="admin_hero">QUẢN TRỊ</h1><p style="color:rgba(255,255,255,0.8);font-size:clamp(16px,2vw,24px);font-family:var(--font-ui);" data-i18n="admin_hero_sub">Cập nhật nội dung giải đấu</p></div>
         </div>
         <div class="container section-gap">
-            <div id="adminPanel" class="active" style="display:block;">
+            <div id="adminPanel" style="display:none;">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;"><h3 style="font-family:var(--font-title);">🛠️ Admin Control Panel</h3><button onclick="handleLogout()" style="background:#dc2626;color:#fff;border:none;padding:8px 20px;border-radius:20px;font-weight:600;cursor:pointer;font-family:var(--font-ui);" data-i18n="logout_btn">Đăng xuất</button></div>
                 <p class="desc">*Dữ liệu lưu LocalStorage. Mật khẩu được bảo vệ bằng hash.</p>
                 <div class="admin-grid">
