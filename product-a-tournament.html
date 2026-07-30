@@ -5461,19 +5461,73 @@
                 messagesBox.scrollTop = messagesBox.scrollHeight;
             });
 
-            // 2. Fetch and Sync Live Standings Table in Product A
+            // 2. Fetch and Sync Live Standings Table & KPIs in Product A
             async function syncLiveStandingsProductA() {
                 try {
-                    const res = await fetch(`${SUPABASE_URL}/standings?order=rank.asc`, {
-                        headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` },
-                    });
-                    if (!res.ok) return;
-                    const standings = await res.json();
-                    if (!standings || standings.length === 0) return;
+                    const headers = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` };
+                    const [resStandings, resTeams, resPlayers] = await Promise.all([
+                        fetch(`${SUPABASE_URL}/standings?order=rank.asc`, { headers }),
+                        fetch(`${SUPABASE_URL}/teams?select=id,name,short_name,logo_url,color`, { headers }),
+                        fetch(`${SUPABASE_URL}/players?order=goals.desc&limit=10`, { headers }),
+                    ]);
+
+                    if (resStandings.ok) {
+                        const standings = await resStandings.json();
+                        const container = document.getElementById('standingsPremium');
+                        if (container && Array.isArray(standings) && standings.length > 0) {
+                            let rows = standings.map(s => `
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                                    <td style="padding:12px; font-weight:800; text-align:center;">${s.rank === 1 ? '🥇 1' : s.rank === 2 ? '🥈 2' : s.rank === 3 ? '🥉 3' : s.rank}</td>
+                                    <td style="padding:12px; font-weight:700; color:#00ff9d;">${s.team}</td>
+                                    <td style="padding:12px; text-align:center;">${s.played}</td>
+                                    <td style="padding:12px; text-align:center;">${s.won}</td>
+                                    <td style="padding:12px; text-align:center;">${s.drawn}</td>
+                                    <td style="padding:12px; text-align:center;">${s.lost}</td>
+                                    <td style="padding:12px; text-align:center;">${s.goals_for}</td>
+                                    <td style="padding:12px; text-align:center;">${s.goals_against}</td>
+                                    <td style="padding:12px; text-align:center; font-weight:700; color:${s.goal_diff > 0 ? '#00ff9d' : s.goal_diff < 0 ? '#ff4d4d' : '#fff'};">${s.goal_diff > 0 ? '+' : ''}${s.goal_diff}</td>
+                                    <td style="padding:12px; text-align:center; font-weight:900; color:#ffd700; font-size:1.05rem;">${s.points}</td>
+                                </tr>
+                            `).join('');
+
+                            container.innerHTML = `
+                                <div style="overflow-x:auto; background:rgba(15,23,42,0.6); backdrop-filter:blur(10px); border-radius:16px; border:1px solid rgba(0,255,157,0.2); padding:16px;">
+                                    <table style="width:100%; border-collapse:collapse; color:#fff; font-size:0.9rem;">
+                                        <thead>
+                                            <tr style="border-bottom:2px solid rgba(0,255,157,0.4); text-transform:uppercase; font-size:0.75rem; letter-spacing:1px; color:rgba(255,255,255,0.7);">
+                                                <th style="padding:10px; text-align:center;">Hạng</th>
+                                                <th style="padding:10px; text-align:left;">Đội Bóng</th>
+                                                <th style="padding:10px; text-align:center;">ST</th>
+                                                <th style="padding:10px; text-align:center;">T</th>
+                                                <th style="padding:10px; text-align:center;">H</th>
+                                                <th style="padding:10px; text-align:center;">B</th>
+                                                <th style="padding:10px; text-align:center;">BT</th>
+                                                <th style="padding:10px; text-align:center;">BB</th>
+                                                <th style="padding:10px; text-align:center;">HS</th>
+                                                <th style="padding:10px; text-align:center;">Điểm</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>${rows}</tbody>
+                                    </table>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    if (resTeams.ok) {
+                        const teams = await resTeams.json();
+                        const heroTeamsEl = document.getElementById('heroTeamsCount');
+                        if (heroTeamsEl && Array.isArray(teams)) heroTeamsEl.innerText = teams.length;
+                    }
+
+                    if (resPlayers.ok) {
+                        const players = await resPlayers.json();
+                        const heroPlayersEl = document.getElementById('heroPlayersCount');
+                        if (heroPlayersEl && Array.isArray(players)) heroPlayersEl.innerText = players.length;
+                    }
 
                     // Update Top Banner Notification badge
-                    const topNotice = document.querySelector('body');
-                    if (topNotice && !document.getElementById('supabaseBadgeA')) {
+                    if (!document.getElementById('supabaseBadgeA')) {
                         const badge = document.createElement('div');
                         badge.id = 'supabaseBadgeA';
                         badge.style.cssText = 'background: linear-gradient(90deg, #00ff9d, #00b8d4); color: #000; font-weight: 800; text-align: center; padding: 6px; font-size: 0.82rem; letter-spacing: 0.5px; z-index: 999;';
