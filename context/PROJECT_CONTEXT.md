@@ -1,25 +1,22 @@
-# 🏆 PROJECT CONTEXT: PTX Summer Cup 2026 (PTX Platform v6.5 Ultra Performance)
+# 🏆 PROJECT CONTEXT: PTX Summer Cup 2026 & PTX Sports Platform
 
-## 📌 Project Overview
-- **Project Name:** PTX Summer Cup 2026 Platform (PTX Platform v6.5 Ultra Performance)
+## 📌 Strategic Product Architecture Separation
+Thực hiện chỉ đạo chiến lược từ Chủ trì Thiết kế (30/07/2026), dự án được phân tách chính thức thành 2 dòng sản phẩm riêng biệt:
+
+### 🏟️ SẢN PHẨM A: "PTX Summer Cup – Trang web giải đấu" (Lightweight v2.4 Official Web)
+- **Mục đích:** Website chính thức của giải đấu dành cho BTC, Cổ động viên, Truyền thông & Nhà tài trợ.
+- **Tính năng:** Giới thiệu giải đấu, Lịch thi đấu, Bảng xếp hạng, Đội bóng, Cầu thủ, Vinh danh HOF, Thư viện ảnh/video, Tin tức.
+- **Đặc điểm:** Thuần HTML/JS/CSS v2.4 nguyên bản, cực kỳ gọn nhẹ, phản hồi tức thì, không bắt buộc đăng nhập.
+- **Git Branch:** `legacy/web` (hoặc truy cập `http://localhost:8000/product-a-tournament.html`).
+
+### 🧠 SẢN PHẨM B: "PTX Sports Platform" (Full-featured Enterprise Platform v6.5 Ultra Performance)
+- **Mục đích:** Nền tảng công nghệ thể thao doanh nghiệp đa năng (B2B SaaS / Commercialization / Multi-season).
+- **Tính năng:** Real-time Broadcast <500ms, AI Match Predictor V2, Social Live Chat & @Mentions, Gamification Badges, SSO Active Directory, Mobile Biometrics & Offline Sync, Public OAuth2 & Webhooks.
+- **Git Branch:** `main` (truy cập `http://localhost:8000/index.html`).
+
+---
+
+## 🚀 Key Performance Indicators & Repository Info
 - **GitHub Repository:** `https://github.com/baoanhtran071096-star/PTXsummercup2026.git`
-- **Handover Date:** July 30, 2026
-
-## 🚀 Key Performance Indicators (v6.5)
-- **Lighthouse Performance Score:** 98 / 100
-- **Page Load Time:** < 1.2s
-- **API Response Time:** ~14.2 ms (Atomic RPC latency 1 - 2 ms)
-- **Security & Protection:** Rate Limiting (150 req/min), XSS & CSP Headers, Gzip Compression, 0 Error Logs.
-
-## 🛠️ Architecture & Technology Stack
-1. **Frontend / UI:** React 18 / Vite / Next.js (`http://localhost:5173`)
-2. **Backend API / Runtime:** Node.js Express / Next.js API Routes (`http://localhost:5000`)
-3. **Database Layer:** PostgreSQL Atomic RPC Functions (`fn_add_goal`, `fn_generate_tournament_schedule`)
-4. **Validation & Contracts:** Zod schemas (`generated/contracts/zod-schemas.ts`)
-5. **Realtime Engine:** Broadcast Service (< 500 ms latency target)
-6. **AI Runtime Engine:** AI Context Builder (`src/ai/context-runner.ts`)
-
-## 🔐 Default Admin Credentials
-- **Admin Email:** `admin@ptxsummercup.vn`
-- **Admin Password:** `admin123`
-- **Local Dev Server:** `http://localhost:8000` / `http://localhost:5173`
+- **Branches Active:** `main` (Sản phẩm B) & `legacy/web` (Sản phẩm A)
+- **Admin Credentials:** `admin@ptxsummercup.vn` / `admin123`
