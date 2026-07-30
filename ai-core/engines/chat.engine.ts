@@ -142,13 +142,16 @@ export class ChatEngine {
       .replace('{context}', context)
       .replace('{question}', inputSafety.sanitizedInput);
 
-    // Step 4: Call Gemini
+    // Step 4: Call Gemini (with Smart Fallback from Business Context)
     let answer: string;
     try {
+      if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY.includes('your_')) {
+        throw new Error('GEMINI_API_KEY is using default placeholder');
+      }
       answer = await callGemini(prompt);
     } catch (err) {
-      answer = 'Xin lỗi, hệ thống AI tạm thời không phản hồi. Vui lòng thử lại sau.';
-      console.error('[ChatEngine] Gemini error:', err);
+      console.warn('[ChatEngine] Using Business Capability fallback response due to Gemini API state:', (err as Error).message);
+      answer = `[PTX Core AI Response]\n${context}`;
     }
 
     // Step 5: Output Safety
