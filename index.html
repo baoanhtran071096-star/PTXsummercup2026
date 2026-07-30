@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PTX Summer Cup 2026 - Demo Platform v6.5 Ultra Performance</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">🏆</div>
+      <div class="brand-text">
+        <h1>PTX SUMMER CUP 2026</h1>
+        <span class="badge-version">v6.5 Ultra Performance</span>
+      </div>
+    </div>
+
+    <div class="user-profile-badge">
+      <div class="avatar">BA</div>
+      <div class="user-info">
+        <div class="user-name">Bảo Anh Trần (Admin)</div>
+        <div class="user-role">⭐ Fan Rank #4 • 1,250 Pts</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner Hero -->
+  <div class="hero-banner">
+    <img src="banner.jpg" alt="PTX Summer Cup 2026 Stadium Banner">
+    <div class="hero-overlay">
+      <h2>PTX SUMMER CUP 2026 — OFFICIAL DEMO</h2>
+      <p>Nền tảng Quản trị Giải đấu & Trải nghiệm Người dùng Đa nền tảng Hàng đầu PTX Group</p>
+      <div class="hero-stats">
+        <div class="hero-stat-item">⚡ API Latency: <span>14.2 ms</span></div>
+        <div class="hero-stat-item">🚀 Lighthouse Performance: <span>98/100</span></div>
+        <div class="hero-stat-item">🔒 Security CSP: <span>Strict OWASP</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" data-tab="tab-live">⚽ Live Match & Timeline</button>
+    <button class="tab-btn" data-tab="tab-chat">💬 Live Chat & Social Hub</button>
+    <button class="tab-btn" data-tab="tab-ai">🤖 AI Predictor V2 & Highlights</button>
+    <button class="tab-btn" data-tab="tab-fanclub">🛡️ Exclusive Fan Clubs</button>
+    <button class="tab-btn" data-tab="tab-btc">📊 BTC Smart Dashboard</button>
+    <button class="tab-btn" data-tab="tab-checkin">🎟️ QR Check-in & TV Scoreboard</button>
+    <button class="tab-btn" data-tab="tab-profile">🏆 Profile & Huy hiệu Badges</button>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+
+    <!-- TAB 1: Live Match & Analytics (UX Region 3) -->
+    <div id="tab-live" class="tab-content active">
+      <div class="grid-3">
+        <!-- Live Scoreboard -->
+        <div class="glass-panel score-card">
+          <div class="score-card-header">
+            <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">CHUNG KẾT PTX SUMMER CUP 2026</span>
+            <div class="live-indicator">
+              <div class="live-dot"></div> TRỰC TIẾP
+            </div>
+          </div>
+
+          <div class="match-teams">
+            <div class="team">
+              <div class="team-badge team-phoenix">🦅</div>
+              <div class="team-name">Phoenix FC</div>
+            </div>
+            <div class="score-display">2 - 1</div>
+            <div class="team">
+              <div class="team-badge team-tiger">🐯</div>
+              <div class="team-name">Tiger FC</div>
+            </div>
+          </div>
+          <div class="match-minute">⏱️ Phút 38' (Hiệp 1) — Sân Complex PTX</div>
+
+          <!-- Momentum Graph (Feature 3.3) -->
+          <div class="chart-container">
+            <div class="chart-title">
+              <span>⚡ Biểu đồ Thế trận & Dominance Momentum</span>
+              <span>Phoenix 65% - 35% Tiger</span>
+            </div>
+            <div class="momentum-bar-wrapper">
+              <div class="momentum-home"></div>
+              <div class="momentum-away"></div>
+            </div>
+          </div>
+
+          <!-- Player Cards (Feature 3.1) -->
+          <h4 style="text-align: left; margin-top: 1.5rem; font-size: 0.95rem; color: var(--primary-green);">
+            👥 Đội hình ra sân (Click vào cầu thủ để xem chỉ số chi tiết)
+          </h4>
+          <div class="player-grid">
+            <div class="player-card" onclick="openPlayerCard('Nguyễn Văn B (Cáp)', 10, 'Tiền đạo FWD', 8, 3, 142)">
+              <div class="player-num">10</div>
+              <div>
+                <div class="player-name">Nguyễn Văn B (C)</div>
+                <div class="player-pos">FWD • 8 Bàn thắng</div>
+              </div>
+            </div>
+            <div class="player-card" onclick="openPlayerCard('Trần Minh C', 7, 'Tiền vệ MID', 3, 1, 189)">
+              <div class="player-num">7</div>
+              <div>
+                <div class="player-name">Trần Minh C</div>
+                <div class="player-pos">MID • 3 Bàn thắng</div>
+              </div>
+            </div>
+            <div class="player-card" onclick="openPlayerCard('Lê Hoàng D', 4, 'Hậu vệ DEF', 1, 0, 95)">
+              <div class="player-num">4</div>
+              <div>
+                <div class="player-name">Lê Hoàng D</div>
+                <div class="player-pos">DEF • 18 Tắc bóng</div>
+              </div>
+            </div>
+            <div class="player-card" onclick="openPlayerCard('Phạm Quốc E', 1, 'Thủ môn GK', 0, 2, 45)">
+              <div class="player-num">1</div>
+              <div>
+                <div class="player-name">Phạm Quốc E</div>
+                <div class="player-pos">GK • 12 Cứu thua</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H2H Historical Record (Feature 3.4) -->
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary-cyan);">
+            ⚔️ Lịch sử Đối đầu (H2H)
+          </h3>
+          <div style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">
+            <p>• Tổng số trận đã đấu: <strong style="color: #fff;">5 trận</strong></p>
+            <p>• Phoenix FC thắng: <strong style="color: var(--primary-green);">3 trận</strong></p>
+            <p>• Tiger FC thắng: <strong style="color: var(--danger-pink);">1 trận</strong></p>
+            <p>• Hòa: <strong style="color: var(--accent-gold);">1 trận</strong></p>
+            <p style="margin-top: 1rem; padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+              ⚽ Trận gần nhất: <strong>Phoenix FC 2 - 1 Tiger FC</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Live Chat & Social (UX Region 2) -->
+    <div id="tab-chat" class="tab-content">
+      <div class="grid-3">
+        <div class="glass-panel chat-panel">
+          <div class="chat-header">
+            <span>💬 Live Chat & Cổ vũ Real-time</span>
+            <span style="color: var(--primary-green); font-size: 0.8rem;">● 1,450 người online</span>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg">
+              <div class="chat-msg-header">
+                <span class="chat-sender">Minh Anh (Phoenix Fan)</span>
+                <span style="color: var(--text-dim);">14:32</span>
+              </div>
+              <div class="chat-text">Siêu phẩm xa quá đẹp! Cố lên <span class="chat-mention">@PhoenixFC</span>!</div>
+              <div class="chat-reactions">
+                <button class="reaction-btn" onclick="addReaction(this)">👍 12</button>
+                <button class="reaction-btn" onclick="addReaction(this)">❤️ 8</button>
+              </div>
+            </div>
+            <div class="chat-msg">
+              <div class="chat-msg-header">
+                <span class="chat-sender">Hoàng Long (Tiger Fan)</span>
+                <span style="color: var(--text-dim);">14:34</span>
+              </div>
+              <div class="chat-text">Tiger FC sắp gỡ hòa rồi <span class="chat-mention">@baoanh</span> ơi!</div>
+              <div class="chat-reactions">
+                <button class="reaction-btn" onclick="addReaction(this)">🔥 15</button>
+              </div>
+            </div>
+          </div>
+          <form class="chat-input-box" id="chatForm">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Nhập tin nhắn (gõ @username để tag)...">
+            <button type="submit" class="btn-send">Gửi 🚀</button>
+          </form>
+        </div>
+
+        <!-- Social Active Leaderboard (Feature 2.5) -->
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-gold);">
+            🔥 Bảng xếp hạng Cổ vũ "Chăm chỉ nhất"
+          </h3>
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.88rem; padding: 8px; background: rgba(255,215,0,0.08); border-radius: 8px;">
+              <span>🥇 Minh Anh (Phoenix)</span>
+              <strong style="color: var(--accent-gold);">142 tin nhắn</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.88rem; padding: 8px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+              <span>🥈 Hoàng Long (Tiger)</span>
+              <strong>118 tin nhắn</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.88rem; padding: 8px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+              <span>🥉 Bạn (Bảo Anh)</span>
+              <strong style="color: var(--primary-green);">95 tin nhắn</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: AI Predictor V2 (UX Region 4 & Task 7.4.1) -->
+    <div id="tab-ai" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; color: var(--primary-cyan);">
+          🤖 AI Match Predictor V2 Engine
+        </h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          Mô hình dự đoán V2 tích hợp dữ liệu đối đầu lịch sử (H2H), phong độ 5 trận gần nhất và chỉ số sức mạnh từng cầu thủ.
+        </p>
+
+        <button id="runPredictorBtn" class="tab-btn active" style="padding: 12px 24px; font-size: 1rem;">
+          ⚡ Chạy Dự đoán AI V2 cho Trận Chung Kết
+        </button>
+
+        <div id="aiResultBox" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: rgba(0,255,157,0.05); border: 1px solid var(--primary-green); border-radius: 12px;">
+          <h4 style="color: var(--primary-green); font-size: 1.1rem; margin-bottom: 0.5rem;">🎯 Kết quả Dự đoán từ AI Model V2:</h4>
+          <div style="display: flex; gap: 30px; margin-top: 1rem;">
+            <div>Tỷ số dự đoán: <strong style="font-size: 1.4rem; color: #fff;">Phoenix 2 - 1 Tiger</strong></div>
+            <div>Xác suất thắng Phoenix: <strong style="color: var(--primary-green);">58.5%</strong></div>
+            <div>Độ tin cậy Model: <strong style="color: var(--accent-gold);">92.4%</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Exclusive Fan Clubs (Task 7.5.1) -->
+    <div id="tab-fanclub" class="tab-content">
+      <div class="grid-3">
+        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+          <div class="team-badge team-phoenix" style="margin: 0 auto 1rem auto;">🦅</div>
+          <h3 style="font-size: 1.3rem; font-weight: 800;">Phoenix Fan Club</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 8px 0 1rem 0;">450 Thành viên chính thức</p>
+          <button class="tab-btn active" style="width: 100%; justify-content: center;">Đã tham gia Fan Club</button>
+        </div>
+        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+          <div class="team-badge team-tiger" style="margin: 0 auto 1rem auto;">🐯</div>
+          <h3 style="font-size: 1.3rem; font-weight: 800;">Tiger Fan Club</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin: 8px 0 1rem 0;">380 Thành viên chính thức</p>
+          <button class="tab-btn" style="width: 100%; justify-content: center;">Tham gia ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: BTC Smart Dashboard (Task 7.4.4) -->
+    <div id="tab-btc" class="tab-content">
+      <div class="grid-4">
+        <div class="glass-panel stat-card">
+          <div class="stat-label">Active Users Realtime</div>
+          <div class="stat-val">1,450</div>
+          <span style="font-size: 0.75rem; color: var(--primary-green);">+18.4% vs tuần trước</span>
+        </div>
+        <div class="glass-panel stat-card">
+          <div class="stat-label">Dự đoán đã gửi</div>
+          <div class="stat-val">8,920</div>
+          <span style="font-size: 0.75rem; color: var(--primary-cyan);">Tỷ lệ tham gia 89%</span>
+        </div>
+        <div class="glass-panel stat-card">
+          <div class="stat-label">Độ chính xác AI</div>
+          <div class="stat-val">92.4%</div>
+          <span style="font-size: 0.75rem; color: var(--accent-gold);">Mô hình V2 Verified</span>
+        </div>
+        <div class="glass-panel stat-card">
+          <div class="stat-label">System Health</div>
+          <div class="stat-val">99.8%</div>
+          <span style="font-size: 0.75rem; color: var(--primary-green);">0 Error Logs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: QR Checkin & TV Scoreboard (UX Region 6) -->
+    <div id="tab-checkin" class="tab-content">
+      <div class="grid-2">
+        <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+          <h3>🎟️ Mã QR Vé Tham Dự Sự Kiện (Check-in)</h3>
+          <div style="margin: 1.5rem auto; width: 160px; height: 160px; background: #fff; padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #000; font-size: 4rem;">
+            📱
+          </div>
+          <p id="ticketStatusBadge" style="margin-bottom: 1rem;">Trạng thái: <strong>Chưa Check-in</strong></p>
+          <button onclick="checkinDemoTicket()" class="tab-btn active" style="margin: 0 auto;">Simulate QR Check-in</button>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <h3>📺 Scoreboard Màn Hình Lớn (TV Mode)</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Giao diện chuẩn HD/4K dành cho màn hình LED sân vận động & Máy chiếu.</p>
+          <div style="background: #000; padding: 1.5rem; border-radius: 12px; border: 2px solid var(--primary-green); text-align: center;">
+            <h2 style="color: var(--primary-green);">PHOENIX FC 2 - 1 TIGER FC</h2>
+            <div style="color: #fff; margin-top: 6px;">⏱️ 38' • Hiệp 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 7: Profile & Badges (UX Region 1 & 4) -->
+    <div id="tab-profile" class="tab-content">
+      <div class="glass-panel" style="padding: 2rem;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem;">🏆 Bộ sưu tập Huy hiệu Badges của tôi</h3>
+        <div>
+          <span class="badge-item">🔰 Tân thủ</span>
+          <span class="badge-item">🎯 Chuyên gia dự đoán</span>
+          <span class="badge-item">🔥 Fan cuồng nhiệt</span>
+          <span class="badge-item">🌐 Sứ giả PTX</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal Component (Feature 3.1) -->
+  <div class="modal-overlay" id="playerModal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeModalBtn">✕</button>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 1rem;">
+        <div style="font-size: 2.5rem; background: rgba(0,255,157,0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">⚽</div>
+        <div>
+          <h3 id="modalPlayerName" style="font-size: 1.2rem; font-weight: 800;">Nguyễn Văn B</h3>
+          <div id="modalPlayerNum" style="color: var(--primary-green); font-weight: 600; font-size: 0.85rem;">#10 - Tiền đạo FWD</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 1rem;">
+        <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Bàn thắng</div>
+          <strong id="modalPlayerGoals" style="font-size: 1.3rem; color: var(--primary-green);">8</strong>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Danh hiệu MVP</div>
+          <strong id="modalPlayerMvp" style="font-size: 1.3rem; color: var(--accent-gold);">3</strong>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Chuyền bóng thành công</div>
+          <strong id="modalPlayerPasses" style="font-size: 1.3rem; color: var(--primary-cyan);">142</strong>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Tỉ lệ dứt điểm</div>
+          <strong style="font-size: 1.3rem; color: #fff;">84%</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
