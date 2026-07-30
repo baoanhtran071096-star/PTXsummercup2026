@@ -271,9 +271,10 @@
             color: var(--white);
         }
         #splash-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            display: none !important;
         }
         #splash-screen .logo {
             font-size: 48px;
@@ -3266,6 +3267,26 @@
         <div class="bar"><div class="fill"></div></div>
         <div class="status">Loading experience...</div>
     </div>
+    <script>
+        (function() {
+            function killSplash() {
+                var el = document.getElementById('splash-screen');
+                if (el) {
+                    el.classList.add('hidden');
+                    el.style.setProperty('display', 'none', 'important');
+                    el.style.setProperty('opacity', '0', 'important');
+                    el.style.setProperty('visibility', 'hidden', 'important');
+                    el.style.setProperty('pointer-events', 'none', 'important');
+                }
+            }
+            if (document.readyState === 'interactive' || document.readyState === 'complete') {
+                setTimeout(killSplash, 150);
+            }
+            window.addEventListener('DOMContentLoaded', killSplash);
+            window.addEventListener('load', killSplash);
+            setTimeout(killSplash, 300);
+        })();
+    </script>
 
     <!-- THEME TOGGLE -->
     <button class="theme-toggle">
