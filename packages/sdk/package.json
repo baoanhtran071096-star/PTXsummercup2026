@@ -1,0 +1,9 @@
+{
+  "name": "@ptx/sdk",
+  "version": "1.0.0",
+  "description": "PTX Platform Shared SDK",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  }
+}
