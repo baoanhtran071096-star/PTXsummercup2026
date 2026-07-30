@@ -60,7 +60,7 @@
     <button class="tab-btn" data-tab="tab-chat">💬 Live Chat & Social Hub</button>
     <button class="tab-btn" data-tab="tab-ai">🤖 AI Predictor V2 & Highlights</button>
     <button class="tab-btn" data-tab="tab-fanclub">🛡️ Exclusive Fan Clubs</button>
-    <button class="tab-btn" data-tab="tab-btc">📊 BTC Smart Dashboard</button>
+    <button class="tab-btn" data-tab="tab-btc" id="adminTabBtn">🔒 BTC Smart Dashboard (Admin Only)</button>
     <button class="tab-btn" data-tab="tab-checkin">🎟️ QR Check-in & TV Scoreboard</button>
     <button class="tab-btn" data-tab="tab-profile">🏆 Profile & Huy hiệu Badges</button>
   </nav>
@@ -356,6 +356,37 @@
           <strong style="font-size: 1.3rem; color: #fff;">84%</strong>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Admin Authentication Login Modal (Feature Security Hardening) -->
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal-card" style="width: 440px;">
+      <button class="modal-close" id="closeAdminLoginBtn">✕</button>
+      <div style="text-align: center; margin-bottom: 1.2rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 6px;">🔐</div>
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-green);">YÊU CẦU ĐĂNG NHẬP ADMIN</h3>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Khu vực dành riêng cho Ban Tổ Chức (BTC) & Quản trị viên</p>
+      </div>
+
+      <form id="adminLoginForm" style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Email Admin:</label>
+          <input type="email" id="adminEmailInput" class="chat-input" style="width: 100%; margin-top: 4px;" value="admin@ptxsummercup.vn" required>
+        </div>
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Mật khẩu Admin:</label>
+          <input type="password" id="adminPasswordInput" class="chat-input" style="width: 100%; margin-top: 4px;" value="admin123" required>
+        </div>
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600;">Mã OTP 2FA (Mã mô phỏng: 123456):</label>
+          <input type="text" id="adminOtpInput" class="chat-input" style="width: 100%; margin-top: 4px;" value="123456" placeholder="Nhập 123456" required>
+        </div>
+
+        <button type="submit" class="tab-btn active" style="margin-top: 10px; justify-content: center; font-weight: 800;">
+          🔓 Đăng nhập & Xác thực 2FA OTP
+        </button>
+      </form>
     </div>
   </div>
 

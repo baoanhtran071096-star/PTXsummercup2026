@@ -7,14 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initPredictionDemo();
 });
 
-// Tab Switching Mechanism
+// Tab Switching Mechanism with Admin Guard
 function initTabs() {
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
 
   tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
       const targetTab = btn.getAttribute('data-tab');
+
+      // Admin Guard Check for BTC Dashboard
+      if (targetTab === 'tab-btc') {
+        const adminToken = sessionStorage.getItem('adminToken');
+        if (!adminToken) {
+          e.preventDefault();
+          showAdminLoginModal();
+          return;
+        }
+      }
 
       tabBtns.forEach(b => b.classList.remove('active'));
       tabContents.forEach(c => c.classList.remove('active'));
@@ -26,6 +36,54 @@ function initTabs() {
       }
     });
   });
+
+  initAdminAuthForm();
+}
+
+function showAdminLoginModal() {
+  const modal = document.getElementById('adminLoginModal');
+  if (modal) modal.classList.add('active');
+}
+
+function initAdminAuthForm() {
+  const loginForm = document.getElementById('adminLoginForm');
+  const closeBtn = document.getElementById('closeAdminLoginBtn');
+  const modal = document.getElementById('adminLoginModal');
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('adminEmailInput').value;
+      const pass = document.getElementById('adminPasswordInput').value;
+      const otp = document.getElementById('adminOtpInput').value;
+
+      if (email === 'admin@ptxsummercup.vn' && pass === 'admin123' && (otp === '123456' || otp === '654321')) {
+        const mockToken = `admin_jwt_${Date.now()}_authenticated`;
+        sessionStorage.setItem('adminToken', mockToken);
+        sessionStorage.setItem('userRole', 'ADMIN');
+
+        modal.classList.remove('active');
+        alert('🎉 Đăng nhập Admin & Xác thực 2FA OTP thành công!');
+
+        // Activate BTC Tab
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        const btcBtn = document.getElementById('adminTabBtn');
+        const btcTab = document.getElementById('tab-btc');
+        if (btcBtn) btcBtn.classList.add('active');
+        if (btcTab) btcTab.classList.add('active');
+      } else {
+        alert('❌ Đăng nhập thất bại: Sai email, mật khẩu hoặc mã OTP 2FA!');
+      }
+    });
+  }
 }
 
 // Live Chat Interactivity
