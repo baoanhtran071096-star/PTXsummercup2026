@@ -6,6 +6,7 @@
   "scripts": {
     "docs:build": "npx -y tsx tools/knowledge/compiler/build.ts",
     "test": "npx -y tsx tests/contract/match-api-contract.test.ts",
+    "test:phase7": "npx -y tsx tests/phase7/phase7-integration-suite.test.ts",
     "clean": "powershell -Command \"Remove-Item -Recurse -Force node_modules, generated/*\""
   },
   "dependencies": {
