@@ -1,7 +1,7 @@
 // ================================================================
 // PTX SUPABASE CLIENT
 // Kết nối PostgreSQL qua Supabase REST API (Free Tier).
-// Không cần SDK — dùng native fetch để tránh dependency.
+// Dùng native fetch để đảm bảo 0 dependency.
 // ================================================================
 
 export interface SupabaseConfig {
@@ -25,29 +25,35 @@ export interface SupabaseResponse<T> {
 }
 
 export class SupabaseClient {
-  private url: string;
-  private headers: Record<string, string>;
+  private configUrl?: string;
+  private configKey?: string;
 
   constructor(config?: SupabaseConfig) {
-    const url = config?.url ?? process.env.SUPABASE_URL ?? '';
-    const key = config?.serviceRoleKey ?? process.env.SUPABASE_SERVICE_ROLE_KEY
-      ?? config?.anonKey ?? process.env.SUPABASE_ANON_KEY ?? '';
-
-    this.url = url;
-    this.headers = {
-      'Content-Type': 'application/json',
-      'apikey': key,
-      'Authorization': `Bearer ${key}`,
-      'Prefer': 'return=representation',
-    };
-
-    if (!url || !key) {
-      console.warn('[SupabaseClient] ⚠️  SUPABASE_URL or keys not set. DB features will use mock data.');
+    if (config) {
+      this.configUrl = config.url;
+      this.configKey = config.serviceRoleKey ?? config.anonKey;
     }
   }
 
+  private get url(): string {
+    return this.configUrl ?? process.env.SUPABASE_URL ?? '';
+  }
+
+  private get key(): string {
+    return this.configKey ?? process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_ANON_KEY ?? '';
+  }
+
+  private get headers(): Record<string, string> {
+    return {
+      'Content-Type': 'application/json',
+      'apikey': this.key,
+      'Authorization': `Bearer ${this.key}`,
+      'Prefer': 'return=representation',
+    };
+  }
+
   get isConfigured(): boolean {
-    return !!this.url && this.url !== '';
+    return !!this.url && !!this.key;
   }
 
   /**
@@ -59,22 +65,18 @@ export class SupabaseClient {
     let endpoint = `${this.url}/rest/v1/${table}?`;
     const params: string[] = [];
 
-    // select columns
     params.push(`select=${options.select ?? '*'}`);
 
-    // filter eq
     if (options.eq) {
       for (const [col, val] of Object.entries(options.eq)) {
         params.push(`${col}=eq.${val}`);
       }
     }
 
-    // order
     if (options.order) {
       params.push(`order=${options.order.column}.${options.order.ascending !== false ? 'asc' : 'desc'}`);
     }
 
-    // pagination
     if (options.limit) params.push(`limit=${options.limit}`);
     if (options.offset) params.push(`offset=${options.offset}`);
 
@@ -133,11 +135,11 @@ export class SupabaseClient {
     return this.request<T>('POST', `${this.url}/rest/v1/rpc/${functionName}`, params);
   }
 
-  private async request<T>(method: string, url: string, body?: unknown, headers?: Record<string, string>): Promise<SupabaseResponse<T>> {
+  private async request<T>(method: string, url: string, body?: unknown, customHeaders?: Record<string, string>): Promise<SupabaseResponse<T>> {
     try {
       const res = await fetch(url, {
         method,
-        headers: headers ?? this.headers,
+        headers: customHeaders ?? this.headers,
         body: body ? JSON.stringify(body) : undefined,
       });
 
