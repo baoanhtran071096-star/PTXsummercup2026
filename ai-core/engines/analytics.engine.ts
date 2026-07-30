@@ -1,36 +1,28 @@
 // ================================================================
-// PTX ANALYTICS ENGINE
-// Tính toán BXH, thống kê, dự đoán kết quả trận đấu.
-// Không cần Gemini — pure TypeScript logic (Free).
+// PTX ANALYTICS ENGINE (v2 – Supabase Connected)
+// Tính toán BXH, thống kê, dự đoán — đọc/ghi DB thực.
 // ================================================================
 
 import { OrchestratorRequest } from '../orchestrator/orchestrator.types';
+import { dbService, Match } from '../../data-platform/supabase/db.service';
 
-interface MatchResult {
-  homeTeam: string;
-  awayTeam: string;
-  homeGoals: number;
-  awayGoals: number;
-  matchday: number;
-  date: string;
-}
-
-interface StandingEntry {
-  rank: number;
-  team: string;
-  played: number;
-  won: number;
-  drawn: number;
-  lost: number;
-  goalsFor: number;
-  goalsAgainst: number;
-  goalDiff: number;
-  points: number;
+interface MatchInput {
+  homeTeam?: string;
+  awayTeam?: string;
+  homeGoals?: number;
+  awayGoals?: number;
+  matchday?: number;
+  date?: string;
+  matchId?: string;
+  results?: Match[];
 }
 
 export class AnalyticsEngine {
   async handle(request: OrchestratorRequest): Promise<unknown> {
-    const { action, data } = request.payload as { action: string; data: Record<string, unknown> };
+    const payload = request.payload as { action: string } & MatchInput & { data?: MatchInput };
+    const action = payload.action;
+    const data: MatchInput = payload.data ?? payload;
+
     console.log(`[AnalyticsEngine] Action: ${action}`);
 
     switch (action) {
@@ -44,80 +36,111 @@ export class AnalyticsEngine {
   }
 
   /**
-   * Cập nhật bảng xếp hạng từ danh sách kết quả trận đấu.
+   * Lấy bảng xếp hạng từ DB (view standings tự tính từ kết quả thực).
+   * Fallback: tính toán từ danh sách results được truyền vào.
    */
-  private updateStandings(data: Record<string, unknown>): StandingEntry[] {
-    const results = (data.results ?? []) as MatchResult[];
-    const teamsMap = new Map<string, Omit<StandingEntry, 'rank'>>();
-
-    const ensureTeam = (team: string) => {
-      if (!teamsMap.has(team)) {
-        teamsMap.set(team, { team, played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0, goalDiff: 0, points: 0 });
-      }
-      return teamsMap.get(team)!;
-    };
-
-    for (const match of results) {
-      const home = ensureTeam(match.homeTeam);
-      const away = ensureTeam(match.awayTeam);
-
-      home.played++; away.played++;
-      home.goalsFor += match.homeGoals; home.goalsAgainst += match.awayGoals;
-      away.goalsFor += match.awayGoals; away.goalsAgainst += match.homeGoals;
-
-      if (match.homeGoals > match.awayGoals) {
-        home.won++; home.points += 3; away.lost++;
-      } else if (match.homeGoals === match.awayGoals) {
-        home.drawn++; home.points++; away.drawn++; away.points++;
-      } else {
-        away.won++; away.points += 3; home.lost++;
-      }
-      home.goalDiff = home.goalsFor - home.goalsAgainst;
-      away.goalDiff = away.goalsFor - away.goalsAgainst;
+  private async updateStandings(data: MatchInput) {
+    // Nếu có matchId → lưu kết quả vào DB trước
+    if (data.matchId && data.homeGoals !== undefined && data.awayGoals !== undefined) {
+      await dbService.saveMatchResult(data.matchId, data.homeGoals, data.awayGoals);
+      console.log('[AnalyticsEngine] Match result saved to DB:', data.matchId);
     }
 
-    const standings = Array.from(teamsMap.values())
-      .sort((a, b) => b.points - a.points || b.goalDiff - a.goalDiff || b.goalsFor - a.goalsFor)
-      .map((entry, i) => ({ rank: i + 1, ...entry }));
+    // Lấy BXH từ DB (Supabase View tự tính)
+    const standings = await dbService.getStandings();
 
-    return standings;
+    if (standings.length > 0) return standings;
+
+    // Fallback: tính từ results được truyền vào (offline)
+    return this.computeStandingsFromResults(data.results ?? []);
   }
 
-  private computeStats(data: Record<string, unknown>) {
-    const match = data as unknown as MatchResult;
+  private async computeStats(data: MatchInput) {
+    const finishedMatches = await dbService.getMatches('finished');
+    const totalGoals = finishedMatches.reduce(
+      (sum, m) => sum + (m.home_goals ?? 0) + (m.away_goals ?? 0), 0
+    );
+    const topScorers = await dbService.getTopScorers(5);
+
     return {
-      totalGoals: (match.homeGoals ?? 0) + (match.awayGoals ?? 0),
-      winner: match.homeGoals > match.awayGoals
-        ? match.homeTeam
-        : match.awayGoals > match.homeGoals
-          ? match.awayTeam
-          : 'Hòa',
-      scoreline: `${match.homeTeam} ${match.homeGoals} - ${match.awayGoals} ${match.awayTeam}`,
+      totalMatches: finishedMatches.length,
+      totalGoals,
+      avgGoalsPerMatch: finishedMatches.length
+        ? (totalGoals / finishedMatches.length).toFixed(2)
+        : '0',
+      topScorers: topScorers.map(p => ({ name: p.name, goals: p.goals })),
+      // Kết quả trận cụ thể nếu có
+      currentMatch: data.matchId
+        ? {
+            scoreline: `${data.homeTeam ?? '?'} ${data.homeGoals} - ${data.awayGoals} ${data.awayTeam ?? '?'}`,
+            winner: (data.homeGoals ?? 0) > (data.awayGoals ?? 0)
+              ? data.homeTeam
+              : (data.awayGoals ?? 0) > (data.homeGoals ?? 0)
+                ? data.awayTeam
+                : 'Hòa',
+          }
+        : undefined,
       computedAt: new Date().toISOString(),
     };
   }
 
-  private predict(data: Record<string, unknown>) {
-    // Simple prediction based on available stats
-    const homeAdvantage = 0.1;
-    const homeWinProb = Math.min(0.9, 0.4 + homeAdvantage);
+  private async predict(data: MatchInput) {
+    // Lấy thống kê 2 đội từ DB để cải thiện dự đoán
+    const standings = await dbService.getStandings();
+    const homeRank = standings.find(s => s.team === data.homeTeam)?.rank ?? 4;
+    const awayRank = standings.find(s => s.team === data.awayTeam)?.rank ?? 4;
+
+    const homeAdvantage = 0.08;
+    const rankFactor = (awayRank - homeRank) * 0.03;
+    const homeWinProb = Math.max(0.15, Math.min(0.85, 0.4 + homeAdvantage + rankFactor));
+    const drawProb = 0.25;
+    const awayWinProb = Math.max(0.05, 1 - homeWinProb - drawProb);
+
     return {
-      homeWinProbability: Math.round(homeWinProb * 100),
-      drawProbability: 25,
-      awayWinProbability: Math.round((1 - homeWinProb - 0.25) * 100),
-      note: 'Dự đoán dựa trên lợi thế sân nhà. Tích hợp dữ liệu thống kê để tăng độ chính xác.',
-      teams: data,
+      homeTeam: data.homeTeam,
+      awayTeam: data.awayTeam,
+      homeWinProbability:  Math.round(homeWinProb  * 100),
+      drawProbability:     Math.round(drawProb      * 100),
+      awayWinProbability:  Math.round(awayWinProb   * 100),
+      basedOn: `BXH: ${data.homeTeam} hạng ${homeRank} vs ${data.awayTeam} hạng ${awayRank}`,
+      predictedAt: new Date().toISOString(),
     };
   }
 
-  private summarize(data: Record<string, unknown>) {
-    const results = (data.results ?? []) as MatchResult[];
-    const totalGoals = results.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0);
+  private async summarize(data: MatchInput) {
+    const finished = await dbService.getMatches('finished');
+    const scheduled = await dbService.getMatches('scheduled');
+    const standings = await dbService.getStandings();
+
     return {
-      totalMatches: results.length,
-      totalGoals,
-      avgGoalsPerMatch: results.length ? (totalGoals / results.length).toFixed(2) : '0',
+      matchesFinished: finished.length,
+      matchesScheduled: scheduled.length,
+      leader: standings[0] ?? null,
+      topTeams: standings.slice(0, 3).map(s => `${s.team}(${s.points}đ)`),
       summarizedAt: new Date().toISOString(),
     };
+  }
+
+  /** Tính BXH offline từ mảng kết quả */
+  private computeStandingsFromResults(results: Match[]) {
+    const map = new Map<string, { team: string; played: number; won: number; drawn: number; lost: number; gf: number; ga: number; pts: number }>();
+    const ensure = (id: string, name: string) => {
+      if (!map.has(id)) map.set(id, { team: name, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, pts: 0 });
+      return map.get(id)!;
+    };
+    for (const m of results) {
+      if (m.home_goals == null || m.away_goals == null) continue;
+      const h = ensure(m.home_team_id, m.home_team ?? m.home_team_id);
+      const a = ensure(m.away_team_id, m.away_team ?? m.away_team_id);
+      h.played++; a.played++;
+      h.gf += m.home_goals; h.ga += m.away_goals;
+      a.gf += m.away_goals; a.ga += m.home_goals;
+      if (m.home_goals > m.away_goals) { h.won++; h.pts += 3; a.lost++; }
+      else if (m.home_goals === m.away_goals) { h.drawn++; h.pts++; a.drawn++; a.pts++; }
+      else { a.won++; a.pts += 3; h.lost++; }
+    }
+    return Array.from(map.values())
+      .sort((a, b) => b.pts - a.pts || (b.gf - b.ga) - (a.gf - a.ga))
+      .map((e, i) => ({ rank: i + 1, team: e.team, played: e.played, won: e.won, drawn: e.drawn, lost: e.lost, goals_for: e.gf, goals_against: e.ga, goal_diff: e.gf - e.ga, points: e.pts }));
   }
 }

@@ -105,19 +105,21 @@ async function runTests() {
     // Không throw — chỉ kiểm tra workflow runner được gọi
   });
 
-  // ── TC5: Analytics – computeStats ──
+  // ── TC5: Analytics – computeStats (v2 – DB-connected) ──
   await test('TC5: AnalyticsEngine.computeStats', async () => {
     const res = await orchestrator.process({
       type: 'analytics',
       payload: {
         action: 'computeStats',
-        data: { homeTeam: 'Đội A', awayTeam: 'Đội B', homeGoals: 2, awayGoals: 2, matchday: 1, date: '2026-08-05' },
+        data: { matchId: 'test-m1', homeTeam: 'Đội A', awayTeam: 'Đội B', homeGoals: 2, awayGoals: 2 },
       },
     });
     if (!res.success) throw new Error(res.error);
-    const stats = res.data?.outputs?.analytics as { winner: string };
-    if (stats.winner !== 'Hòa') throw new Error(`Expected "Hòa", got "${stats.winner}"`);
-    console.log(`    Kết quả: ${stats.winner} ✓`);
+    const stats = res.data?.outputs?.analytics as { totalMatches: number; currentMatch?: { winner: string } };
+    if (typeof stats.totalMatches !== 'number') throw new Error('Expected totalMatches field');
+    const winner = stats.currentMatch?.winner;
+    if (winner !== 'Hòa') throw new Error(`Expected "Hòa", got "${winner}"`);
+    console.log(`    totalMatches=${stats.totalMatches}, currentMatch winner: ${winner} ✓`);
   });
 
   // ── TC6: Orchestrator – error handling ──

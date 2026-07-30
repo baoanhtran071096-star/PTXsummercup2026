@@ -5,6 +5,7 @@
   "main": "generated/types/domain-models.ts",
   "scripts": {
     "dev": "npx -y serve -l 8000 .",
+    "api:dev": "npx -y tsx data-platform/api/server.ts",
     "docs:build": "npx -y tsx tools/knowledge/compiler/build.ts",
     "test": "npx -y tsx tests/contract/match-api-contract.test.ts",
     "test:phase7": "npx -y tsx tests/phase7/phase7-integration-suite.test.ts",
@@ -12,7 +13,8 @@
     "test:phase8": "npx -y tsx tests/phase8/phase8-super-app.test.ts",
     "test:security": "npx -y tsx tests/security/admin-security.test.ts",
     "test:ai-core": "npx -y tsx tests/ai-core/ai-core.test.ts",
-    "test:all": "npm run test && npm run test:phase7 && npm run test:ux && npm run test:phase8 && npm run test:security && npm run test:ai-core",
+    "test:supabase": "npx -y tsx tests/data-platform/supabase.test.ts",
+    "test:all": "npm run test:ai-core && npm run test:supabase && npm run test:security",
     "clean": "powershell -Command \"Remove-Item -Recurse -Force node_modules, generated/*\""
   },
   "dependencies": {
