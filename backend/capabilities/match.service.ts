@@ -1,26 +1,42 @@
 // PTX MATCH SERVICE – Business Capability Layer
 import { dbService, Match } from '../../data-platform/supabase/db.service';
+import { teamService } from './team.service';
 
 export class MatchService {
+  private async populateTeamNames(matches: Match[]): Promise<Match[]> {
+    const teams = await teamService.getAllTeams();
+    const tm = Object.fromEntries(teams.map(t => [t.id, t.name]));
+    return matches.map(m => ({
+      ...m,
+      home_team: m.home_team ?? tm[m.home_team_id] ?? 'Đội Chưa XĐ',
+      away_team: m.away_team ?? tm[m.away_team_id] ?? 'Đội Chưa XĐ',
+    }));
+  }
+
   async getAllMatches(): Promise<Match[]> {
-    return dbService.getMatches();
+    const matches = await dbService.getMatches();
+    return this.populateTeamNames(matches);
   }
 
   async getFinishedMatches(): Promise<Match[]> {
-    return dbService.getMatches('finished');
+    const matches = await dbService.getMatches('finished');
+    return this.populateTeamNames(matches);
   }
 
   async getScheduledMatches(): Promise<Match[]> {
-    return dbService.getMatches('scheduled');
+    const matches = await dbService.getMatches('scheduled');
+    return this.populateTeamNames(matches);
   }
 
   async getLiveMatches(): Promise<Match[]> {
-    return dbService.getMatches('live');
+    const matches = await dbService.getMatches('live');
+    return this.populateTeamNames(matches);
   }
 
   async getUpcomingMatches(limit = 5): Promise<Match[]> {
     const scheduled = await dbService.getMatches('scheduled');
-    return scheduled.slice(0, limit);
+    const populated = await this.populateTeamNames(scheduled);
+    return populated.slice(0, limit);
   }
 
   async saveResult(matchId: string, homeGoals: number, awayGoals: number): Promise<void> {
@@ -43,7 +59,8 @@ export class MatchService {
 
   async getRecentResults(limit = 5): Promise<Match[]> {
     const finished = await dbService.getMatches('finished');
-    return finished.slice(-limit).reverse();
+    const populated = await this.populateTeamNames(finished);
+    return populated.slice(-limit).reverse();
   }
 
   formatScore(match: Match): string {
