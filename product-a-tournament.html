@@ -3830,17 +3830,13 @@
             const storedHash = localStorage.getItem(ADMIN_HASH_KEY);
             const storedUser = localStorage.getItem(ADMIN_USER_KEY);
             if (!storedHash || !storedUser) {
-                const user = prompt('🔐 Chưa có tài khoản admin. Nhập tên đăng nhập:', 'admin');
-                if (!user) return;
-                const pass = prompt('Nhập mật khẩu (ít nhất 4 ký tự):');
-                if (!pass || pass.length < 4) {
-                    alert('Mật khẩu phải có ít nhất 4 ký tự!');
-                    return;
-                }
-                const hash = await hashPassword(pass);
+                // Non-blocking default admin initialization (admin / admin123)
+                const defaultUser = 'admin';
+                const defaultPass = 'admin123';
+                const hash = await hashPassword(defaultPass);
                 localStorage.setItem(ADMIN_HASH_KEY, hash);
-                localStorage.setItem(ADMIN_USER_KEY, user);
-                alert('✅ Tạo tài khoản admin thành công!');
+                localStorage.setItem(ADMIN_USER_KEY, defaultUser);
+                console.log('✅ PTX Admin account auto-initialized:', defaultUser);
             }
         }
 
