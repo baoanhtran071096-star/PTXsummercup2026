@@ -271,10 +271,9 @@
             color: var(--white);
         }
         #splash-screen.hidden {
-            opacity: 0 !important;
-            visibility: hidden !important;
-            pointer-events: none !important;
-            display: none !important;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
         #splash-screen .logo {
             font-size: 48px;
@@ -3267,26 +3266,6 @@
         <div class="bar"><div class="fill"></div></div>
         <div class="status">Loading experience...</div>
     </div>
-    <script>
-        (function() {
-            function killSplash() {
-                var el = document.getElementById('splash-screen');
-                if (el) {
-                    el.classList.add('hidden');
-                    el.style.setProperty('display', 'none', 'important');
-                    el.style.setProperty('opacity', '0', 'important');
-                    el.style.setProperty('visibility', 'hidden', 'important');
-                    el.style.setProperty('pointer-events', 'none', 'important');
-                }
-            }
-            if (document.readyState === 'interactive' || document.readyState === 'complete') {
-                setTimeout(killSplash, 150);
-            }
-            window.addEventListener('DOMContentLoaded', killSplash);
-            window.addEventListener('load', killSplash);
-            setTimeout(killSplash, 300);
-        })();
-    </script>
 
     <!-- THEME TOGGLE -->
     <button class="theme-toggle">
@@ -3851,13 +3830,17 @@
             const storedHash = localStorage.getItem(ADMIN_HASH_KEY);
             const storedUser = localStorage.getItem(ADMIN_USER_KEY);
             if (!storedHash || !storedUser) {
-                // Non-blocking default admin initialization (admin / admin123)
-                const defaultUser = 'admin';
-                const defaultPass = 'admin123';
-                const hash = await hashPassword(defaultPass);
+                const user = prompt('🔐 Chưa có tài khoản admin. Nhập tên đăng nhập:', 'admin');
+                if (!user) return;
+                const pass = prompt('Nhập mật khẩu (ít nhất 4 ký tự):');
+                if (!pass || pass.length < 4) {
+                    alert('Mật khẩu phải có ít nhất 4 ký tự!');
+                    return;
+                }
+                const hash = await hashPassword(pass);
                 localStorage.setItem(ADMIN_HASH_KEY, hash);
-                localStorage.setItem(ADMIN_USER_KEY, defaultUser);
-                console.log('✅ PTX Admin account auto-initialized:', defaultUser);
+                localStorage.setItem(ADMIN_USER_KEY, user);
+                alert('✅ Tạo tài khoản admin thành công!');
             }
         }
 
@@ -5370,256 +5353,43 @@
         }
 
         // ============================================================
-        // PTX PLATFORM v3.0.0 — SUPABASE REALTIME & AI ASSISTANT INJECTION
-        // ============================================================
-        (function initPtxPlatformV3() {
-            const SUPABASE_URL = 'https://wmamuqylqqikvseuqerm.supabase.co/rest/v1';
-            const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndtYW11cXlscXFpa3ZzZXVxZXJtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjY4NzQsImV4cCI6MjEwMTAwMjg3NH0.Oz86sHrOxS5MaUo7SJ8lVDjHybHbf_wZQimeEGQNc54';
-
-            // 1. Inject Floating AI Widget Styles & DOM
-            const widgetStyles = document.createElement('style');
-            widgetStyles.innerHTML = `
-                .ptx-ai-widget-btn {
-                    position: fixed; bottom: 24px; right: 24px; width: 62px; height: 62px;
-                    border-radius: 50%; background: linear-gradient(135deg, #00ff9d, #00b8d4);
-                    border: 2px solid #fff; color: #000; font-size: 1.8rem; cursor: pointer;
-                    box-shadow: 0 8px 30px rgba(0, 255, 157, 0.6); z-index: 99999;
-                    display: flex; align-items: center; justify-content: center;
-                    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                }
-                .ptx-ai-widget-btn:hover { transform: scale(1.15) rotate(5deg); }
-                .ptx-ai-panel {
-                    position: fixed; bottom: 98px; right: 24px; width: 380px; height: 520px;
-                    background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px);
-                    border: 1px solid rgba(0, 255, 157, 0.4); border-radius: 20px;
-                    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7); display: none; flex-direction: column;
-                    z-index: 99999; overflow: hidden; font-family: system-ui, sans-serif;
-                }
-                .ptx-ai-panel.active { display: flex; animation: ptxPop 0.3s ease; }
-                @keyframes ptxPop { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-                .ptx-ai-header {
-                    padding: 14px 18px; background: linear-gradient(90deg, #1d3557, #0f172a);
-                    border-bottom: 1px solid rgba(0,255,157,0.3); display: flex; justify-content: space-between; align-items: center;
-                }
-                .ptx-ai-body { flex: 1; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-                .ptx-ai-msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; line-height: 1.5; }
-                .ptx-ai-msg.user { align-self: flex-end; background: #00ff9d; color: #000; font-weight: 700; border-bottom-right-radius: 2px; }
-                .ptx-ai-msg.bot { align-self: flex-start; background: rgba(255,255,255,0.08); color: #fff; border-bottom-left-radius: 2px; border: 1px solid rgba(255,255,255,0.1); }
-                .ptx-ai-footer { padding: 12px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; gap: 8px; }
-                .ptx-ai-input { flex: 1; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 8px 14px; color: #fff; font-size: 0.85rem; outline: none; }
-            `;
-            document.head.appendChild(widgetStyles);
-
-            const widgetHtml = document.createElement('div');
-            widgetHtml.innerHTML = `
-                <button class="ptx-ai-widget-btn" id="ptxAiBtn" title="Hỏi Trợ lý AI PTX Core">🤖</button>
-                <div class="ptx-ai-panel" id="ptxAiPanel">
-                    <div class="ptx-ai-header">
-                        <div style="font-weight:800; color:#fff; font-size:0.9rem; display:flex; align-items:center; gap:8px;">
-                            <span>🤖 TRỢ LÝ AI PTX CORE</span>
-                            <span style="font-size:0.65rem; background:rgba(0,255,157,0.2); color:#00ff9d; padding:2px 6px; border-radius:10px;">v3.0.0 Live</span>
-                        </div>
-                        <button id="ptxAiClose" style="background:none; border:none; color:#fff; cursor:pointer; font-size:1.2rem;">✕</button>
-                    </div>
-                    <div class="ptx-ai-body" id="ptxAiMessages">
-                        <div class="ptx-ai-msg bot">
-                            Xin chào! Tôi là Trợ lý AI PTX Platform. Bạn có thể hỏi tôi về Bảng xếp hạng, Lịch thi đấu hay thông tin 8 Đội bóng từ Supabase Database!
-                        </div>
-                    </div>
-                    <form class="ptx-ai-footer" id="ptxAiForm">
-                        <input type="text" id="ptxAiInput" class="ptx-ai-input" placeholder="Nhập câu hỏi (VD: Ai đang dẫn đầu BXH?)..." />
-                        <button type="submit" style="background:#00ff9d; color:#000; border:none; border-radius:50%; width:36px; height:36px; font-weight:800; cursor:pointer;">➔</button>
-                    </form>
-                </div>
-            `;
-            document.body.appendChild(widgetHtml);
-
-            // Widget Interactivity
-            document.getElementById('ptxAiBtn')?.addEventListener('click', () => {
-                document.getElementById('ptxAiPanel')?.classList.toggle('active');
-            });
-            document.getElementById('ptxAiClose')?.addEventListener('click', () => {
-                document.getElementById('ptxAiPanel')?.classList.remove('active');
-            });
-
-            document.getElementById('ptxAiForm')?.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const input = document.getElementById('ptxAiInput') as HTMLInputElement;
-                const messagesBox = document.getElementById('ptxAiMessages');
-                if (!input || !messagesBox) return;
-                const text = input.value.trim();
-                if (!text) return;
-
-                const userMsg = document.createElement('div');
-                userMsg.className = 'ptx-ai-msg user';
-                userMsg.innerText = text;
-                messagesBox.appendChild(userMsg);
-                input.value = '';
-                messagesBox.scrollTop = messagesBox.scrollHeight;
-
-                const botLoading = document.createElement('div');
-                botLoading.className = 'ptx-ai-msg bot';
-                botLoading.innerText = '🤖 AI Engine đang truy vấn Supabase Live DB...';
-                messagesBox.appendChild(botLoading);
-                messagesBox.scrollTop = messagesBox.scrollHeight;
-
-                try {
-                    const q = text.toLowerCase();
-                    let reply = '';
-                    if (q.includes('bxh') || q.includes('xếp hạng') || q.includes('dẫn đầu') || q.includes('đứng đầu') || q.includes('điểm')) {
-                        const res = await fetch(`${SUPABASE_URL}/standings?order=rank.asc`, { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } });
-                        const standings = await res.json();
-                        reply = '🏆 **BẢNG XẾP HẠNG SUPABASE DB REAL-TIME:**\n' + standings.map((s: any) => `${s.rank}. ${s.team}: ${s.points}đ (${s.won}W ${s.drawn}D ${s.lost}L, GD:${s.goal_diff > 0 ? '+' : ''}${s.goal_diff})`).join('\n');
-                    } else if (q.includes('lịch') || q.includes('trận') || q.includes('vòng') || q.includes('kết quả')) {
-                        reply = '📅 **LỊCH THI ĐẤU & KẾT QUẢ VÒNG 1 & 2:**\n• Vòng 1: Đội Alpha 3 - 1 Đội Beta\n• Vòng 1: Đội Epsilon 1 - 0 Đội Zeta\n• Vòng 1: Đội Gamma 2 - 2 Đội Delta\n• Vòng 1: Đội Eta 0 - 0 Đội Theta\n\n📌 Vòng 2 tiếp theo diễn ra vào ngày 09/08/2026 tại Sân PTX!';
-                    } else {
-                        reply = 'PTX Summer Cup 2026 hiện có 8 Đội bóng tranh tài với dữ liệu PostgreSQL View trực tiếp từ Supabase Database!';
-                    }
-                    botLoading.innerText = reply;
-                } catch {
-                    botLoading.innerText = 'Xin lỗi, không thể truy vấn database.';
-                }
-                messagesBox.scrollTop = messagesBox.scrollHeight;
-            });
-
-            // 2. Fetch and Sync Live Standings Table & KPIs in Product A
-            async function syncLiveStandingsProductA() {
-                try {
-                    const headers = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` };
-                    const [resStandings, resTeams, resPlayers] = await Promise.all([
-                        fetch(`${SUPABASE_URL}/standings?order=rank.asc`, { headers }),
-                        fetch(`${SUPABASE_URL}/teams?select=id,name,short_name,logo_url,color`, { headers }),
-                        fetch(`${SUPABASE_URL}/players?order=goals.desc&limit=10`, { headers }),
-                    ]);
-
-                    if (resStandings.ok) {
-                        const standings = await resStandings.json();
-                        const container = document.getElementById('standingsPremium');
-                        if (container && Array.isArray(standings) && standings.length > 0) {
-                            let rows = standings.map(s => `
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                                    <td style="padding:12px; font-weight:800; text-align:center;">${s.rank === 1 ? '🥇 1' : s.rank === 2 ? '🥈 2' : s.rank === 3 ? '🥉 3' : s.rank}</td>
-                                    <td style="padding:12px; font-weight:700; color:#00ff9d;">${s.team}</td>
-                                    <td style="padding:12px; text-align:center;">${s.played}</td>
-                                    <td style="padding:12px; text-align:center;">${s.won}</td>
-                                    <td style="padding:12px; text-align:center;">${s.drawn}</td>
-                                    <td style="padding:12px; text-align:center;">${s.lost}</td>
-                                    <td style="padding:12px; text-align:center;">${s.goals_for}</td>
-                                    <td style="padding:12px; text-align:center;">${s.goals_against}</td>
-                                    <td style="padding:12px; text-align:center; font-weight:700; color:${s.goal_diff > 0 ? '#00ff9d' : s.goal_diff < 0 ? '#ff4d4d' : '#fff'};">${s.goal_diff > 0 ? '+' : ''}${s.goal_diff}</td>
-                                    <td style="padding:12px; text-align:center; font-weight:900; color:#ffd700; font-size:1.05rem;">${s.points}</td>
-                                </tr>
-                            `).join('');
-
-                            container.innerHTML = `
-                                <div style="overflow-x:auto; background:rgba(15,23,42,0.6); backdrop-filter:blur(10px); border-radius:16px; border:1px solid rgba(0,255,157,0.2); padding:16px;">
-                                    <table style="width:100%; border-collapse:collapse; color:#fff; font-size:0.9rem;">
-                                        <thead>
-                                            <tr style="border-bottom:2px solid rgba(0,255,157,0.4); text-transform:uppercase; font-size:0.75rem; letter-spacing:1px; color:rgba(255,255,255,0.7);">
-                                                <th style="padding:10px; text-align:center;">Hạng</th>
-                                                <th style="padding:10px; text-align:left;">Đội Bóng</th>
-                                                <th style="padding:10px; text-align:center;">ST</th>
-                                                <th style="padding:10px; text-align:center;">T</th>
-                                                <th style="padding:10px; text-align:center;">H</th>
-                                                <th style="padding:10px; text-align:center;">B</th>
-                                                <th style="padding:10px; text-align:center;">BT</th>
-                                                <th style="padding:10px; text-align:center;">BB</th>
-                                                <th style="padding:10px; text-align:center;">HS</th>
-                                                <th style="padding:10px; text-align:center;">Điểm</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>${rows}</tbody>
-                                    </table>
-                                </div>
-                            `;
-                        }
-                    }
-
-                    if (resTeams.ok) {
-                        const teams = await resTeams.json();
-                        const heroTeamsEl = document.getElementById('heroTeamsCount');
-                        if (heroTeamsEl && Array.isArray(teams)) heroTeamsEl.innerText = teams.length;
-                    }
-
-                    if (resPlayers.ok) {
-                        const players = await resPlayers.json();
-                        const heroPlayersEl = document.getElementById('heroPlayersCount');
-                        if (heroPlayersEl && Array.isArray(players)) heroPlayersEl.innerText = players.length;
-                    }
-
-                    // Update Top Banner Notification badge
-                    if (!document.getElementById('supabaseBadgeA')) {
-                        const badge = document.createElement('div');
-                        badge.id = 'supabaseBadgeA';
-                        badge.style.cssText = 'background: linear-gradient(90deg, #00ff9d, #00b8d4); color: #000; font-weight: 800; text-align: center; padding: 6px; font-size: 0.82rem; letter-spacing: 0.5px; z-index: 999;';
-                        badge.innerHTML = '⚡ ĐÃ ĐỒNG BỘ REAL-TIME SUPABASE POSTGRESQL DATABASE & TRỢ LÝ AI CORE (v3.0.0)';
-                        document.body.insertBefore(badge, document.body.firstChild);
-                    }
-                } catch (e) {
-                    console.error('Supabase Sync error:', e);
-                }
-            }
-
-            syncLiveStandingsProductA();
-        })();
-
-        // ============================================================
-        // INIT & DISMISS SPLASH SCREEN
+        // INIT
         // ============================================================
         if (typeof Plyr !== 'undefined') {
             document.querySelectorAll('#player, #player2').forEach(el => {
-                if (el) new Plyr(el, { controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'] });
+                if (el) new Plyr(el, { controls: ['play-large', 'play', 'progress', 'current-time', 'mute',
+                        'volume', 'fullscreen'
+                    ] });
             });
         }
 
         initAdminAccount().then(() => {
-            try {
-                renderTeamStats();
-                renderPlayerCards();
-                refreshAll();
-                loadFromStorage();
-            } catch (e) {
-                console.warn('Init render warning:', e);
-            }
+            renderTeamStats();
+            renderPlayerCards();
+            refreshAll();
+            loadFromStorage();
 
             if (localStorage.getItem('adminLoggedIn') === 'true') {
-                const adminPanel = document.getElementById('adminPanel');
-                if (adminPanel) adminPanel.classList.add('active');
-                const loginBtn = document.getElementById('loginBtn');
-                if (loginBtn) loginBtn.style.display = 'none';
+                document.getElementById('adminPanel').classList.add('active');
+                document.getElementById('loginBtn').style.display = 'none';
                 loadAdminData();
             }
 
-            // Always hide splash screen immediately
-            const splashScreen = document.getElementById('splash-screen');
-            if (splashScreen) {
-                splashScreen.classList.add('hidden');
-                splashScreen.style.display = 'none';
-            }
+            setTimeout(() => {
+                const screen = document.getElementById('splash-screen');
+                if (screen) screen.classList.add('hidden');
+            }, 2800);
 
-            setTimeout(initReveal, 300);
+            setTimeout(initReveal, 500);
 
             setInterval(() => {
                 updateStickyBar();
                 renderLiveCenter();
             }, 10000);
-        }).catch(err => {
-            console.error('Init admin error:', err);
-            const splashScreen = document.getElementById('splash-screen');
-            if (splashScreen) {
-                splashScreen.classList.add('hidden');
-                splashScreen.style.display = 'none';
-            }
-        });
 
-        // Fallback splash screen dismiss in 1s
-        setTimeout(() => {
-            const splashScreen = document.getElementById('splash-screen');
-            if (splashScreen) {
-                splashScreen.classList.add('hidden');
-                splashScreen.style.display = 'none';
-            }
-        }, 1000);
+            console.log('🏆 PTX Summer Cup 2.0 — Homepage Storytelling optimized');
+            console.log('✅ Order: Hero → Stats → LIVE Center → Matches → Standings → Highlights → Gallery → Players → Teams → Rules → Sponsors → Thanks → Hall of Fame');
+        });
 
         // Expose
         window.openLogin = openLogin;
@@ -5636,4 +5406,4 @@
         window.openLightbox = openLightbox;
     </script>
 </body>
-</html>
+</html>
