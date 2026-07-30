@@ -8,6 +8,7 @@
     "test": "npx -y tsx tests/contract/match-api-contract.test.ts",
     "test:phase7": "npx -y tsx tests/phase7/phase7-integration-suite.test.ts",
     "test:ux": "npx -y tsx tests/ux/ux-enhancement-suite.test.ts",
+    "test:phase8": "npx -y tsx tests/phase8/phase8-super-app.test.ts",
     "clean": "powershell -Command \"Remove-Item -Recurse -Force node_modules, generated/*\""
   },
   "dependencies": {
