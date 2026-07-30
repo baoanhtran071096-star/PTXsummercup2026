@@ -1,15 +1,18 @@
 {
   "name": "ptx-platform-v2",
-  "version": "1.1.0",
-  "description": "PTX Platform V2 - Enterprise Product Engineering Knowledge System",
+  "version": "1.2.0",
+  "description": "PTX Sports Platform v7.0 — AI-Native, Free-by-Design",
   "main": "generated/types/domain-models.ts",
   "scripts": {
+    "dev": "npx -y serve -l 8000 .",
     "docs:build": "npx -y tsx tools/knowledge/compiler/build.ts",
     "test": "npx -y tsx tests/contract/match-api-contract.test.ts",
     "test:phase7": "npx -y tsx tests/phase7/phase7-integration-suite.test.ts",
     "test:ux": "npx -y tsx tests/ux/ux-enhancement-suite.test.ts",
     "test:phase8": "npx -y tsx tests/phase8/phase8-super-app.test.ts",
     "test:security": "npx -y tsx tests/security/admin-security.test.ts",
+    "test:ai-core": "npx -y tsx tests/ai-core/ai-core.test.ts",
+    "test:all": "npm run test && npm run test:phase7 && npm run test:ux && npm run test:phase8 && npm run test:security && npm run test:ai-core",
     "clean": "powershell -Command \"Remove-Item -Recurse -Force node_modules, generated/*\""
   },
   "dependencies": {
