@@ -5492,6 +5492,64 @@
             syncLiveStandingsProductA();
         })();
 
+        // ============================================================
+        // INIT & DISMISS SPLASH SCREEN
+        // ============================================================
+        if (typeof Plyr !== 'undefined') {
+            document.querySelectorAll('#player, #player2').forEach(el => {
+                if (el) new Plyr(el, { controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'] });
+            });
+        }
+
+        initAdminAccount().then(() => {
+            try {
+                renderTeamStats();
+                renderPlayerCards();
+                refreshAll();
+                loadFromStorage();
+            } catch (e) {
+                console.warn('Init render warning:', e);
+            }
+
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                const adminPanel = document.getElementById('adminPanel');
+                if (adminPanel) adminPanel.classList.add('active');
+                const loginBtn = document.getElementById('loginBtn');
+                if (loginBtn) loginBtn.style.display = 'none';
+                loadAdminData();
+            }
+
+            // Always hide splash screen immediately
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                splashScreen.classList.add('hidden');
+                splashScreen.style.display = 'none';
+            }
+
+            setTimeout(initReveal, 300);
+
+            setInterval(() => {
+                updateStickyBar();
+                renderLiveCenter();
+            }, 10000);
+        }).catch(err => {
+            console.error('Init admin error:', err);
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                splashScreen.classList.add('hidden');
+                splashScreen.style.display = 'none';
+            }
+        });
+
+        // Fallback splash screen dismiss in 1s
+        setTimeout(() => {
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                splashScreen.classList.add('hidden');
+                splashScreen.style.display = 'none';
+            }
+        }, 1000);
+
         // Expose
         window.openLogin = openLogin;
         window.closeLogin = closeLogin;
