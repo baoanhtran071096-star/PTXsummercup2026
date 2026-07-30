@@ -52,11 +52,19 @@ async function runOfficialMigrationAndSeed() {
   console.log('🚀 THỰC THI MIGRATION & SEED DỮ LIỆU CHÍNH THỨC (01/08/2026)');
   console.log('===============================================================\n');
 
+  // Delete test teams outside the 8 official ones
+  const officialNames = ['Đội Alpha', 'Đội Beta', 'Đội Gamma', 'Đội Delta', 'Đội Epsilon', 'Đội Zeta', 'Đội Eta', 'Đội Theta'];
+  const allTeams = await req<Array<{ id: string; name: string }>>('teams?select=id,name');
+  for (const t of allTeams) {
+    if (!officialNames.includes(t.name)) {
+      await fetch(`${BASE}/rest/v1/teams?id=eq.${t.id}`, { method: 'DELETE', headers });
+    }
+  }
+
   // STEP 1: TEAMS MIGRATION & SEED
   console.log('📦 1. MIGRATION & SEED 8 ĐỘI BÓNG (TEAMS)');
   console.log('---------------------------------------------------------------');
   
-  // Fetch existing teams or insert
   let teams = await req<Array<{ id: string; name: string }>>('teams?select=id,name');
   if (teams.length < 8) {
     const officialTeams = [
