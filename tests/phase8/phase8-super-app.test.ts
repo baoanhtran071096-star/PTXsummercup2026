@@ -76,6 +76,15 @@ function runPhase8SuperAppVerificationSuite() {
   }
   console.log(`✅ Group F Passed: Payment Checkout URL Generated (${payment.paymentUrl}).`);
 
+  // Test 6: Database Backup Scheduler (2:00 AM Task)
+  console.log('\n--- Test 8.Ops: Database Backup Scheduler (2:00 AM) ---');
+  const { databaseBackupSchedulerService } = require('../../src/governance/database-backup-scheduler.service');
+  const backupReceipt = databaseBackupSchedulerService.triggerDailyBackup();
+  if (backupReceipt.status !== 'SUCCESS') {
+    throw new Error('Backup Scheduler Test Failed!');
+  }
+  console.log(`✅ Ops Passed: Automated Backup Executed (${backupReceipt.backupFileName}).`);
+
   console.log('\n🎉 [PHASE 8 SPORTS SUPER APP SUITE] All Workstreams Passed 100%!');
 }
 
